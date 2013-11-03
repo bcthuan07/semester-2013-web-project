@@ -1,7 +1,9 @@
 package entity;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,58 +17,66 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="USERID", unique = true, nullable = false)
-	private int userId;
+	@Column(name = "iduser", unique = true, nullable = false)
+	private int iduser;
 
-	public static enum Gender {
-		MALE, FEMALE
-	};
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "GENDER")
-	private Gender gender;
-	
-	@Column(name = "USERNAME")
+	@Column(name = "username", unique = true, nullable = false)
 	private String username;
-	
-	@Column(name = "PASSWORD")
-	private String password;
-	
-	@Column(name = "DAYOFBIRTH")
-	private Date dayOfBirth;
-	
-	@Column(name = "FULLNAME")
-	private String fullname;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "USER")
-	private ArrayList<Invoice> invoiceList;
 
-	public User(int id, String username, String password) {
-		this.userId = id;
+	@Column(name = "password", nullable = false)
+	private String password;
+
+	@Column(name = "firstname")
+	private String firstname;
+
+	@Column(name = "lastname")
+	private String lastname;
+
+	@Column(name = "age")
+	private int age;
+
+	@Column(name = "address")
+	private String address;
+
+	@Column(name = "datecreated", nullable = false)
+	private Timestamp datecreated;
+
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "permission", nullable=false)
+	private int permission;
+
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
+	private List<Feedback> lFeedback;
+	
+	public User(int iduser, String username, String password, String firstname,
+			String lastname, int age, String address, Timestamp datecreated,
+			String email, int permission) {
+		super();
+		this.iduser = iduser;
 		this.username = username;
 		this.password = password;
-		invoiceList = new ArrayList<>();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.age = age;
+		this.address = address;
+		this.datecreated = datecreated;
+		this.email = email;
+		this.permission = permission;
+		lFeedback = new ArrayList<>();
 	}
 
-	public Gender getGender() {
-		return gender;
+	public int getIduser() {
+		return iduser;
 	}
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public int getId() {
-		return userId;
-	}
-
-	public void setId(int id) {
-		this.userId = id;
+	public void setIduser(int iduser) {
+		this.iduser = iduser;
 	}
 
 	public String getUsername() {
@@ -85,28 +95,82 @@ public class User {
 		this.password = password;
 	}
 
-	public Date getDayOfBirth() {
-		return dayOfBirth;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setDayOfBirth(Date dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getName() {
-		return fullname;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setName(String name) {
-		this.fullname = name;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
-	public ArrayList<Invoice> getInvoiceList() {
-		return invoiceList;
+	public int getAge() {
+		return age;
 	}
 
-	public void setInvoiceList(ArrayList<Invoice> invoiceList) {
-		this.invoiceList = invoiceList;
+	public void setAge(int age) {
+		this.age = age;
 	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Timestamp getDatecreated() {
+		return datecreated;
+	}
+
+	public void setDatecreated(Timestamp datecreated) {
+		this.datecreated = datecreated;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getPermission() {
+		return permission;
+	}
+
+	public void setPermission(int permission) {
+		this.permission = permission;
+	}
+
+	public List<Feedback> getlFeedback() {
+		return lFeedback;
+	}
+
+	public void setlFeedback(List<Feedback> lFeedback) {
+		this.lFeedback = lFeedback;
+	}
+
+	@Override
+	public String toString() {
+		return "User [iduser=" + iduser + ", username=" + username
+				+ ", password=" + password + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", age=" + age + ", address="
+				+ address + ", datecreated=" + datecreated + ", email=" + email
+				+ ", permission=" + permission + ", lFeedback=" + lFeedback
+				+ "]";
+	}
+	
+	
+	
+	
 
 }
