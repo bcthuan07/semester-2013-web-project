@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nhà Hàng Jamie Oliver's</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--<meta name="description" content="">
+    <meta name="author" content="">-->
+
+<!-- Le styles -->
+<link href="css\bootstrap.css" rel="stylesheet">
+<style>
+body {
+	/*padding-top: 60px;*/
+	/* 60px to make the container go all the way to the bottom of the topbar */
+	
+}
+/* CUSTOMIZE THE CAROUSEL
+    -------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+	margin-top: 0;
+	margin-bottom: 60px;
+}
+
+.carousel .container {
+	position: relative;
+	z-index: 9;
+}
+
+.carousel-control {
+	height: 80px;
+	margin-top: 0;
+	font-size: 120px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+	background-color: transparent;
+	border: 0;
+	z-index: 10;
+}
+
+.carousel .item {
+	height: 500px;
+}
+
+.carousel img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	height: 500px;
+}
+
+.carousel-caption {
+	background-color: transparent;
+	position: static;
+	max-width: 550px;
+	padding: 0 20px;
+	margin-top: 200px;
+}
+
+.carousel-caption h1,.carousel-caption .lead {
+	margin: 0;
+	line-height: 1.25;
+	color: #fff;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+.carousel-caption .btn {
+	margin-top: 10px;
+}
+</style>
+<link href="css\bootstrap-responsive.css" rel="stylesheet">
+
+<!-- Fav and touch icons -->
+<link rel="shortcut icon" href=" ico/favicon.png">
+</head>
+
+<body>
+
+	<div id="top" class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="index.html">Jamie Oliver's </a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active"><a href="index.html">Trang Chủ</a></li>
+						<li><a href="about.html">Giới Thiệu</a></li>
+						<li><a href="contact.html">Liên Hệ</a></li>
+						<li><a href="">Đặt Bàn Online</a></li>
+						<!--drop down menu-->
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">Thực đơn <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="foods.html">Món Ăn</a></li>
+								<li><a href="">Đồ Uống</a></li>
+							</ul></li>
+					</ul>
+					<a class="navbar-search pull-right" style="margin: 10px;font-size: 12pt;" href="login.jsp">Đăng Nhập</a>
+					<!-- 
+			<form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email">
+              <input class="span2" type="password" placeholder="Password">
+              <button type="submit" class="btn">Đăng Nhập</button>
+            </form>
+            <div class="nav-collapse collapse">
+            <div class="nav pull-right">
+            <a href="login.jsp" title="Đăng Nhập">Đăng Nhập</a>
+            </div></div>-->
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<div id="myCarousel" class="carousel slide">
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="img/slide/slide-01.jpg" alt="">
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>Khuyến Mãi Hấp Dẫn</h1>
+						<p class="lead">Đăng ký làm thành viên ngay bây giờ để nhận vé
+							khuyến mãi giảm giá khi đặt bàn tại nhà hàng, quà lưu niệm cùng
+							hàng ngàn tặng phẩm khác</p>
+						<a class="btn btn-large btn-primary" href="#">Đăng ký</a>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<img src="img/slide/slide-02.jpg" alt="">
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>Another example headline.</h1>
+						<p class="lead">Cras justo odio, dapibus ac facilisis in,
+							egestas eget quam. Donec id elit non mi porta gravida at eget
+							metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						<a class="btn btn-large btn-primary" href="#">Xem thêm</a>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<img src="img/slide/slide-03.jpg" alt="">
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>One more for good measure.</h1>
+						<p class="lead">Cras justo odio, dapibus ac facilisis in,
+							egestas eget quam. Donec id elit non mi porta gravida at eget
+							metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+						<a class="btn btn-large btn-primary" href="#">Xem thêm</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+	</div>
+	<!-- /.carousel -->
+
+	<div class="container">
+
+
+		<hr class="featurette-divider">
+		<footer>
+			<p class="pull-right">
+				<a href="#top">Back to top</a>
+			</p>
+			<p>
+				© 2013 Company, Inc. · <a
+					href="http://getbootstrap.com/examples/carousel/#">Privacy</a> · <a
+					href="http://getbootstrap.com/examples/carousel/#">Terms</a>
+			</p>
+		</footer>
+
+	</div>
+	<!-- /container -->
+
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap-transition.js"></script>
+	<script src="js/bootstrap-alert.js"></script>
+	<script src="js/bootstrap-modal.js"></script>
+	<script src="js/bootstrap-dropdown.js"></script>
+	<script src="js/bootstrap-scrollspy.js"></script>
+	<script src="js/bootstrap-tab.js"></script>
+	<script src="js/bootstrap-tooltip.js"></script>
+	<script src="js/bootstrap-popover.js"></script>
+	<script src="js/bootstrap-button.js"></script>
+	<script src="js/bootstrap-collapse.js"></script>
+	<script src="js/bootstrap-carousel.js"></script>
+	<script src="js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>
