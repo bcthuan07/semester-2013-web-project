@@ -5,7 +5,7 @@ import service.DishService;
 import service.DishServiceImpl;
 
 
-public class Test {
+public class testcsdl {
 
 	public static void main(String[] args) {
 		DishService dishService = new DishServiceImpl();
