@@ -2,19 +2,19 @@ package entity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 
 @Entity
 @Table(name = "user")
@@ -51,8 +51,13 @@ public class User {
 	@Column(name = "permission", nullable=false)
 	private int permission;
 
-	@OneToMany(fetch=FetchType.LAZY,mappedBy="user")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<Feedback> lFeedback;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	private List<Invoice> lInvoice;
 	
 	public User(int iduser, String username, String password, String firstname,
 			String lastname, int age, String address, Timestamp datecreated,
@@ -69,7 +74,28 @@ public class User {
 		this.email = email;
 		this.permission = permission;
 		lFeedback = new ArrayList<>();
+		lInvoice = new ArrayList<>();
 	}
+
+	public User(){}
+	public User(int iduser, String username, String password, String firstname,
+			String lastname, int age, String address, Timestamp datecreated,
+			String email, int permission, List<Feedback> lFeedback, List<Invoice> lInvoice) {
+		super();
+		this.iduser = iduser;
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.age = age;
+		this.address = address;
+		this.datecreated = datecreated;
+		this.email = email;
+		this.permission = permission;
+		this.lFeedback = lFeedback;
+		this.lInvoice = lInvoice;
+	}
+
 
 	public int getIduser() {
 		return iduser;
@@ -159,6 +185,14 @@ public class User {
 		this.lFeedback = lFeedback;
 	}
 
+	public List<Invoice> getlInvoice() {
+		return lInvoice;
+	}
+
+	public void setlInvoice(List<Invoice> lInvoice) {
+		this.lInvoice = lInvoice;
+	}
+
 	@Override
 	public String toString() {
 		return "User [iduser=" + iduser + ", username=" + username
@@ -166,7 +200,7 @@ public class User {
 				+ ", lastname=" + lastname + ", age=" + age + ", address="
 				+ address + ", datecreated=" + datecreated + ", email=" + email
 				+ ", permission=" + permission + ", lFeedback=" + lFeedback
-				+ "]";
+				+ ", lInvoice=" + lInvoice + "]";
 	}
 	
 	

@@ -5,50 +5,51 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import entity.Dish;
 import entity.HibernateUtil;
+import entity.MealType;
 
-public class DishDAOImpl implements DishDAO {
+public class MealTypeDAOImpl implements MealTypeDAO{
 
 	@Override
-	public void addDish(Dish dish) {
+	public void addMealType(MealType mealtype) {
 		// TODO Auto-generated method stub
 		Session s = HibernateUtil.openSession();
 		s.beginTransaction();
-		s.save(dish);
+		s.save(mealtype);
 		s.getTransaction().commit();
 		s.close();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Dish> listDish() {
+	public List<MealType> listMealType() {
 		// TODO Auto-generated method stub
-		List<Dish> list = new ArrayList<>();
+		List<MealType> list = new ArrayList<>();
 		Session s = HibernateUtil.openSession();
 		s.beginTransaction();
-		list = s.createQuery("from Dish").list();
+		list = s.createQuery("from MealType").list();
 		s.getTransaction().commit();
 		s.close();
 		return list;
 	}
 
 	@Override
-	public void removeDish(Integer id) {
+	public void removeMealType(Integer id) {
 		// TODO Auto-generated method stub
 		Session s = HibernateUtil.openSession();
 		s.beginTransaction();
-		Dish d = (Dish) s.load(Dish.class, id);
-		s.delete(d);
+		MealType mealtype = (MealType) s.load(MealType.class,id);
+		s.delete(mealtype);
 		s.getTransaction().commit();
 		s.close();
 	}
 
 	@Override
-	public void updateDish(Dish dish) {
+	public void updateMealType(MealType mealtype) {
 		// TODO Auto-generated method stub
 		Session s = HibernateUtil.openSession();
 		s.beginTransaction();
-		s.update(dish);
+		s.update(mealtype);
 		s.getTransaction().commit();
 		s.close();
 	}

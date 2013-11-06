@@ -28,7 +28,7 @@ public class Feedback {
 	@Column(name="datecreated")
 	private Timestamp datecreated;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="iduser",nullable=false)
 	private User user;
 
@@ -51,6 +51,12 @@ public class Feedback {
 
 	public String getContent() {
 		return content;
+	}
+	
+	
+
+	public Feedback() {
+		super();
 	}
 
 	public void setContent(String content) {
