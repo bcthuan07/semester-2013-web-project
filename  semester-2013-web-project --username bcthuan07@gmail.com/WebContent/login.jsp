@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%String username = (String) request.getAttribute("username");
+	String username_err = "";if(request.getAttribute("username_err")!=null) username_err = (String) request.getAttribute("username_err");
+	String password_err = "";if(request.getAttribute("password_err")!=null) password_err = (String) request.getAttribute("password_err");
+	System.out.println(username_err);%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +24,7 @@ body {
 }
 
 .form-signin {
-	max-width: 300px;
+	max-width: 400px;
 	padding: 19px 29px 29px;
 	margin: 0 auto 20px;
 	background-color: #fff;
@@ -37,11 +41,12 @@ body {
 	margin-bottom: 10px;
 }
 
-.form-signin input[type="text"],.form-signin input[type="password"] {
+.form-signin input[type="text"],.form-signin input[type="password"]{
 	font-size: 16px;
 	height: auto;
 	margin-bottom: 15px;
 	padding: 7px 9px;
+	padding-bottom: 10px;
 }
 </style>
 <link href="css\bootstrap-responsive.css" rel="stylesheet">
@@ -66,13 +71,11 @@ body {
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Thực đơn <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="foods.html">Món Ăn</a></li>
+								<li><a href="foods.jsp">Món Ăn</a></li>
 								<li><a href="">Đồ Uống</a></li>
 							</ul></li>
 					</ul>
-					<a class="navbar-search pull-right"
-						style="margin: 10px; font-size: 12pt;" href="login.jsp">Đăng
-						Nhập</a>
+					
 				</div>
 			</div>
 		</div>
@@ -80,10 +83,10 @@ body {
 	<div class="container">
 
 		
-      <form class="form-signin">
+      <form class="form-signin" method="post" action="login">
         <h2 class="form-signin-heading">Vui lòng đăng nhập</h2>
-        <input type="text" class="input-block-level" placeholder="Usernam">
-        <input type="password" class="input-block-level" placeholder="Password">
+        <input name="username" type="text" class="input-block-level" placeholder="Username"><span class="text-error"style="font-size: 12pt;"><%=username_err %></span>
+        <input name="password" type="password" class="input-block-level" placeholder="Password"><span class="text-error"style="font-size: 12pt;;"><%=password_err %></span>
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me
         </label>
