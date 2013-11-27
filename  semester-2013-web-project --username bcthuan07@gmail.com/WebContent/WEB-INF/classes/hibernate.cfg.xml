@@ -5,19 +5,22 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1/restaurant</property>
+        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1/fastfood</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">jamieoliver</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
-        
-        <mapping class="entity.User"/> 
+       	<property name="hibernate.default_schema">fastfood</property> 
+       
+        <mapping class="entity.User"/>
+        <mapping class="entity.Product"/>
+        <mapping class="entity.Address"/>
+        <mapping class="entity.OrderItem"/>
+        <mapping class="entity.OrderStatus"/>
+        <mapping class="entity.PaymentMethod"/>
+        <mapping class="entity.ProductType"/>
+        <mapping class="entity.UserAddressHistory"/>
+        <mapping class="entity.UserOrder"/>
         <mapping class="entity.Feedback"/>
-        <mapping class="entity.Invoice"/>
-        <mapping class="entity.Meal"/>
-        <mapping class="entity.InvoiceDetail"/>
-        <mapping class="entity.MealType"/>
-        <mapping class="entity.MealKind"/>
-        <mapping class="entity.InvoiceDetailFieldKey"/>
     </session-factory>
 </hibernate-configuration>
