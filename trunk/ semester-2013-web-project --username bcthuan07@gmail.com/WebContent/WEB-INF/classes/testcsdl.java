@@ -1,25 +1,32 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.Session;
-
+import service.RegisterService;
+import sun.org.mozilla.javascript.internal.ast.ArrayLiteral;
+import model.Address;
+import model.PaymentMethod;
+import model.ProductType;
+import model.User;
 import dao.AddressDAO;
 import dao.GeneralDAO;
+import dao.PaymentMethodDAO;
 import dao.ProductTypeDAO;
 import dao.UserDAO;
-import entity.Address;
-import entity.ProductType;
-import entity.User;
 
 public class testcsdl {
 
 	public static void main(String[] args) {
 		
 		GeneralDAO<Address, Integer> dao = new AddressDAO();
-		List<Address> list = dao.listObject();
-		for(Address p: list){
-			System.out.println(p);
-		}
+//		Address pt = dao.getObject(new Integer(1));
+//		System.out.println(pt);
+//		List<Address> l = dao.listObject();
+//		dao.removeObject(new Integer(4));
+		System.out.println(dao.getObject(new Integer(1)));
+//		for(Address a: l){
+//			System.out.println(a);
+//			System.out.println(a.getProducts());
+//		}
 	}
 }

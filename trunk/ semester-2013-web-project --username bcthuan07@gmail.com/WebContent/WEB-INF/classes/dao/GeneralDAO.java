@@ -23,19 +23,19 @@ public interface GeneralDAO<E,T> {
 	 * 
 	 * @param <E> declare what type of object you want
 	 */
-	public void addObject(E object);
+	public boolean addObject(E object);
 	
 	/**
 	 * 
 	 * @param object <E> declare what type of object you want
 	 */
-	public void updateObject(E object);
+	public boolean updateObject(E object);
 	
 	/**
 	 * 
 	 * @param object <T> your primary key object
 	 */
-	public void removeObject(T object);
+	public boolean removeObject(T object);
 	
 	public E getObject(T key);
 }

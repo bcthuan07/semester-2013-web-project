@@ -3,86 +3,107 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import model.OrderItem;
 
 import org.hibernate.Session;
 
 import util.HibernateUtil;
-import entity.OrderItem;
 
 /**
  * @author Thuan
- *
+ * 
  */
-public class OrderItemDAO implements GeneralDAO<OrderItem, Integer>{
+public class OrderItemDAO implements GeneralDAO<OrderItem, Integer> {
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#listObject()
-	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderItem> listObject() {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<OrderItem> list = session.createQuery("from OrderItem").list();
-		session.getTransaction().commit();
-		session.close();
+		List<OrderItem> list = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			list = session.createQuery("from OrderItem").list();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return list;
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#addObject(java.lang.Object)
-	 */
 	@Override
-	public void addObject(OrderItem object) {
-		// TODO Auto-generated method stub
-		Session session =  HibernateUtil.openSession();
-		session.beginTransaction();
-		session.save(object);
-		session.getTransaction().commit();
-		session.close();
-	}
-
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#updateObject(java.lang.Object)
-	 */
-	@Override
-	public void updateObject(OrderItem object) {
-		// TODO Auto-generated method stub
+	public boolean addObject(OrderItem object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.update(object);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.save(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#removeObject(java.lang.Object)
-	 */
 	@Override
-	public void removeObject(Integer object) {
-		// TODO Auto-generated method stub
+	public boolean updateObject(OrderItem object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		OrderItem orderItem = (OrderItem) session.load(OrderItem.class, object);
-		session.delete(orderItem);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.update(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#getObject(java.lang.Object)
-	 */
+	@Override
+	public boolean removeObject(Integer object) {
+		Session session = HibernateUtil.openSession();
+		try {
+			session.beginTransaction();
+			OrderItem orderItem = (OrderItem) session.load(OrderItem.class,
+					object);
+			session.delete(orderItem);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
+	}
+
 	@Override
 	public OrderItem getObject(Integer key) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		OrderItem orderItem = (OrderItem) session.load(OrderItem.class, key);
-		session.getTransaction().commit();
-		session.close();
+		OrderItem orderItem = null;
+		try {
+			session.beginTransaction();
+			orderItem = (OrderItem) session.get(OrderItem.class, key);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return orderItem;
 	}
-	
 
 }

@@ -3,88 +3,138 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import model.Address;
 
 import org.hibernate.Session;
 
-import entity.Address;
 import util.HibernateUtil;
 
 /**
  * @author Thuan
- *
+ * 
  */
-public class AddressDAO implements GeneralDAO<Address,Integer>{
+public class AddressDAO implements GeneralDAO<Address, Integer> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dao.GeneralDAO#listObject()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Address> listObject() {
 		// TODO Auto-generated method stub
+		List<Address> list = new ArrayList<>();
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<Address> list = session.createQuery("from Address").list();
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			list = session.createQuery("from Address").list();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			System.err.println(e.getMessage());
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return list;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dao.GeneralDAO#addObject(java.lang.Object)
 	 */
 	@Override
-	public void addObject(Address object) {
+	public boolean addObject(Address object) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.save(object);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.save(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dao.GeneralDAO#updateObject(java.lang.Object)
 	 */
 	@Override
-	public void updateObject(Address object) {
+	public boolean updateObject(Address object) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.update(object);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.update(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dao.GeneralDAO#removeObject(java.lang.Object)
 	 */
 	@Override
-	public void removeObject(Integer object) {
+	public boolean removeObject(Integer object) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		Address address = (Address) session.load(Address.class, object);
-		session.delete(address);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			Address address = (Address) session.load(Address.class, object);
+			session.delete(address);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see dao.GeneralDAO#getObject(java.lang.Object)
 	 */
 	@Override
 	public Address getObject(Integer key) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		Address address = (Address) session.load(Address.class, key);
-		session.getTransaction().commit();
-		session.close();
+		Address address = null;
+		try {
+			session.beginTransaction();
+			address = (Address) session.get(Address.class, key);
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			System.err.println(e.getMessage());
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return address;
 	}
 
-	
-	
 }

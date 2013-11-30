@@ -3,87 +3,106 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import model.User;
 
 import org.hibernate.Session;
 
 import util.HibernateUtil;
-import entity.User;
 
 /**
  * @author Thuan
- *
+ * 
  */
-public class UserDAO implements GeneralDAO<User, Integer>{
+public class UserDAO implements GeneralDAO<User, Integer> {
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#listObject()
-	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> listObject() {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<User> list = session.createQuery("from User").list();
-		session.getTransaction().commit();
-		session.close();
+		List<User> list = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			list = session.createQuery("from User").list();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return list;
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#addObject(java.lang.Object)
-	 */
 	@Override
-	public void addObject(User object) {
-		// TODO Auto-generated method stub
+	public boolean addObject(User object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.save(object);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.save(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#updateObject(java.lang.Object)
-	 */
 	@Override
-	public void updateObject(User object) {
-		// TODO Auto-generated method stub
+	public boolean updateObject(User object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.update(object);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.update(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#removeObject(java.lang.Object)
-	 */
 	@Override
-	public void removeObject(Integer object) {
-		// TODO Auto-generated method stub
+	public boolean removeObject(Integer object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		User user = (User) session.load(User.class, object);
-		session.delete(user);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			User user = (User) session.load(User.class, object);
+			session.delete(user);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#getObject(java.lang.Object)
-	 */
 	@Override
 	public User getObject(Integer key) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		User user = (User) session.load(User.class, key);
-		session.getTransaction().commit();
-		session.close();
+		User user = null;
+		try {
+			session.beginTransaction();
+			user = (User) session.get(User.class, key);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return user;
 	}
 
-	
 }
