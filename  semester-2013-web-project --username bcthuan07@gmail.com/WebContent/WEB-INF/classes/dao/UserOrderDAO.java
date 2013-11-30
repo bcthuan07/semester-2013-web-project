@@ -3,86 +3,108 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import model.UserOrder;
 
 import org.hibernate.Session;
 
 import util.HibernateUtil;
-import entity.UserOrder;
 
 /**
  * @author Thuan
- *
+ * 
  */
-public class UserOrderDAO implements GeneralDAO<UserOrder, Integer>{
+public class UserOrderDAO implements GeneralDAO<UserOrder, Integer> {
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#listObject()
-	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserOrder> listObject() {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<UserOrder> list = session.createQuery("from UserOrder").list();
-		session.getTransaction().commit();
-		session.close();
+		List<UserOrder> list = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			list = session.createQuery("from UserOrder").list();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return list;
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#addObject(java.lang.Object)
-	 */
 	@Override
-	public void addObject(UserOrder object) {
-		// TODO Auto-generated method stub
+	public boolean addObject(UserOrder object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.save(object);
-		session.getTransaction().commit();
-		session.close();
-		
+		try {
+			session.beginTransaction();
+			session.save(object);
+			return true;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			System.err.println(e.getMessage());
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
+
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#updateObject(java.lang.Object)
-	 */
 	@Override
-	public void updateObject(UserOrder object) {
-		// TODO Auto-generated method stub
+	public boolean updateObject(UserOrder object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.update(object);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.update(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#removeObject(java.lang.Object)
-	 */
 	@Override
-	public void removeObject(Integer object) {
-		// TODO Auto-generated method stub
+	public boolean removeObject(Integer object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		UserOrder userOrder = (UserOrder) session.load(UserOrder.class, object);
-		session.delete(userOrder);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			UserOrder userOrder = (UserOrder) session.load(UserOrder.class,
+					object);
+			session.delete(userOrder);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see dao.GeneralDAO#getObject(java.lang.Object)
-	 */
 	@Override
 	public UserOrder getObject(Integer key) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		UserOrder userOrder = (UserOrder) session.load(UserOrder.class, key);
-		session.getTransaction().commit();
-		session.close();
+		UserOrder userOrder = null;
+		try {
+			session.beginTransaction();
+			userOrder = (UserOrder) session.get(UserOrder.class, key);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
+
 		return userOrder;
 	}
 

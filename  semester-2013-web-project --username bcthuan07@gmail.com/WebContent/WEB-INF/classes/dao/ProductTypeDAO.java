@@ -3,12 +3,14 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import model.ProductType;
 
 import org.hibernate.Session;
 
 import util.HibernateUtil;
-import entity.ProductType;
 
 /**
  * @author Thuan
@@ -16,20 +18,21 @@ import entity.ProductType;
  */
 public class ProductTypeDAO implements GeneralDAO<ProductType, Integer> {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see dao.GeneralDAO#listObject()
-	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ProductType> listObject() {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<ProductType> list = session.createQuery("from ProductType").list();
-		session.getTransaction().commit();
-		session.close();
+		List<ProductType> list = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			list = session.createQuery("from ProductType").list();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return list;
 	}
 
@@ -39,45 +42,56 @@ public class ProductTypeDAO implements GeneralDAO<ProductType, Integer> {
 	 * @see dao.GeneralDAO#addObject(java.lang.Object)
 	 */
 	@Override
-	public void addObject(ProductType object) {
-		// TODO Auto-generated method stub
+	public boolean addObject(ProductType object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.save(object);
-		session.getTransaction().commit();
-		session.close();
-
+		try {
+			session.beginTransaction();
+			session.save(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see dao.GeneralDAO#updateObject(java.lang.Object)
-	 */
 	@Override
-	public void updateObject(ProductType object) {
-		// TODO Auto-generated method stub
+	public boolean updateObject(ProductType object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		session.update(object);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			session.update(object);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see dao.GeneralDAO#removeObject(java.lang.Object)
-	 */
 	@Override
-	public void removeObject(Integer object) {
-		// TODO Auto-generated method stub
+	public boolean removeObject(Integer object) {
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		ProductType productType = (ProductType) session.load(ProductType.class, object);
-		session.delete(productType);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			ProductType productType = (ProductType) session.load(
+					ProductType.class, object);
+			session.delete(productType);
+			return true;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+			return false;
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 	}
 
 	/*
@@ -89,10 +103,17 @@ public class ProductTypeDAO implements GeneralDAO<ProductType, Integer> {
 	public ProductType getObject(Integer key) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
-		session.beginTransaction();
-		ProductType productType = (ProductType) session.load(ProductType.class, key);
-		session.getTransaction().commit();
-		session.close();
+		ProductType productType = null;
+		try {
+			session.beginTransaction();
+			productType = (ProductType) session.get(ProductType.class, key);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			session.getTransaction().rollback();
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
 		return productType;
 	}
 

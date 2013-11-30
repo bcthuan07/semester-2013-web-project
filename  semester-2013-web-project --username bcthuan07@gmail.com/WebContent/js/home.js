@@ -1,22 +1,24 @@
 $(function(){
 	
 var $container = $('.right');
-/* 	// initialize
+// initialize
 	  $('.right').masonry({
 	  columnWidth: 20,
-	   itemSelector: '.a' 
+	   itemSelector: '.a',
+	   'isOrginLeft': true
 	  
-	});   */
+	})
 	 
-$('.right').masonry({
+/*$('.right').masonry({
 		columnWidth: 20,
 		itemSelector: '.a',
-		isFitWidth: false,
+		isFitWidth: false
+		
 
-	})
+	})*/
 .imagesLoaded(function() {
 		$(this).masonry('reload');
 	});
 	
 	
-})
+});
