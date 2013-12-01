@@ -143,7 +143,7 @@ h1 {
 					<br> <br> <label style="float: left;">Ảnh trưng
 						bày </label> <input class="input" style="float: right;" name="firstname"
 						type="file"> <br> <br> <label
-						style="float: left;">Loại Sản Phẩm:</label> <select>
+						style="float: left;">Loại Sản Phẩm:</label> <select name="producttype">
 						<%
 							for (ProductType pt : list) {
 						%>

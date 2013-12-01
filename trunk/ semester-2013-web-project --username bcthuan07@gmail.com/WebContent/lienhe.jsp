@@ -1,6 +1,8 @@
-﻿<html>
-
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Lien He</title>
 <link rel="stylesheet" href="css/style.css" />
 <!-- 			<script src="js/jquery.1.7.js" ></script>
@@ -41,11 +43,11 @@
 
 				<div class="menu">
 					<ul>
-						<li><a href="home.html">Trang Chủ </a></li>
-						<li><a href="dangnhap.jsp">Đăng Nhập / Đăng Kí</a>
-						<li><a href="#">Thực Đơn </a></li>
-						<li><a href="#">Đặt Hàng</a></li>
-						<li><a href="lienhe.jsp" id="trangchu">Liên Hệ </a></li>
+						<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
+						<li><a class="menuitem" href="login.jsp">Đăng Nhập / Đăng Kí</a>
+						<li><a class="menuitem" href="Menu">Thực Đơn </a></li>
+						<li><a class="menuitem" href="order.jsp">Đặt Hàng</a></li>
+						<li><a class="menuitem" href="lienhe.jsp" id="active">Liên Hệ </a></li>
 					</ul>
 				</div>
 			</div>
@@ -104,7 +106,7 @@
 	<footer>
 		<div class="info">
 			<p>COPYRIGHT © 2013</p>
-			<a href="lienhe.html"> <b>Liên Hệ </b>
+			<a href="lienhe.jsp"> <b>Liên Hệ </b>
 			</a>
 		</div>
 	</footer>

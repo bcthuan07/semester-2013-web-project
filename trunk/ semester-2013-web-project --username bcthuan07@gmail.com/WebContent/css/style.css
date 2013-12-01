@@ -78,7 +78,7 @@ a {
 }
 
 .left .menu {
-	width: 97%;
+	width: 80%;
 	height: auto;
 	margin-bottom: 10px;
 	float: left;
@@ -95,7 +95,7 @@ a {
 	
 }
 
-.left .menu ul li a {
+.left .menu ul li .menuitem {
 	text-decoration: none;
 	color: #f4f4f4;
 	font-family: myriad pro;
@@ -106,6 +106,26 @@ a {
 	-webkit-transition: all ease 0.4s;
 	transtion-delay: 2s;
 	padding-top: 17px;
+	border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.left .menu ul li label {
+	color: #f4f4f4;
+	font-family: myriad pro;
+	font-size: 14px;
+	font-weight: normal;
+	padding-bottom: 17px;
+	display: block;
+	padding-top: 17px;
+	border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.left .menu ul li label .username {
+	color: #f4f4f4;
+	font-family: myriad pro;
+	font-size: 14px;
+	font-weight: normal;
+	margin-left: 5px;
 }
 
 .left .menu ul li a:hover {
@@ -117,7 +137,8 @@ a {
 .right {
 	width: 75%;
 	float: right;
-	margin: 0 auto; padding-left : 10px;
+	margin: 0 auto;
+	padding-left: 10px;
 	background-color: #ededed;
 	padding-top: 10px;
 	height: auto;
@@ -1221,10 +1242,10 @@ body {
 }
 
 /* static */
-#trangchu {
+#active {
 	margin-left: -20px; /* background-color: rgba(255, 255, 255, 1); */
 	padding-left: 16;
-	border-left: 10px solid white;
+	border-left: 10px solid #72bd4a;
 }
 
 #lienhe {
@@ -1278,6 +1299,7 @@ iframe {
 }
 
 .topmenu ul {
+	
 }
 
 .topmenu ul li {
@@ -1288,7 +1310,7 @@ iframe {
 	text-align: center;
 }
 
-.topmenu ul li:hover{
+.topmenu ul li:hover {
 	background: #72bd4a;
 }
 
@@ -1300,9 +1322,11 @@ iframe {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-.menuactive{
+
+.menuactive {
 	background: #72bd4a;
 }
+
 .right .boxitem {
 	width: 250px;
 	padding: 15px;
@@ -1318,18 +1342,19 @@ iframe {
 	display: block;
 	width: auto;
 }
-.right .boxitem .proimage{
+
+.right .boxitem .proimage {
 	opacity: 1;
 }
-.right .boxitem .proimage{
+
+.right .boxitem .proimage {
 	opacity: 0.7;
 }
 
-
-.right .boxitem .info{
+.right .boxitem .info {
 	display: none;
 }
 
-.right .boxitem .info:hover{
+.right .boxitem .info:hover {
 	display: block;
 }

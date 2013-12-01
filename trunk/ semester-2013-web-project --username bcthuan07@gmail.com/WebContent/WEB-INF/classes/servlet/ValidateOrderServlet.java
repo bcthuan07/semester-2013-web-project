@@ -8,25 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class ValidateOrderServlet
  */
-@WebServlet("/Register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/ValidateOrder")
+public class ValidateOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public RegisterServlet() {
+    public ValidateOrderServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
 	protected void toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-//		String
 	}
 
 }
