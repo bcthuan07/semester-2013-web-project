@@ -16,13 +16,13 @@ import dao.UserDAO;
  */
 public class LoginService {
 
-	public boolean authenticate(String username, String password) {
+	public User authenticate(String username, String password) {
 
 		GeneralDAO<User, Integer> userDAO = new UserDAO();
 		DAOService<User, Integer> userService = new DAOService<>(userDAO);
 		List<User> listUser = userService.listObject();
 		if (listUser.size() == 0)
-			return false;
+			return null;
 		User user = null;
 		for (User u : listUser) {
 			if (u.getUsername().equals(username)) {
@@ -31,8 +31,9 @@ public class LoginService {
 			}
 		}
 		if (user == null)
-			return false;
+			return null;
 		else {
+			System.out.println(user);
 			byte[] pass = user.getPassword();
 			byte[] salt = user.getSalt();
 			boolean isRight = false;
@@ -41,7 +42,22 @@ public class LoginService {
 			} catch (Exception e) {
 				System.err.println("error with password authenticate");
 			}
-			return isRight;
+			if(isRight){
+				return user;
+			}
 		}
+		return null;
+	}
+	
+	public boolean hasUser(String username){
+		GeneralDAO<User, Integer> userDao = new UserDAO();
+		List<User> listUser = userDao.listObject();
+		boolean hasUser = false;
+		for(User user: listUser){
+			if(user.getUsername().equals(username)){
+				hasUser = true;
+			}
+		}
+		return hasUser;
 	}
 }

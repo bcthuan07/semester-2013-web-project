@@ -57,11 +57,11 @@
 			</div>
 			<div class="menu">
 				<ul>
-					<li><a href="home.html" id="trangchu">Trang Chủ </a></li>
-					<li><a href="add/register.jsp">Đăng Nhập/Đăng kí</a>
-					<li><a href="#">Thực Đơn </a></li>
-					<li><a href="#">Đặt Hàng</a></li>
-					<li><a href="lienhe.html">Liên Hệ </a></li>
+					<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
+					<li><a class="menuitem" href="login.jsp">Đăng Nhập/Đăng kí</a>
+					<li><a class="menuitem" href="/Menu" id="active">Thực Đơn </a></li>
+					<li><a class="menuitem" href="#">Đặt Hàng</a></li>
+					<li><a class="menuitem" href="lienhe.jsp">Liên Hệ </a></li>
 				</ul>
 			</div>
 
@@ -101,7 +101,7 @@
 	<footer>
 	<div class="info">
 		<p>COPYRIGHT © 2013 </p>
-		<a href="lienhe.html"> <b>Liên Hệ </b> </a>
+		<a href="lienhe.jsp"> <b>Liên Hệ </b> </a>
 	</div>
 </footer>
 </body>

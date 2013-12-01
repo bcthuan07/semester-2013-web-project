@@ -11,7 +11,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<c:out value="23"></c:out>
+<form action="AddProduct" method="post" enctype="multipart/form-data">
+	<input type="file" name="file">
+	<input type="submit" >
+</form>
 </body>
 </html>
