@@ -59,7 +59,7 @@
 				<ul>
 					<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
 					<li><a class="menuitem" href="login.jsp">Đăng Nhập/Đăng kí</a>
-					<li><a class="menuitem" href="/Menu" id="active">Thực Đơn </a></li>
+					<li><a class="menuitem" href="Menu" id="active">Thực Đơn </a></li>
 					<li><a class="menuitem" href="#">Đặt Hàng</a></li>
 					<li><a class="menuitem" href="lienhe.jsp">Liên Hệ </a></li>
 				</ul>
@@ -89,7 +89,7 @@
 		<%for(Product product: listProduct){ %>
 				<div class="boxitem">
 				<div class="proimage">
-					<a href="ProductDetail?productid=<%=product.getProductId() %>"><img alt="" src="<%=product.getImagePath() %>"></a>
+					<a href="ProductInfo?idProduct=<%=product.getProductId() %>"><img alt="" src="<%=product.getImagePath() %>"></a>
 				</div>
 					<div class="info">
 					ajgakjgakjgh

@@ -1,0 +1,40 @@
+package servlet.detail;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class ProductInfoServlet
+ */
+@WebServlet("/ProductInfo")
+public class ProductInfoServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public ProductInfoServlet() {
+        super();
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		toDo(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		toDo(request, response);
+	}
+	
+	protected void toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String idProduct = request.getParameter("idProduct");
+		if(idProduct==null){
+			response.sendRedirect("menu.jsp");
+		} else {
+			response.sendRedirect("menu.jsp");
+		}
+	}
+	
+	
+
+}

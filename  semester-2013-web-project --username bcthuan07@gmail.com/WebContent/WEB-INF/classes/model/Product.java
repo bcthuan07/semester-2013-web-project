@@ -84,7 +84,7 @@ public class Product implements java.io.Serializable {
 		this.productName = productName;
 	}
 
-	@Column(name = "description", nullable = false)
+	@Column(name = "description")
 	public String getDescription() {
 		return this.description;
 	}

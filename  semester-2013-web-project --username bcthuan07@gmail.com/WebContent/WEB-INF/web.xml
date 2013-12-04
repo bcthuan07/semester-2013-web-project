@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>jamie-olivers</display-name>
-  <welcome-file-list>
-    <welcome-file>home.html</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>jamie-olivers</display-name>
+	<welcome-file-list>
+		<welcome-file>home.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>manageuser</param-name>
+		<param-value>bcthuan07@gmail.com</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>acountsend</param-name>
+		<param-value>doublefaces1211@gmail.com</param-value>
+	</context-param>
+	
 </web-app>

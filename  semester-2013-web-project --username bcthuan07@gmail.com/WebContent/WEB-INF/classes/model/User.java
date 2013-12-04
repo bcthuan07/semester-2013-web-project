@@ -37,8 +37,9 @@ public class User implements java.io.Serializable {
 	private byte[] password;
 	private PaymentMethod paymentMethod;
 	private int phoneNumber;
-	private String firstName;
-	private String lastName;
+//	private String firstName;
+//	private String lastName;
+	private String fullname;
 	private String email;
 	private boolean permission;
 	private boolean gender;
@@ -53,8 +54,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(Integer userId, String username, byte[] password,
-			PaymentMethod paymentMethod, int phoneNumber, String firstName,
-			String lastName, String email, boolean permission, boolean gender,
+			PaymentMethod paymentMethod, int phoneNumber,String fullname, String email, boolean permission, boolean gender,
 			Date datecreated, byte[] salt, Set<UserOrder> userOrders,
 			Set<UserAddressHistory> userAddressHistories,
 			Set<Feedback> feedbacks) {
@@ -64,8 +64,7 @@ public class User implements java.io.Serializable {
 		this.password = password;
 		this.paymentMethod = paymentMethod;
 		this.phoneNumber = phoneNumber;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.fullname = fullname;
 		this.email = email;
 		this.permission = permission;
 		this.gender = gender;
@@ -89,7 +88,7 @@ public class User implements java.io.Serializable {
 
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "payment_method_id", nullable = false)
+	@JoinColumn(name = "payment_method_id")
 	public PaymentMethod getPaymentMethod() {
 		return this.paymentMethod;
 	}
@@ -107,22 +106,14 @@ public class User implements java.io.Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Column(name = "first_name", nullable = false)
-	public String getFirstName() {
-		return this.firstName;
+	
+	@Column(name="fullname")
+	public String getFullname() {
+		return fullname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	@Column(name = "last_name", nullable = false)
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 
 	@Column(name = "email", nullable = false)
@@ -224,8 +215,7 @@ public class User implements java.io.Serializable {
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username
 				+ ", password=" + Arrays.toString(password) + ", phoneNumber="
-				+ phoneNumber + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", permission=" + permission
+				+ phoneNumber + ", fullName=" + fullname + ", email=" + email + ", permission=" + permission
 				+ ", gender=" + gender + ", datecreated=" + datecreated + "]";
 	}
 
