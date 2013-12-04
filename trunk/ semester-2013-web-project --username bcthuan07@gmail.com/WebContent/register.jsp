@@ -25,12 +25,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Đăng Kí</title>
-<link rel="stylesheet" href="../css/style.css" />
-<script src="../js/jquery.1.7.js"></script>
-<script src="../js/jquery.masonry.min.js"></script>
-<script src="../js/modernizr-2.5.3.min.js"></script>
-<script src="../js/home.js"></script>
-<script src="../js/top.js"></script>
+<link rel="stylesheet" href="css/style.css" />
+<script src="js/jquery.1.7.js"></script>
+<script src="js/jquery.masonry.min.js"></script>
+<script src="js/modernizr-2.5.3.min.js"></script>
+<script src="js/home.js"></script>
+<script src="js/top.js"></script>
 <style type="text/css">
 .regis {
 	display: block;
@@ -160,11 +160,8 @@ h1 {
 						style="float: left;">Password: </label> <input class="input"
 						style="float: right;" name="password" type="password"><span
 						class="check">*</span> <br>
-					<br> <label style="float: left;">Họ: </label> <input
-						class="input" style="float: right;" name="firstname" type="text"><span
-						class="check">*</span>
-					<br> <br> <label style="float: left;">Tên: </label> <input
-						class="input" style="float: right;" name="lastname" type="text"><span
+					<br> <label style="float: left;">Tên Đầy Đủ: </label> <input
+						class="input" style="float: right;" name="fullname" type="text"><span
 						class="check">*</span>
 					<br> <br> <label style="float: left;">Email: </label> <input
 						class="input" style="float: right;" name="email" type="text"><span

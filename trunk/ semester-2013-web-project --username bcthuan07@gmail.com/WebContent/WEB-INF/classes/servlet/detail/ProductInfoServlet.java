@@ -1,11 +1,16 @@
 package servlet.detail;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import model.Product;
+import service.DAOService;
+import dao.ProductDAO;
 
 /**
  * Servlet implementation class ProductInfoServlet
@@ -31,7 +36,11 @@ public class ProductInfoServlet extends HttpServlet {
 		if(idProduct==null){
 			response.sendRedirect("menu.jsp");
 		} else {
-			response.sendRedirect("menu.jsp");
+			Integer id = Integer.parseInt(idProduct);
+			DAOService<Product, Integer> daoService = new DAOService<>(new ProductDAO());
+			Product product = daoService.getObjectById(id);
+			request.setAttribute("product", product);
+			request.getRequestDispatcher("detail/productdetail.jsp").forward(request, response);
 		}
 	}
 	

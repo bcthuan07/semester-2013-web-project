@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    	Product product = (Product) session.getAttribute("product");
+    	Product product = (Product) request.getAttribute("product");
     	String name = "";
     	String description = "";
     	String type = "";
@@ -29,6 +29,10 @@
 <p><%=description %></p>
 <p><%=type %></p>
 <p><%=price %></p>
-<a href="ChooseProduct?idProducts=<%=id %>">Them vao gio hang</a>
+<form action="ChooseProduct" method="post">
+	<input type="hidden" name="id" value="<%=id %>">
+	<input type="number" name="number" value="1">
+	<input type="submit" value="Thêm vào giỏ hàng">
+</form>
 </body>
 </html>

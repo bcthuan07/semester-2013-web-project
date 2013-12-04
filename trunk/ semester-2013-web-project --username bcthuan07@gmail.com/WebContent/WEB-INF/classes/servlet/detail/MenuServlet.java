@@ -31,7 +31,7 @@ public class MenuServlet extends HttpServlet {
 	}
 
 	protected void  toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idproducttype = request.getParameter("idproducttype");
+		String idproducttype = request.getParameter("producttype");
 		System.out.println(idproducttype);
 		if(idproducttype!=null){
 			Integer id = Integer.parseInt(idproducttype);
