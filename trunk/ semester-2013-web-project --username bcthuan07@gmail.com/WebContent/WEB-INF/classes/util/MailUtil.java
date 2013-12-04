@@ -38,7 +38,7 @@ public class MailUtil {
 	 * @param msgBody
 	 *            : nội dung
 	 */
-	public void send(final String username, String userInfo, final String pass,
+	public static void send(final String username, String userInfo, final String pass,
 			String dest, String destInfo, String subject, String msgBody) {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");

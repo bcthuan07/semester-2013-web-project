@@ -4,21 +4,20 @@
     <%
     	User user = (User) request.getAttribute("user");
     	String username = "";
-    	String firstname = "";
-    	String lastname = "";
     	String phonenumber = "";
+    	String fullname = "";
     	String email = "";
     	String paymentmethod = "";
     	String gioitinh = "";
+    	String id="";
     	if(user != null){
     		username = user.getUsername();
-    		firstname = user.getFirstName();
-    		lastname = user.getLastName();
+    		fullname=user.getFullname();
     		phonenumber = user.getPhoneNumber() +"";
     		email = user.getEmail();
     		paymentmethod = user.getPaymentMethod().getDescription();
     		gioitinh = user.getGender() ? "Nam" : "Nữ";
-    		
+    		id=user.getUserId()+"";
     	}
     %>
 <html>
@@ -27,6 +26,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<p><%=username %></p>
+<p><%=fullname %></p>
+<p><%=phonenumber %></p>
+<p><%=email %></p>
+<p><%=gioitinh %></p>
+<a href="EditProlife?id=<%=id %>">Chinh sua account</a>
 </body>
 </html>

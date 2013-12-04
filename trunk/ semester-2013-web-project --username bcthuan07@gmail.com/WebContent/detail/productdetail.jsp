@@ -7,12 +7,14 @@
     	String description = "";
     	String type = "";
     	String price = "";
+    	String id = "";
     	
     	if(product!=null){
     		name = product.getProductName();
     		description = product.getDescription();
     		type = product.getProductType().getDescription();
     		price = product.getPrice()+"";
+    		id=product.getProductId()+"";
     	}
     
     %>
@@ -23,5 +25,10 @@
 </head>
 <body>
 
+<p><%=name %></p>
+<p><%=description %></p>
+<p><%=type %></p>
+<p><%=price %></p>
+<a href="ChooseProduct?idProducts=<%=id %>">Them vao gio hang</a>
 </body>
 </html>

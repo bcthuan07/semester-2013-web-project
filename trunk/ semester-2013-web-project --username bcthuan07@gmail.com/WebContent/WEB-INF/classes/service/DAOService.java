@@ -38,4 +38,8 @@ public class DAOService<E, T> {
 	public E getObjectById(T id){
 		return this.generalDAO.getObject(id);
 	}
+	
+	public boolean updateObject(E object){
+		return this.generalDAO.updateObject(object);
+	}
 }
