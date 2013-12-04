@@ -3,10 +3,15 @@
  */
 package service;
 
+import java.util.Date;
 import java.util.List;
 
+import model.Address;
 import model.User;
-import dao.GeneralDAO;
+import model.UserAddressHistory;
+import model.UserAddressHistoryId;
+import dao.AddressDAO;
+import dao.UserAddressHistoryDAO;
 import dao.UserDAO;
 
 /**
@@ -15,10 +20,14 @@ import dao.UserDAO;
  */
 public class RegisterService {
 
-	public boolean register(User user) {
+	public boolean register(User user, Address address) {
 		try {
-			GeneralDAO<User, Integer> userDAO = new UserDAO();
-			DAOService<User, Integer> userService = new DAOService<>(userDAO);
+			DAOService<User, Integer> userService = new DAOService<>(
+					new UserDAO());
+			DAOService<Address, Integer> addressService = new DAOService<>(
+					new AddressDAO());
+			DAOService<UserAddressHistory, UserAddressHistoryId> userAddressService = new DAOService<>(
+					new UserAddressHistoryDAO());
 			List<User> listUser = userService.listObject();
 			for (User u : listUser) {
 				if (u.getUsername().equals(user.getUsername())
@@ -27,7 +36,22 @@ public class RegisterService {
 					return false;
 				}
 			}
+			boolean esxit = false;
+			List<Address> listAddresses = addressService.listObject();
+			for (Address add : listAddresses) {
+				if (add.equals(address)) {
+					address = add;
+					esxit = true;
+				}
+			}
+			if (!esxit)
+				addressService.addObject(address);
+			Date date = new Date();
+			UserAddressHistoryId addressHistoryId = new UserAddressHistoryId(user.getUserId(), address.getAddressId(), date);
+			UserAddressHistory addressHistory = new UserAddressHistory();
+			addressHistory.setId(addressHistoryId);
 			userService.addObject(user);
+			userAddressService.addObject(addressHistory);
 			return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

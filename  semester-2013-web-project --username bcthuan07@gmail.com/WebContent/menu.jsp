@@ -77,7 +77,7 @@
 							c="menuactive";
 						}
 				%>
-				<li class="<%=c %>"><a href="Menu?idproducttype=<%=pt.getProductTypeId()%>"
+				<li class="<%=c %>"><a href="Menu?producttype=<%=pt.getProductTypeId()%>"
 					title="Món ăn"><%=pt.getDescription()%></a></li>
 
 				<%

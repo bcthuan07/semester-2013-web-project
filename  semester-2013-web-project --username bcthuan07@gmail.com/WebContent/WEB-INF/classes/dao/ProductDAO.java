@@ -94,7 +94,6 @@ public class ProductDAO implements GeneralDAO<Product, Integer> {
 		try {
 			session.beginTransaction();
 			product = (Product) session.get(Product.class, key);
-			session.delete(product);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			session.getTransaction().rollback();
