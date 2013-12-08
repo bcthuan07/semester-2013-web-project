@@ -8,13 +8,16 @@
     	String type = "";
     	String price = "";
     	String id = "";
-    	
+    	String number_err = "";
     	if(product!=null){
     		name = product.getProductName();
     		description = product.getDescription();
     		type = product.getProductType().getDescription();
     		price = product.getPrice()+"";
     		id=product.getProductId()+"";
+    	}
+    	if(request.getAttribute("number_err")!=null){
+    		number_err = (String) request.getAttribute("number_err");
     	}
     
     %>
@@ -31,7 +34,7 @@
 <p><%=price %></p>
 <form action="ChooseProduct" method="post">
 	<input type="hidden" name="id" value="<%=id %>">
-	<input type="number" name="number" value="1">
+	<input type="number" name="number" value="1"><span><%=number_err %></span>
 	<input type="submit" value="Thêm vào giỏ hàng">
 </form>
 </body>

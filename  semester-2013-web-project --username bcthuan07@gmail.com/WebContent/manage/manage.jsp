@@ -39,12 +39,12 @@
 			</div>
 			<div class="menu">
 				<ul>
-					<li><a href="../home.html" id="trangchu">Trang Chủ </a></li>
-					<li><a href="" >Khách Hàng</a></li>
-					<li><a href="" >Sản Phẩm</a></li>
-					<li><a href="" >Hóa Đơn</a></li>
+					<li><a class="menuitem" href="../home.jsp" id="trangchu">Trang Chủ </a></li>
+					<li><a class="menuitem" href="user.jsp" >Khách Hàng</a></li>
+					<li><a class="menuitem" href="product.jsp" >Sản Phẩm</a></li>
+					<li><a class="menuitem" href="order.jsp" >Hóa Đơn</a></li>
 				</ul>
-	</div>
+			</div>
 	
 	<a class="back-to-top" href="#" title="Quay lên trên">Lên Đầu Trang</a>
 </div> <!-- hết phần trái -->

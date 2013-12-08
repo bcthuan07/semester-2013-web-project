@@ -40,12 +40,12 @@ public class AddProductServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("detail/productdetail.jsp");
+//		response.sendRedirect("detail/productdetail.jsp");
 		String idProducttype = request.getParameter("producttype");
 		String name = request.getParameter("productname");
 		String description = request.getParameter("description");
 		String price = request.getParameter("price");
-		Part part = request.getPart("file");
+//		Part part = request.getPart("file");
 		String name_err = "";
 		String description_err = "";
 		String file_err = "";
@@ -57,9 +57,9 @@ public class AddProductServlet extends HttpServlet {
 		if (description == null || description.equals("")) {
 			description_err += "Vui loÌng nhâòp mô taÒ saÒn phâÒm!";
 		}
-		if (part == null) {
-			file_err += "Vui loÌng choòn aÒnh ðaòi diêòn!";
-		}
+//		if (part == null) {
+//			file_err += "Vui loÌng choòn aÒnh ðaòi diêòn!";
+//		}
 		if (price == null || price.equals("")) {
 			price_err += "Vui loÌng nhâòp giaì saÒn phâÒm!";
 		}
@@ -95,7 +95,7 @@ public class AddProductServlet extends HttpServlet {
 			request.setAttribute("name", name);
 			request.setAttribute("description", description);
 			request.setAttribute("price", price);
-			request.getRequestDispatcher("manage/addproduct.jsp").forward(request, response);
+			request.getRequestDispatcher("/manage/addproduct.jsp").forward(request, response);
 		}
 	}
 

@@ -1,12 +1,22 @@
+<%@page import="java.util.List"%>
+<%@page import="dao.ProductDAO"%>
+<%@page import="model.Product"%>
+<%@page import="service.DAOService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	<%
+		DAOService<Product, Integer> daoService = new DAOService<Product, Integer>(new ProductDAO());
+		List<Product> list = daoService.listObject();
+		
+	%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Sản phẩm</title>
 </head>
 <body>
-
+<%for(Product p : list){ %>
+<%=p.toString() %>
+<%} %>
 </body>
 </html>

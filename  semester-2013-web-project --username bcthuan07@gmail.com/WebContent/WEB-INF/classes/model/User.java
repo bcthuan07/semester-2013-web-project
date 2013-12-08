@@ -36,9 +36,7 @@ public class User implements java.io.Serializable {
 	private String username;
 	private byte[] password;
 	private PaymentMethod paymentMethod;
-	private int phoneNumber;
-//	private String firstName;
-//	private String lastName;
+	private String phoneNumber;
 	private String fullname;
 	private String email;
 	private boolean permission;
@@ -54,7 +52,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(Integer userId, String username, byte[] password,
-			PaymentMethod paymentMethod, int phoneNumber,String fullname, String email, boolean permission, boolean gender,
+			PaymentMethod paymentMethod, String phoneNumber,String fullname, String email, boolean permission, boolean gender,
 			Date datecreated, byte[] salt, Set<UserOrder> userOrders,
 			Set<UserAddressHistory> userAddressHistories,
 			Set<Feedback> feedbacks) {
@@ -98,11 +96,11 @@ public class User implements java.io.Serializable {
 	}
 
 	@Column(name = "phone_number", nullable = false)
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

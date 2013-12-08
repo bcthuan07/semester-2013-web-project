@@ -52,7 +52,7 @@
 					<li><a class="menuitem" href="home.jsp" id="active">Trang Chủ </a></li>
 					<li><a class="menuitem" href="login.jsp">Đăng Nhập/Đăng kí</a>
 					<li> <a  class="menuitem" href="Menu">Thực Đơn </a> </li>
-					<li> <a class="menuitem" href="order.jsp">Đặt Hàng</a> </li>
+					<li> <a class="menuitem" href="Order">Đặt Hàng</a> </li>
 					<li> <a class="menuitem" href="lienhe.jsp">Liên Hệ </a> </li>
 					
 				</ul>

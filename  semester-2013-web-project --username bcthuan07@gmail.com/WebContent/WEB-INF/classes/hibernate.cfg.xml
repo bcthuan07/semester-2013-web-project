@@ -10,15 +10,16 @@
 		<property name="hibernate.connection.characterEncoding">UTF-8</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">jamieoliver</property>
+		<property name="hibernate.connection.autoReconnect">true</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name="show_sql">true</property>
+		<!-- <property name="show_sql">true</property>-->
 		<property name="hibernate.default_schema">fastfood</property>
 
 		<property name="hibernate.c3p0.acquire_increment">1</property>
 		<property name="hibernate.c3p0.idle_test_period">100</property>
-		<property name="hibernate.c3p0.max_size">10</property>
+		<property name="hibernate.c3p0.max_size">100</property>
 		<property name="hibernate.c3p0.max_statements">10</property>
-		<property name="hibernate.c3p0.min_size">10</property>
+		<property name="hibernate.c3p0.min_size">100</property>
 		<property name="hibernate.c3p0.timeout">100</property>
 		
 		<mapping class="model.User" />

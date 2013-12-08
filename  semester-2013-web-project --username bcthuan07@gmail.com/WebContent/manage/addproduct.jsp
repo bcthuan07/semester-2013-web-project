@@ -12,12 +12,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Thêm Sản Phẩm</title>
-<link rel="stylesheet" href="../css/style.css" />
-<script src="../js/jquery.1.7.js"></script>
-<script src="../js/jquery.masonry.min.js"></script>
-<script src="../js/modernizr-2.5.3.min.js"></script>
-<script src="../js/home.js"></script>
-<script src="../js/top.js"></script>
+<link rel="stylesheet" href="css/style.css" />
+<script src="js/jquery.1.7.js"></script>
+<script src="js/jquery.masonry.min.js"></script>
+<script src="js/modernizr-2.5.3.min.js"></script>
+<script src="js/home.js"></script>
+<script src="js/top.js"></script>
 <style type="text/css">
 .regis {
 	display: block;
@@ -95,35 +95,33 @@ h1 {
 	<div class="container">
 		<div class="left">
 			<div class="logo">
-				<a href="#"> <img src="../images/logo.png" />
+				<a href="#"> <img src="images/logo.png" />
 				</a>
 				<div class="share">
 					<ul>
-						<li><a href="#"> <img src="../images/icon/tumblr.png"></a>
+						<li><a href="#"> <img src="images/icon/tumblr.png"></a>
 						</li>
-						<li><a href="#"> <img src="../images/icon/pinterest.png">
+						<li><a href="#"> <img src="images/icon/pinterest.png">
 						</a></li>
-						<li><a href="#"> <img src="../images/icon/flickr.png">
+						<li><a href="#"> <img src="images/icon/flickr.png">
 						</a></li>
-						<li><a href="#"> <img src="../images/icon/facebook.png">
+						<li><a href="#"> <img src="images/icon/facebook.png">
 						</a></li>
-						<li><a href="#"> <img src="../images/icon/dribbble.png">
+						<li><a href="#"> <img src="images/icon/dribbble.png">
 						</a></li>
-						<li><a href="#"> <img src="../images/icon/behance.png">
+						<li><a href="#"> <img src="images/icon/behance.png">
 						</a></li>
-						<li><a href="#"> <img src="../images/icon/aim.png">
+						<li><a href="#"> <img src="images/icon/aim.png">
 						</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="menu">
 				<ul>
-					<li><a href="../home.html">Trang Chủ </a></li>
-					<li><a href="../add/register.jsp" id="trangchu">Đăng
-							Nhập/Đăng kí</a>
-					<li><a href="../menu.jsp">Thực Đơn </a></li>
-					<li><a href="#">Đặt Hàng</a></li>
-					<li><a href="../lienhe.html">Liên Hệ </a></li>
+					<li><a class="menuitem" href="../home.jsp" id="trangchu">Trang Chủ </a></li>
+					<li><a class="menuitem" href="user.jsp" >Khách Hàng</a></li>
+					<li><a class="menuitem" href="product.jsp" >Sản Phẩm</a></li>
+					<li><a class="menuitem" href="../manage/order.jsp" >Hóa Đơn</a></li>
 				</ul>
 			</div>
 
@@ -135,7 +133,7 @@ h1 {
 			<div class="regis">
 				<h1>Thêm Sản Phẩm</h1>
 				<div class="divide"></div>
-				<form action="register" method="post">
+				<form action="<%=request.getContextPath() %>/AddProduct" method="post">
 					<label style="float: left;">Tên: </label> <input class="input"
 						style="float: right;" name="productname" type="text"> <br>
 					<br> <label style="float: left;">Mô Tả: </label> <input
@@ -152,7 +150,8 @@ h1 {
 							}
 						%>
 					</select> <br>
-					<br> <input class="submit" type="submit" value="Đăng Kí">
+					<br> <label style="float: left;">Giá: </label> <input class="input"
+						style="float: right;" name="price" type="text"><br><br><input class="submit" type="submit" value="Thêm">
 				</form>
 			</div>
 		</div>
