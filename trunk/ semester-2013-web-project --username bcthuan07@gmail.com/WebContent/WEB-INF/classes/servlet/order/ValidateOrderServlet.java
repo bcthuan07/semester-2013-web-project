@@ -143,7 +143,7 @@ public class ValidateOrderServlet extends HttpServlet {
 				newUser.setDatecreated(new Date());
 				newUser.setFullname(fullname);
 				newUser.setPermission(false);
-				newUser.setPhoneNumber(phone);
+				newUser.setPhoneNumber(phone+"");
 				OrderService orderService= new OrderService();
 				if(orderService.order(listProduct, newUser, address, new Date())){
 					response.sendRedirect("thanks.jsp");

@@ -121,5 +121,13 @@ public class Product implements java.io.Serializable {
 		this.imagePath = imagePath;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", productName="
+				+ productName + ", description=" + description + ", price="
+				+ price + ", imagePath=" + imagePath + "]";
+	}
+
+	
 	
 }

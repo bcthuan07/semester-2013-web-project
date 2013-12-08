@@ -8,14 +8,14 @@
 	pageEncoding="UTF-8"%>
 <%
 	User user = (User) session.getAttribute("user");
-	List<UserOrder> listUserOrders = new ArrayList();
-	//if (user != null) {
-		//boolean permission = user.getPermission();
-		DAOService<UserOrder, Integer> daoService = new DAOService(
+	List<UserOrder> listUserOrders = new ArrayList<UserOrder>();
+	if (user != null) {
+		boolean permission = user.getPermission();
+		DAOService<UserOrder, Integer> daoService = new DAOService<UserOrder, Integer>(
 				new UserOrderDAO());
-		listUserOrders = //permission ?
-				daoService.listObject();// : new ArrayList();
-	//}
+		listUserOrders = permission ? daoService.listObject()
+				: new ArrayList<UserOrder>();
+	}
 	response.setHeader("Refresh", "10");
 %>
 <html>
@@ -24,12 +24,22 @@
 <title>Quản lý hóa đơn</title>
 </head>
 <body>
-<%for(UserOrder userOrder: listUserOrders){ %>
-	<p>Tên KH: <%=userOrder.getUser().getFullname() %></p>
-	<p>Tình Trạng Thanh Toán: <%=userOrder.getOrderStatus().getDescription() %></p>
-	<p>Ngày lập: <%=userOrder.getOrderDate() %></p>
-	
-	
-<%} %>
+	<%
+		for (UserOrder userOrder : listUserOrders) {
+	%>
+	<p>
+		Tên KH:
+		<%=userOrder.getUser().getFullname()%></p>
+	<p>
+		Tình Trạng Thanh Toán:
+		<%=userOrder.getOrderStatus().getDescription()%></p>
+	<p>
+		Ngày lập:
+		<%=userOrder.getOrderDate()%></p>
+
+
+	<%
+		}
+	%>
 </body>
 </html>
