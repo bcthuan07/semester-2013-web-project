@@ -7,45 +7,67 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Product;
+import model.User;
 import service.DAOService;
 import dao.ProductDAO;
 
 /**
  * Servlet implementation class DeleteProductServlet
  */
-@WebServlet("/DeleteProductServlet")
+@WebServlet("/DeleteProduct")
 public class DeleteProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public DeleteProductServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public DeleteProductServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
 
-	protected void toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idProduct = request.getParameter("idproduct");
-		if(idProduct!=null){
-			DAOService<Product, Integer> daoService = new DAOService<>(new ProductDAO());
+	protected void toDo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
+		String idProduct = request.getParameter("product");
+		HttpSession session = request.getSession();
+
+		User staff = (User) session.getAttribute("user");
+		boolean permission = false;
+		if (staff != null) {
+			permission = staff.getPermission();
+		}
+
+		if (!permission) {
+			DAOService<Product, Integer> daoService = new DAOService<>(
+					new ProductDAO());
 			Integer id = Integer.parseInt(idProduct);
 			boolean isDeleted = daoService.removeObject(id);
-			if(isDeleted){
+			if (isDeleted) {
 				response.sendRedirect("manage/product.jsp");
 			} else {
-				String error = "KhÙng thÍ“ xoÏa sa“n ph‚“m naÃy.";
+				String error = "Kh√¥ng th√™Ãâ xoÃÅa saÃân ph√¢Ãâm naÃÄy.";
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("error.jsp").forward(request, response);
+				request.getRequestDispatcher("error/commonerror.jsp").forward(request,
+						response);
 			}
 		} else {
-			response.sendRedirect("manage/product.jsp");
+			String error = "B·∫°n kh√¥ng c√≥ quy·ªÅn truy c·∫≠p trang n√†y!";
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("error/commonerror.jsp").forward(
+					request, response);
 		}
 	}
 

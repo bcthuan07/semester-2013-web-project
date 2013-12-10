@@ -2,7 +2,6 @@ package servlet.order;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Product;
 import service.DAOService;
 import dao.ProductDAO;
-import model.Product;
 
 /**
  * Servlet implementation class ChooseProductServlet
@@ -38,6 +37,10 @@ public class ChooseProductServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
 		String idProduct = request.getParameter("id");
 		String number = request.getParameter("number");
 		String number_err = "";

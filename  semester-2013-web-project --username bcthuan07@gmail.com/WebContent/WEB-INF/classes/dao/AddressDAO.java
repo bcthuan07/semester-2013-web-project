@@ -52,16 +52,20 @@ public class AddressDAO implements GeneralDAO<Address, Integer> {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.save(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.save(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 
 	}
@@ -76,16 +80,20 @@ public class AddressDAO implements GeneralDAO<Address, Integer> {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.update(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.update(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 
 	}
@@ -100,17 +108,21 @@ public class AddressDAO implements GeneralDAO<Address, Integer> {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			Address address = (Address) session.load(Address.class, object);
-			session.delete(address);
-			return true;
+			try {
+				session.beginTransaction();
+				Address address = (Address) session.load(Address.class, object);
+				session.delete(address);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 
 	}

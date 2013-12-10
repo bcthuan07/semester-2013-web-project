@@ -40,16 +40,21 @@ public class UserDAO implements GeneralDAO<User, Integer> {
 	public boolean addObject(User object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.save(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.save(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -57,16 +62,20 @@ public class UserDAO implements GeneralDAO<User, Integer> {
 	public boolean updateObject(User object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.update(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.update(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -74,18 +83,24 @@ public class UserDAO implements GeneralDAO<User, Integer> {
 	public boolean removeObject(Integer object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			User user = (User) session.load(User.class, object);
-			session.delete(user);
-			return true;
+			try {
+				session.beginTransaction();
+				User user = (User) session.load(User.class, object);
+				session.delete(user);
+				
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
+			
 	}
 
 	@Override

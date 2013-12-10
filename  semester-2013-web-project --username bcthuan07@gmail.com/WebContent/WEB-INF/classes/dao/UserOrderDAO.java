@@ -40,16 +40,20 @@ public class UserOrderDAO implements GeneralDAO<UserOrder, Integer> {
 	public boolean addObject(UserOrder object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.save(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.save(object);
+				return true;
+			} catch (Exception e) {
+				session.getTransaction().rollback();
+				System.err.println(e.getMessage());
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			session.getTransaction().rollback();
-			System.err.println(e.getMessage());
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 
 	}
@@ -58,16 +62,20 @@ public class UserOrderDAO implements GeneralDAO<UserOrder, Integer> {
 	public boolean updateObject(UserOrder object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.update(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.update(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -75,18 +83,22 @@ public class UserOrderDAO implements GeneralDAO<UserOrder, Integer> {
 	public boolean removeObject(Integer object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			UserOrder userOrder = (UserOrder) session.load(UserOrder.class,
-					object);
-			session.delete(userOrder);
-			return true;
+			try {
+				session.beginTransaction();
+				UserOrder userOrder = (UserOrder) session.load(UserOrder.class,
+						object);
+				session.delete(userOrder);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 

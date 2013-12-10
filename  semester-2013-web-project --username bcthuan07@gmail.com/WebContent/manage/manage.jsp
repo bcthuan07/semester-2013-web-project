@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+	<%
+	request.setCharacterEncoding("utf8");
+	response.setCharacterEncoding("utf8");
+	%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,44 +16,47 @@
 <script src="../js/top.js"></script>
 </head>
 <body>
-<div class="container">
-	<div class="left">
+	<div class="container">
 		<div class="left">
-			<div class="logo">
-				<a href="#"> <img src="../images/logo.png" />
-				</a>
-				<div class="share">
+			<div class="left">
+				<div class="logo">
+					<a href="#"> <img src="../images/logo.png" />
+					</a>
+					<div class="share">
+						<ul>
+							<li><a href="#"> <img src="../images/icon/tumblr.png"></a>
+							</li>
+							<li><a href="#"> <img src="../images/icon/pinterest.png">
+							</a></li>
+							<li><a href="#"> <img src="../images/icon/flickr.png">
+							</a></li>
+							<li><a href="#"> <img src="../images/icon/facebook.png">
+							</a></li>
+							<li><a href="#"> <img src="../images/icon/dribbble.png">
+							</a></li>
+							<li><a href="#"> <img src="../images/icon/behance.png">
+							</a></li>
+							<li><a href="#"> <img src="../images/icon/aim.png">
+							</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="menu">
 					<ul>
-						<li><a href="#"> <img src="../images/icon/tumblr.png"></a>
-						</li>
-						<li><a href="#"> <img src="../images/icon/pinterest.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/flickr.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/facebook.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/dribbble.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/behance.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/aim.png">
-						</a></li>
+						<li><a class="menuitem" href="../home.jsp" id="trangchu">Trang
+								Chủ </a></li>
+						<li><a class="menuitem" href="user.jsp">Khách Hàng</a></li>
+						<li><a class="menuitem" href="product.jsp">Sản Phẩm</a></li>
+						<li><a class="menuitem" href="order.jsp">Hóa Đơn</a></li>
 					</ul>
 				</div>
-			</div>
-			<div class="menu">
-				<ul>
-					<li><a class="menuitem" href="../home.jsp" id="trangchu">Trang Chủ </a></li>
-					<li><a class="menuitem" href="user.jsp" >Khách Hàng</a></li>
-					<li><a class="menuitem" href="product.jsp" >Sản Phẩm</a></li>
-					<li><a class="menuitem" href="order.jsp" >Hóa Đơn</a></li>
-				</ul>
-			</div>
-	
-	<a class="back-to-top" href="#" title="Quay lên trên">Lên Đầu Trang</a>
-</div> <!-- hết phần trái -->
-	</div>
 
-</div>
+				<a class="back-to-top" href="#" title="Quay lên trên">Lên Đầu
+					Trang</a>
+			</div>
+			<!-- hết phần trái -->
+		</div>
+
+	</div>
 </body>
 </html>

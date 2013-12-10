@@ -1,4 +1,10 @@
 eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/classes/servlet/add/AddProductServlet.java=UTF-8
+encoding//WebContent/WEB-INF/classes/servlet/add/AddProductTypeServlet.java=UTF-8
+encoding//WebContent/WEB-INF/classes/servlet/edit/DeleteProductServlet.java=UTF-8
+encoding//WebContent/WEB-INF/classes/servlet/edit/DeleteUserOrderServlet.java=UTF-8
+encoding//WebContent/WEB-INF/classes/servlet/edit/DeleteUserServlet.java=UTF-8
+encoding//WebContent/WEB-INF/classes/servlet/edit/EditProlifeServlet.java=UTF-8
 encoding//WebContent/WEB-INF/classes/testcsdl.java=UTF-8
 encoding//WebContent/WEB-INF/classes/util/MailUtil.java=UTF-8
 encoding//WebContent/home.jsp=UTF-8

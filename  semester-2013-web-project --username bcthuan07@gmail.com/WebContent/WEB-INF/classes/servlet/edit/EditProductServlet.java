@@ -37,6 +37,10 @@ public class EditProductServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
 		String name = request.getParameter("name");
 		String priceString = request.getParameter("price");
 		Integer idProductType = Integer.parseInt(request

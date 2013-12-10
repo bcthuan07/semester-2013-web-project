@@ -191,7 +191,7 @@ public class User implements java.io.Serializable {
 		this.username = username;
 	}
 
-	@Column(name = "password", nullable = false)
+	@Column(name = "password")
 	public byte[] getPassword() {
 		return password;
 	}
@@ -200,7 +200,7 @@ public class User implements java.io.Serializable {
 		this.password = password;
 	}
 	
-	@Column(name="salt",nullable=false)
+	@Column(name="salt")
 	public byte[] getSalt() {
 		return salt;
 	}

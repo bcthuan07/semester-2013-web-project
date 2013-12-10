@@ -7,10 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import dao.UserOrderDAO;
+import model.User;
 import model.UserOrder;
 import service.DAOService;
+import dao.UserOrderDAO;
 
 /**
  * Servlet implementation class DeleteUserOrderServlet
@@ -18,33 +20,53 @@ import service.DAOService;
 @WebServlet("/DeleteUserOrder")
 public class DeleteUserOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public DeleteUserOrderServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public DeleteUserOrderServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
 
-	protected void toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void toDo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
 		String userOrder = request.getParameter("userorder");
-		if(userOrder!=null){
+		HttpSession session = request.getSession();
+
+		User staff = (User) session.getAttribute("user");
+		boolean permission = false;
+		if (staff != null) {
+			permission = staff.getPermission();
+		}
+
+		if (permission) {
 			Integer id = Integer.parseInt(userOrder);
-			DAOService<UserOrder, Integer> daoService = new DAOService<>(new UserOrderDAO());
+			DAOService<UserOrder, Integer> daoService = new DAOService<>(
+					new UserOrderDAO());
 			boolean isDeleted = daoService.removeObject(id);
-			if(isDeleted){
+			if (isDeleted) {
 				response.sendRedirect("manage/order.jsp");
 			} else {
-				String error = "KhÙng thÍ“ xoÏa hoÏa ın naÃy.";
+				String error = "Kh√¥ng th√™Ãâ xoÃÅa hoÃÅa ƒë∆°n naÃÄy.";
 				request.setAttribute("error", error);
+				request.getRequestDispatcher("error/commonerror.jsp").forward(
+						request, response);
 			}
 		} else {
-			response.sendRedirect("manage/order.jsp");
+			String error = "B·∫°n kh√¥ng c√≥ quy·ªÅn truy c·∫≠p trang n√†y!";
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("error/commonerror.jsp").forward(request, response);
 		}
 	}
 

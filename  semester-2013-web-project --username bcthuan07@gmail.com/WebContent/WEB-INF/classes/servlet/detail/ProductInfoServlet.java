@@ -32,6 +32,10 @@ public class ProductInfoServlet extends HttpServlet {
 	}
 	
 	protected void toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
 		String idProduct = request.getParameter("idProduct");
 		if(idProduct==null){
 			response.sendRedirect("menu.jsp");
