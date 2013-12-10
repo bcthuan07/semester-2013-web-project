@@ -40,16 +40,20 @@ public class PaymentMethodDAO implements GeneralDAO<PaymentMethod, Integer> {
 	public boolean addObject(PaymentMethod object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.save(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.save(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -57,16 +61,20 @@ public class PaymentMethodDAO implements GeneralDAO<PaymentMethod, Integer> {
 	public boolean updateObject(PaymentMethod object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.update(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.update(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -74,18 +82,22 @@ public class PaymentMethodDAO implements GeneralDAO<PaymentMethod, Integer> {
 	public boolean removeObject(Integer object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			PaymentMethod paymentMethod = (PaymentMethod) session.load(
-					PaymentMethod.class, object);
-			session.delete(paymentMethod);
-			return true;
+			try {
+				session.beginTransaction();
+				PaymentMethod paymentMethod = (PaymentMethod) session.load(
+						PaymentMethod.class, object);
+				session.delete(paymentMethod);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 

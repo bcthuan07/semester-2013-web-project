@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.ProductType;
+import model.User;
 import service.DAOService;
 import dao.ProductTypeDAO;
 
@@ -36,33 +38,51 @@ public class AddProductTypeServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
+		
 		String description = request.getParameter("description");
 		String description_err = "";
+		
+		HttpSession session = request.getSession();
+		User staff = (User) session.getAttribute("user");
+		boolean permission = false;
+		if(staff!=null){
+			permission = staff.getPermission();
+		}
+		
 		if(description.equals("") || description==null){
-			description_err+="TrıõÌng naÌy không ğıõòc ğêÒ trôìng.";
+			description_err+="TrÆ°Æ¡Ì€ng naÌ€y khÃ´ng Ä‘Æ°Æ¡Ì£c Ä‘ÃªÌ‰ trÃ´Ìng.";
 		} 
 		
-		if(description_err.length() == 0){
-			DAOService<ProductType, Integer> daoService = new DAOService<>(new ProductTypeDAO());
-			List<ProductType> list = daoService.listObject();
-			boolean exists = false;
-			for(ProductType pt : list){
-				if(pt.getDescription().equals(description))
-					exists=true;
-			}
-			if(exists){
-				description_err+="Loaòi saÒn phâÒm naÌy ğaŞ coì.";
+		if(permission){
+			if(description_err.length() == 0){
+				DAOService<ProductType, Integer> daoService = new DAOService<>(new ProductTypeDAO());
+				List<ProductType> list = daoService.listObject();
+				boolean exists = false;
+				for(ProductType pt : list){
+					if(pt.getDescription().equals(description))
+						exists=true;
+				}
+				if(exists){
+					description_err+="LoaÌ£i saÌ‰n phÃ¢Ì‰m naÌ€y Ä‘aÌƒ coÌ.";
+					request.setAttribute("error", description_err);
+					request.getRequestDispatcher("manage/producttype.jsp").forward(request, response);
+				}else{
+					ProductType pt = new ProductType();
+					pt.setDescription(description);
+					daoService.addObject(pt);
+					response.sendRedirect("manage/producttype.jsp");
+				}
+			} else {
 				request.setAttribute("error", description_err);
-				request.getRequestDispatcher("manage/producttype.jsp").forward(request, response);
-			}else{
-				ProductType pt = new ProductType();
-				pt.setDescription(description);
-				daoService.addObject(pt);
-				response.sendRedirect("manage/producttype.jsp");
+				request.getRequestDispatcher("/manage/producttype.jsp").forward(request, response);
 			}
 		} else {
-			request.setAttribute("error", description_err);
-			request.getRequestDispatcher("/manage/producttype.jsp").forward(request, response);
+			String error = "Báº¡n khÃ´ng cÃ³ quyá»n truy cáº­p trang nÃ y.";
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("error/commonerror.jsp").forward(request, response);
 		}
 		
 	}

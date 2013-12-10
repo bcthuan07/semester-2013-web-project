@@ -32,7 +32,12 @@ public class CartServlet extends HttpServlet {
 	}
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
 		HttpSession session = request.getSession();
+		@SuppressWarnings("unchecked")
 		List<Product> listProduct = (List<Product>) session.getAttribute("listproduct");
 		if(listProduct!=null){
 			response.sendRedirect("cartview.jsp");

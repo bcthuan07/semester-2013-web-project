@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("utf8");
+	response.setCharacterEncoding("utf8");
+
 	String username = "";
 	String phonenumber = "";
 	String lastname = "";
@@ -100,12 +103,11 @@ h1 {
 	font-size: 18;
 }
 
-.regis form .error{
+.regis form .error {
 	color: red;
 	font-size: 18px;
 	margin-right: 0px;
 	padding-right: 0px;
-	
 }
 </style>
 </head>
@@ -154,45 +156,44 @@ h1 {
 				<h1>Đăng Kí</h1>
 				<div class="divide"></div>
 				<form action="register" method="post">
-					<label style="float: left;">Username: </label><span
-						class="check">*</span> <input class="input"
-						style="float: right;" name="username" type="text"> <br><p class="error" style="float: right;">errp</p> <br> <label
-						style="float: left;">Password: </label> <input class="input"
-						style="float: right;" name="password" type="password"><span
-						class="check">*</span> <br>
-					<br> <label style="float: left;">Tên Đầy Đủ: </label> <input
+					<label style="float: left;">Username: </label><span class="check">*</span>
+					<input class="input" style="float: right;" name="username"
+						type="text"> <br>
+					<p class="error" style="float: right;">errp</p>
+					<br> <label style="float: left;">Password: </label> <input
+						class="input" style="float: right;" name="password"
+						type="password"><span class="check">*</span> <br> <br>
+					<label style="float: left;">Tên Đầy Đủ: </label> <input
 						class="input" style="float: right;" name="fullname" type="text"><span
-						class="check">*</span>
-					<br> <br> <label style="float: left;">Email: </label> <input
-						class="input" style="float: right;" name="email" type="text"><span
-						class="check">*</span><br>
-					<br> <label style="float: left;">Số Điện Thoại: </label> <input
+						class="check">*</span> <br> <br> <label
+						style="float: left;">Email: </label> <input class="input"
+						style="float: right;" name="email" type="text"><span
+						class="check">*</span><br> <br> <label
+						style="float: left;">Số Điện Thoại: </label> <input
 						class="input" style="float: right;" name="phonenumber" type="text"><span
-						class="check">*</span><br>
-					<br> <label style="float: left;">Giới Tính: </label>
+						class="check">*</span><br> <br> <label
+						style="float: left;">Giới Tính: </label>
 					<ul>
 						<li><input style="max-width: 100px;" name="gender"
 							type="radio" value="Nam" checked><span>Nam</span>
 						<li>
 						<li><input style="max-width: 100px" name="gender"
 							type="radio" value="Nữ"><span>Nữ</span></li>
-					</ul><span
-						class="check">*</span>
-					<br>
-					<br> <label style="float: left">Số Nhà</label><input
-						class="input" style="float: right;" type="text"
-						name="buildingnumber"><span
-						class="check">*</span><br>
-					<br> <label style="float: left">Đường</label><input
-						class="input" style="float: right;" type="text" name="street"><span
-						class="check">*</span><br>
-					<br> <label style="float: left">Zip Code</label><input
-						class="input" style="float: right;" type="text" name="zipcode"><span
-						class="check">*</span><br>
-					<br> <label style="float: left">Thành Phố</label><input
-						class="input" style="float: right;" type="text" name="city"><span
-						class="check">*</span><br>
-					<br> <input class="submit" type="submit" value="Đăng Kí">
+					</ul>
+					<span class="check">*</span> <br> <br> <label
+						style="float: left">Số Nhà</label><input class="input"
+						style="float: right;" type="text" name="buildingnumber"><span
+						class="check">*</span><br> <br> <label
+						style="float: left">Đường</label><input class="input"
+						style="float: right;" type="text" name="street"><span
+						class="check">*</span><br> <br> <label
+						style="float: left">Zip Code</label><input class="input"
+						style="float: right;" type="text" name="zipcode"><span
+						class="check">*</span><br> <br> <label
+						style="float: left">Thành Phố</label><input class="input"
+						style="float: right;" type="text" name="city"><span
+						class="check">*</span><br> <br> <input class="submit"
+						type="submit" value="Đăng Kí">
 				</form>
 			</div>
 		</div>

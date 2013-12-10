@@ -31,6 +31,10 @@ public class MenuServlet extends HttpServlet {
 	}
 
 	protected void  toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
 		String idproducttype = request.getParameter("producttype");
 		System.out.println(idproducttype);
 		if(idproducttype!=null){

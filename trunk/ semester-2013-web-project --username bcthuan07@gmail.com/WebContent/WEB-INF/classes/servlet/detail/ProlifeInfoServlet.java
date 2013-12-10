@@ -34,6 +34,8 @@ public class ProlifeInfoServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");

@@ -8,10 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.HttpSession;
 
 import model.Product;
 import model.ProductType;
+import model.User;
 import service.DAOService;
 import dao.ProductDAO;
 import dao.ProductTypeDAO;
@@ -40,62 +41,86 @@ public class AddProductServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		response.sendRedirect("detail/productdetail.jsp");
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
+		// response.sendRedirect("detail/productdetail.jsp");
 		String idProducttype = request.getParameter("producttype");
 		String name = request.getParameter("productname");
 		String description = request.getParameter("description");
 		String price = request.getParameter("price");
-//		Part part = request.getPart("file");
+		// Part part = request.getPart("file");
 		String name_err = "";
 		String description_err = "";
 		String file_err = "";
 		String price_err = "";
 		Double priceDouble = 0.0;
 		if (name == null || name.equals("")) {
-			name_err += "Vui loÃng nh‚Úp tÍn sa“n ph‚“m!";
+			name_err += "Vui loÃÄng nh√¢Ã£p t√™n saÃân ph√¢Ãâm!";
 		}
 		if (description == null || description.equals("")) {
-			description_err += "Vui loÃng nh‚Úp mÙ ta“ sa“n ph‚“m!";
+			description_err += "Vui loÃÄng nh√¢Ã£p m√¥ taÃâ saÃân ph√¢Ãâm!";
 		}
-//		if (part == null) {
-//			file_err += "Vui loÃng choÚn a“nh aÚi diÍÚn!";
-//		}
+		// if (part == null) {
+		// file_err += "Vui loÃÄng choÃ£n aÃânh ƒëaÃ£i di√™Ã£n!";
+		// }
 		if (price == null || price.equals("")) {
-			price_err += "Vui loÃng nh‚Úp giaÏ sa“n ph‚“m!";
+			price_err += "Vui loÃÄng nh√¢Ã£p giaÃÅ saÃân ph√¢Ãâm!";
 		}
 
 		try {
 			priceDouble = Double.parseDouble(price);
 		} catch (NumberFormatException e) {
-			price_err+="Vui loÃng nh‚Úp laÚi giaÏ sa“n ph‚“m!";
+			price_err += "Vui loÃÄng nh√¢Ã£p laÃ£i giaÃÅ saÃân ph√¢Ãâm!";
 		}
 
-		if (file_err.length() == 0 && name_err.length() == 0
-				&& description_err.length() == 0 && price_err.length() == 0) {
-			Integer idProductType = Integer.parseInt(idProducttype);
-			DAOService<Product, Integer> pdService = new DAOService<>(
-					new ProductDAO());
-			DAOService<ProductType, Integer> pdtService = new DAOService<>(
-					new ProductTypeDAO());
-			ProductType pt = pdtService.getObjectById(idProductType);
-			Product p = new Product();
-			p.setDescription(description);
-			p.setImagePath("");
-			p.setProductName(name);
-			p.setProductType(pt);
-			p.setPrice(priceDouble);
-			pdService.addObject(p);
-			response.sendRedirect("Menu");
-		} else {
-			request.setAttribute("name_err", name_err);
-			request.setAttribute("description_err", description_err);
-			request.setAttribute("price_err", price_err);
-			request.setAttribute("file_err",file_err);
+		HttpSession session = request.getSession();
+		User staff = (User) session.getAttribute("user");
+		boolean permission = false;
+		if (staff != null) {
+			permission = staff.getPermission();
+		}
 
-			request.setAttribute("name", name);
-			request.setAttribute("description", description);
-			request.setAttribute("price", price);
-			request.getRequestDispatcher("/manage/addproduct.jsp").forward(request, response);
+		if (permission) {
+			if (file_err.length() == 0 && name_err.length() == 0
+					&& description_err.length() == 0 && price_err.length() == 0) {
+				Integer idProductType = Integer.parseInt(idProducttype);
+				DAOService<Product, Integer> pdService = new DAOService<>(
+						new ProductDAO());
+				DAOService<ProductType, Integer> pdtService = new DAOService<>(
+						new ProductTypeDAO());
+				ProductType pt = pdtService.getObjectById(idProductType);
+				Product p = new Product();
+				p.setDescription(description);
+				p.setImagePath("");
+				p.setProductName(name);
+				p.setProductType(pt);
+				p.setPrice(priceDouble);
+				boolean isAdded = pdService.addObject(p);
+				if (isAdded) {
+					response.sendRedirect("Menu");
+				} else {
+					String error = "Kh√¥ng th·ªÉ th√™m s·∫£n ph·∫©m.";
+					request.setAttribute("error", error);
+					request.getRequestDispatcher("error/commonerror.jsp").forward(request, response);
+				}
+			} else {
+				request.setAttribute("name_err", name_err);
+				request.setAttribute("description_err", description_err);
+				request.setAttribute("price_err", price_err);
+				request.setAttribute("file_err", file_err);
+
+				request.setAttribute("name", name);
+				request.setAttribute("description", description);
+				request.setAttribute("price", price);
+				request.getRequestDispatcher("/manage/addproduct.jsp").forward(
+						request, response);
+			}
+		} else {
+			String error = "B·∫°n kh√¥ng c√≥ quy·ªÅn truy c·∫≠p trang n√†y.";
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("error/commonerror.jsp").forward(
+					request, response);
 		}
 	}
 

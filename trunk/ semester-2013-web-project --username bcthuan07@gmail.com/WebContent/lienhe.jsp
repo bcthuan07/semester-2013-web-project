@@ -3,10 +3,14 @@
 <%@page import="model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%
-		User user = (User) session.getAttribute("user");
-		List<Product> listProduct = (List<Product>) session.getAttribute("listproduct");
-	%>
+<%
+	request.setCharacterEncoding("utf8");
+	response.setCharacterEncoding("utf8");
+
+	User user = (User) session.getAttribute("user");
+	List<Product> listProduct = (List<Product>) session
+			.getAttribute("listproduct");
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -50,14 +54,20 @@
 
 				<div class="menu">
 					<ul>
-					<%if(user!=null){%>
-						<li><label>Xin Chào <a class="username" href="" >TEst</a></label></li>
-					<%}%>
+						<%
+							if (user != null) {
+						%>
+						<li><label>Xin Chào <a class="username" href=""><%=user.getUsername()%></a></label></li>
+						<%
+							}
+						%>
 						<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
-						<li><a class="menuitem" href="login.jsp">Đăng Nhập / Đăng Kí</a>
+						<li><a class="menuitem" href="login.jsp">Đăng Nhập /
+								Đăng Kí</a>
 						<li><a class="menuitem" href="Menu">Thực Đơn </a></li>
 						<li><a class="menuitem" href="order.jsp">Đặt Hàng</a></li>
-						<li><a class="menuitem" href="lienhe.jsp" id="active">Liên Hệ </a></li>
+						<li><a class="menuitem" href="lienhe.jsp" id="active">Liên
+								Hệ </a></li>
 					</ul>
 				</div>
 			</div>

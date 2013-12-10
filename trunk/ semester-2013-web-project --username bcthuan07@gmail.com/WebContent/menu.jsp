@@ -9,13 +9,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("utf8");
+	response.setCharacterEncoding("utf8");
+
 	GeneralDAO<ProductType, Integer> dao = new ProductTypeDAO();
 	List<ProductType> list = dao.listObject();
 
 	List<Product> listProduct = new ArrayList<Product>();
 	String ptString = "";
-	if(request.getAttribute("producttype")!=null){
-		ProductType pt = (ProductType) request.getAttribute("producttype");
+	if (request.getAttribute("producttype") != null) {
+		ProductType pt = (ProductType) request
+				.getAttribute("producttype");
 		ptString = pt.getDescription();
 		Set<Product> set = pt.getProducts();
 		listProduct.addAll(set);
@@ -58,7 +62,8 @@
 			<div class="menu">
 				<ul>
 					<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
-					<li><a class="menuitem" href="login.jsp">Đăng Nhập/Đăng kí</a>
+					<li><a class="menuitem" href="login.jsp">Đăng Nhập/Đăng
+							kí</a>
 					<li><a class="menuitem" href="Menu" id="active">Thực Đơn </a></li>
 					<li><a class="menuitem" href="#">Đặt Hàng</a></li>
 					<li><a class="menuitem" href="lienhe.jsp">Liên Hệ </a></li>
@@ -73,12 +78,12 @@
 				<%
 					for (ProductType pt : list) {
 						String c = "";
-						if(ptString.equals(pt.getDescription())){
-							c="menuactive";
+						if (ptString.equals(pt.getDescription())) {
+							c = "menuactive";
 						}
 				%>
-				<li class="<%=c %>"><a href="Menu?producttype=<%=pt.getProductTypeId()%>"
-					title="Món ăn"><%=pt.getDescription()%></a></li>
+				<li class="<%=c%>"><a
+					href="Menu?producttype=<%=pt.getProductTypeId()%>" title="Món ăn"><%=pt.getDescription()%></a></li>
 
 				<%
 					}
@@ -86,23 +91,27 @@
 			</ul>
 		</div>
 		<div class="right">
-		<%for(Product product: listProduct){ %>
-				<div class="boxitem">
+			<%
+				for (Product product : listProduct) {
+			%>
+			<div class="boxitem">
 				<div class="proimage">
-					<a href="ProductInfo?idProduct=<%=product.getProductId() %>"><img alt="" src="<%=product.getImagePath() %>"></a>
+					<a href="ProductInfo?idProduct=<%=product.getProductId()%>"><img
+						alt="" src="<%=product.getImagePath()%>"></a>
 				</div>
-					<div class="info">
-					ajgakjgakjgh
-					</div>
-				</div>
-		<% } %>
+				<div class="info">ajgakjgakjgh</div>
+			</div>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<footer>
-	<div class="info">
-		<p>COPYRIGHT © 2013 </p>
-		<a href="lienhe.jsp"> <b>Liên Hệ </b> </a>
-	</div>
-</footer>
+		<div class="info">
+			<p>COPYRIGHT © 2013</p>
+			<a href="lienhe.jsp"> <b>Liên Hệ </b>
+			</a>
+		</div>
+	</footer>
 </body>
 </html>

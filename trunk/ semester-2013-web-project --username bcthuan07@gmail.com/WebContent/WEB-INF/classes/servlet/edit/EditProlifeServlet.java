@@ -39,76 +39,77 @@ public class EditProlifeServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String username = request.getParameter("username");
+		
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
+
 		String phonenumber = request.getParameter("phonenumber");
 		String email = request.getParameter("email");
 		String oldpassword = request.getParameter("oldpassword");
-		String password1 = request.getParameter("newpassword1");
-		String password2 = request.getParameter("newpassword2");
+		String password1 = request.getParameter("password1");
+		String password2 = request.getParameter("password2");
 		String gioitinh = request.getParameter("gioitinh");
-		String fullname = request.getParameter("fullname") == null ? "" : "";
+		String fullname = request.getParameter("fullname");
 
-		String username_err = "";
 		String phonenumber_err = "";
 		String email_err = "";
 		String oldpassword_err = "";
 		String password1_err = "";
 		String password2_err = "";
+		String fullname_err="";
 		boolean gender = false;
 		int phone = 0;
 		
-
+		System.out.println(password1);System.out.println(password2);
+		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		if (username == null || username.equals("")) {
-			username_err += "Vui loÌng nhâòp username.";
-		} else {
-			username_err = ValidateData.isUsername(username) ? ""
-					: "Vui loÌng nhâòp laòi username.";
+		if(fullname==null || fullname.equals("")){
+			fullname_err+="Vui lÃ²ng nháº­p tÃªn Ä‘áº§y Ä‘á»§!";
 		}
 
 		if (phonenumber == null || phonenumber.equals("")) {
-			phonenumber_err += "Vui loÌng nhâòp sôì ğiêòn thoaòi";
+			phonenumber_err += "Vui loÌ€ng nhÃ¢Ì£p sÃ´Ì Ä‘iÃªÌ£n thoaÌ£i";
 		} else {
 			try {
 				phone = Integer.parseInt(phonenumber);
 			} catch (NumberFormatException e) {
-				phonenumber_err+="Vui loÌng nhâòp laòi sôì ğiêòn thoaòi.";
+				phonenumber_err+="Vui loÌ€ng nhÃ¢Ì£p laÌ£i sÃ´Ì Ä‘iÃªÌ£n thoaÌ£i.";
 			}
 		}
 
 		if (email == null || email.equals("")) {
-			email_err += "Vui loÌng nhâòp email.";
+			email_err += "Vui loÌ€ng nhÃ¢Ì£p email.";
 		} else {
 			email_err = ValidateData.isEmail(email) ? ""
-					: "Vui loÌng nhâòp laòi email.";
+					: "Vui loÌ€ng nhÃ¢Ì£p laÌ£i email.";
 		}
 
 		if (oldpassword == null || oldpassword.equals("")) {
-			oldpassword_err += "Vui loÌng nhâòp password cuŞ.";
+			oldpassword_err += "Vui loÌ€ng nhÃ¢Ì£p password cuÌƒ.";
 		} else {
 			oldpassword_err += PasswordUtil.authenticate(oldpassword,
 					user.getPassword(), user.getSalt()) ? "" : "Password sai.";
 		}
 
 		if (password1 == null || password1.equals("")) {
-			password1_err += "Vui loÌng nhâòp laòi password1.";
+			password1_err += "Vui loÌ€ng nhÃ¢Ì£p laÌ£i password1.";
 		}
 
 		if (password2 == null || password2.equals("")) {
-			password2_err += "Vui loÌng nhâòp password2.";
+			password2_err += "Vui loÌ€ng nhÃ¢Ì£p password2.";
 		} else if (!password2.equals(password1)) {
-			password2_err += "Password2 vaÌ password1 không truÌng nhau.";
+			password2_err += "Password2 vaÌ€ password1 khÃ´ng truÌ€ng nhau.";
 		}
 
 		gender = gioitinh.equals("Nam") ? true : false;
 
-		if (username_err.length() == 0 && password1_err.length() == 0
+		if (  password1_err.length() == 0
 				&& password2_err.length() == 0 && oldpassword_err.length() == 0
-				&& email_err.length() == 0 && phonenumber_err.length() == 0) {
+				&& email_err.length() == 0 && phonenumber_err.length() == 0 && fullname_err.length()==0) {
 
 			DAOService<User, Integer> daoService = new DAOService<>(new UserDAO());
-			User userUpdate = new User();
+			User userUpdate = (User) session.getAttribute("user");
 			userUpdate.setEmail(email);
 			byte[] saltUpdate = new byte[8];
 			try {
@@ -120,11 +121,15 @@ public class EditProlifeServlet extends HttpServlet {
 			userUpdate.setPassword(PasswordUtil.getEncryptedPassword(password1, saltUpdate));
 			userUpdate.setFullname(fullname);
 			userUpdate.setGender(gender);
-			userUpdate.setUsername(username);
 			userUpdate.setPhoneNumber(phone+"");
-			daoService.updateObject(userUpdate);
+			System.out.println(daoService.updateObject(userUpdate));
+			response.sendRedirect("home.jsp");
 		} else {
-			request.setAttribute("username_err", username_err);
+			request.setAttribute("phonenumber", phonenumber);
+			request.setAttribute("email", email);
+			request.setAttribute("fullname", fullname);
+			
+			request.setAttribute("fullname_err", fullname_err);
 			request.setAttribute("oldpassword_err", oldpassword_err);
 			request.setAttribute("phonenumber_err", phonenumber_err);
 			request.setAttribute("email_err", email_err);

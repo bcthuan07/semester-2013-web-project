@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package dao;
 
 import java.util.ArrayList;
@@ -10,6 +8,7 @@ import util.HibernateUtil;
 import model.Product;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * @author Thuan
@@ -39,16 +38,20 @@ public class ProductDAO implements GeneralDAO<Product, Integer> {
 	public boolean addObject(Product object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.save(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.save(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -56,16 +59,20 @@ public class ProductDAO implements GeneralDAO<Product, Integer> {
 	public boolean updateObject(Product object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.update(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.update(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -73,17 +80,21 @@ public class ProductDAO implements GeneralDAO<Product, Integer> {
 	public boolean removeObject(Integer object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			Product product = (Product) session.load(Product.class, object);
-			session.delete(product);
-			return true;
+			try {
+				session.beginTransaction();
+				Product product = (Product) session.load(Product.class, object);
+				session.delete(product);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 

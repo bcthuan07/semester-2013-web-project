@@ -24,34 +24,22 @@ import dao.UserDAO;
 
 public class testcsdl {
 
-	public static void main(String[] args) throws NoSuchAlgorithmException,
-			InvalidKeySpecException {
-
-		List<Integer> list = new ArrayList<>();
-		list.add(1);
-		list.add(1);
-		list.add(2);
-		list.add(2);
-		list.add(4);
-
-		Set<Integer> set = new HashSet<>();
-		set.addAll(list);
-
-		System.out.println(list);
-		System.out.println(set);
-
-		HashMap<Integer, Integer> hashMap = new HashMap<>();
-		int count = 0;
-		for (int i : set) {
-			count=0;
-			for (int j : list) {
-				if(j==i){
-					count++;
-				}
-			}
-			hashMap.put(i, count);
-		}
-		
-		System.out.println(hashMap);
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		DAOService<User, Integer> userDaoService = new DAOService<>(new UserDAO());
+		User user = new User();
+		byte[] salt = PasswordUtil.generateSalt();
+		byte[] pass = PasswordUtil.getEncryptedPassword("thuan", salt);
+		user.setUsername("bcthuan07");
+		user.setPassword(pass);
+		user.setSalt(salt);
+		user.setEmail("Thuần");
+		user.setFullname("test");
+		PaymentMethod p = new PaymentMethod();
+		p.setPaymentMethodId(1);
+		user.setPaymentMethod(p);
+		user.setPermission(true);
+		user.setDatecreated(new Date());
+		user.setPhoneNumber(23553636+"");
+		userDaoService.addObject(user);
 	}
 }

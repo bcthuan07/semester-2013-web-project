@@ -42,16 +42,20 @@ public class UserAddressHistoryDAO implements
 	public boolean addObject(UserAddressHistory object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.save(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.save(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -59,16 +63,20 @@ public class UserAddressHistoryDAO implements
 	public boolean updateObject(UserAddressHistory object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			session.update(object);
-			return true;
+			try {
+				session.beginTransaction();
+				session.update(object);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 
@@ -76,18 +84,22 @@ public class UserAddressHistoryDAO implements
 	public boolean removeObject(UserAddressHistoryId object) {
 		Session session = HibernateUtil.openSession();
 		try {
-			session.beginTransaction();
-			UserAddressHistory uah = (UserAddressHistory) session.load(
-					UserAddressHistory.class, object);
-			session.delete(uah);
-			return true;
+			try {
+				session.beginTransaction();
+				UserAddressHistory uah = (UserAddressHistory) session.load(
+						UserAddressHistory.class, object);
+				session.delete(uah);
+				return true;
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				session.getTransaction().rollback();
+				return false;
+			} finally {
+				session.getTransaction().commit();
+				session.close();
+			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			session.getTransaction().rollback();
 			return false;
-		} finally {
-			session.getTransaction().commit();
-			session.close();
 		}
 	}
 

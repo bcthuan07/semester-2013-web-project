@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("utf8");
+	response.setCharacterEncoding("utf8");
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,7 +42,8 @@
 			<div class="menu">
 				<ul>
 					<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
-					<li><a class="menuitem" href="login.jsp" id="active">Đăng Nhập / Đăng Kí</a>
+					<li><a class="menuitem" href="login.jsp" id="active">Đăng
+							Nhập / Đăng Kí</a>
 					<li><a class="menuitem" href="Menu">Thực Đơn </a></li>
 					<li><a class="menuitem" href="order.jsp">Đặt Hàng</a></li>
 					<li><a class="menuitem" href="lienhe.jsp">Liên Hệ </a></li>
@@ -47,7 +52,11 @@
 		</div>
 	</div>
 	<div class="right">
-		
+		<form action="Login" method="post">
+			<label>Username:</label><input type="text" name="username"> <label>Password:</label><input
+				type="password" name="password"> <input type="submit"
+				value="Đăng Nhập">
+		</form>
 	</div>
 	<footer>
 		<div class="info">
