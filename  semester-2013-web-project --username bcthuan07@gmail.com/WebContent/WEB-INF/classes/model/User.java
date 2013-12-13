@@ -182,7 +182,7 @@ public class User implements java.io.Serializable {
 		this.feedbacks = feedbacks;
 	}
 
-	@Column(name = "username", nullable = false)
+	@Column(name = "username")
 	public String getUsername() {
 		return username;
 	}

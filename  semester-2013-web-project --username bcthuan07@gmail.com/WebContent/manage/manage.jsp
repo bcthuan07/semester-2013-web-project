@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%
+<%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
-	%>
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -58,5 +58,12 @@
 		</div>
 
 	</div>
+	<footer>
+		<div class="info">
+			<p>COPYRIGHT © 2013</p>
+			<a href="lienhe.jsp"> <b>Liên Hệ </b>
+			</a>
+		</div>
+	</footer>
 </body>
 </html>

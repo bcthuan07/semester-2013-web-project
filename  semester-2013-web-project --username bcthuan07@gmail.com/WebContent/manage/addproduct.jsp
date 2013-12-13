@@ -1,3 +1,4 @@
+<%@page import="model.User"%>
 <%@page import="service.DAOService"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.ProductTypeDAO"%>
@@ -8,166 +9,117 @@
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
-	DAOService<ProductType, Integer> dao = new DAOService<ProductType, Integer>(new ProductTypeDAO());
+	DAOService<ProductType, Integer> dao = new DAOService<ProductType, Integer>(
+			new ProductTypeDAO());
 	List<ProductType> list = dao.listObject();
+
+	User user = (User) session.getAttribute("user");
+	boolean permission = user == null ? false : user.getPermission();
+	if (!permission)
+		response.sendRedirect("home.jsp");
+	String username = user == null ? "" : user.getUsername();
 %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Thêm Sản Phẩm</title>
-<link rel="stylesheet" href="../css/style.css" />
-<script src="../js/jquery.1.7.js"></script>
-<script src="../js/jquery.masonry.min.js"></script>
-<script src="../js/modernizr-2.5.3.min.js"></script>
-<script src="../js/home.js"></script>
-<script src="../js/top.js"></script>
-<style type="text/css">
-.regis {
-	display: block;
-	width: 800px;
-	float: left;
-	padding-bottom: 50px;
-	padding-right: 50px;
-}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
 
-.regis .input {
-	min-width: 400px;
-	margin-right: 60px;
-	font-family: sans-serif;
-	font-size: 20px;
-	font-weight: normal;
-	margin-right: 60px;
-}
+<title>Trang Quản Lý - SB Admin</title>
 
-.regis select {
-	min-width: 400px;
-	margin-right: 60px;
-	font-family: sans-serif;
-	font-size: 20px;
-	font-weight: normal;
-	margin-right: 60px;
-	float: right;
-}
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
 
-.regis label {
-	font-family: sans-serif;
-	font-size: 20px;
-	font-weight: normal;
-	margin-left: 80px;
-}
-
-.divide {
-	border-bottom: 1px solid rgb(214, 214, 214);
-	margin-top: 10px;
-	margin-bottom: 50px;
-}
-
-h1 {
-	font-family: sans-serif;
-}
-
-.regis form ul li {
-	list-style: none;
-	float: right;
-	margin-right: 110px;
-}
-
-.regis form ul li span {
-	font-size: 20px;
-	font-family: sans-serif;
-	margin-right: 10px;
-}
-
-.regis form .submit {
-	display: block;
-	min-width: 200px;
-	height: 50px;
-	font-size: 24px;
-	font-family: sans-serif;
-	background: black;
-	float: right;
-	color: white;
-	margin-right: 60px;
-	border: 0;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-</style>
+<!-- Add custom CSS here -->
+<link href="css/sb-admin.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<!-- Page Specific CSS -->
+<link rel="stylesheet"
+	href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
 </head>
+
 <body>
-	<div class="container">
-		<div class="left">
-			<div class="logo">
-				<a href="#"> <img src="../images/logo.png" />
-				</a>
-				<div class="share">
-					<ul>
-						<li><a href="#"> <img src="../images/icon/tumblr.png"></a>
-						</li>
-						<li><a href="#"> <img src="../images/icon/pinterest.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/flickr.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/facebook.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/dribbble.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/behance.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/aim.png">
-						</a></li>
-					</ul>
-				</div>
+
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">SB Admin</a>
 			</div>
-			<div class="menu">
-				<ul>
-					<li><a class="menuitem" href="../home.jsp" id="trangchu">Trang
-							Chủ </a></li>
-					<li><a class="menuitem" href="user.jsp">Khách Hàng</a></li>
-					<li><a class="menuitem" href="product.jsp">Sản Phẩm</a></li>
-					<li><a class="menuitem" href="../manage/order.jsp">Hóa
-							Đơn</a></li>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav side-nav">
+					<li class="active"><a href="index.html"><i
+							class="fa fa-dashboard"></i> Thống Kê</a></li>
+					<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i>
+							Charts</a></li>
+					<li><a href="tables.html"><i class="fa fa-table"></i>
+							Tables</a></li>
+					<li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>
+					<li><a href="typography.html"><i class="fa fa-font"></i>
+							Typography</a></li>
+					<li><a href="bootstrap-elements.html"><i
+							class="fa fa-desktop"></i> Bootstrap Elements</a></li>
+					<li><a href="bootstrap-grid.html"><i class="fa fa-wrench"></i>
+							Bootstrap Grid</a></li>
+					<li><a href="blank-page.html"><i class="fa fa-file"></i>
+							Blank Page</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Dropdown <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Dropdown Item</a></li>
+							<li><a href="#">Another Item</a></li>
+							<li><a href="#">Third Item</a></li>
+							<li><a href="#">Last Item</a></li>
+						</ul></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right navbar-user">
+
+
+					<li class="dropdown user-dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"><i
+							class="fa fa-user"></i> <%=username%> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#"><i class="fa fa-user"></i> Tài Khoản</a></li>
+							<li class="divider"></li>
+							<li><a href="#"><i class="fa fa-power-off"></i> Thoát</a></li>
+						</ul></li>
 				</ul>
 			</div>
-
-			<a class="back-to-top" href="#" title="Quay lên trên">Lên Đầu
-				Trang</a>
-		</div>
-		<!-- hết phần trái -->
-		<div class="right">
-			<div class="regis">
-				<h1>Thêm Sản Phẩm</h1>
-				<div class="divide"></div>
-				<form action="<%=request.getContextPath() %>/AddProduct" method="post">
-					<label style="float: left;">Tên: </label> <input class="input"
-						style="float: right;" name="productname" type="text"> <br>
-					<br> <label style="float: left;">Mô Tả: </label> <input
-						class="input" style="float: right;" name="description" type="text">
-					<br> <br> <label style="float: left;">Ảnh trưng
-						bày </label> <input class="input" style="float: right;" name="firstname"
-						type="file"> <br> <br> <label
-						style="float: left;">Loại Sản Phẩm:</label> <select name="producttype">
-						<%
-							for (ProductType pt : list) {
-						%>
-						<option value="<%=pt.getProductTypeId()%>"><%=pt.getDescription()%></option>
-						<%
-							}
-						%>
-					</select> <br>
-					<br> <label style="float: left;">Giá: </label> <input class="input"
-						style="float: right;" name="price" type="text"><br><br><input class="submit" type="submit" value="Thêm">
-				</form>
-			</div>
-		</div>
+			<!-- /.navbar-collapse -->
+		</nav>
+		<h1>Thêm Sản Phẩm</h1>
+		<form action="<%=request.getContextPath()%>/AddProduct" method="post">
+			<label>Tên: </label> <input name="productname" type="text">
+			<br> <label>Mô Tả: </label> <input name="description"
+				type="text"> <label>Ảnh trưng bày </label> <input
+				name="firstname" type="file"> <label>Loại
+				Sản Phẩm:</label> <select name="producttype">
+				<%
+					for (ProductType pt : list) {
+				%>
+				<option value="<%=pt.getProductTypeId()%>"><%=pt.getDescription()%></option>
+				<%
+					}
+				%>
+			</select> <label>Giá: </label> <input name="price" type="text"> <label>Số
+				Lượng Sản Phẩm:</label><input name="quantity" type="number"> <input
+				type="submit" value="Thêm">
+		</form>
 	</div>
 
-	<footer>
-		<div class="info">
-			<p>COPYRIGHT © 2013</p>
-			<a href="../lienhe.html"> <b>Liên Hệ </b>
-			</a>
-		</div>
-	</footer>
 </body>
 </html>

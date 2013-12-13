@@ -40,7 +40,7 @@ public class ValidateOrderServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("utf8");
 		response.setCharacterEncoding("utf8");
 
@@ -53,7 +53,7 @@ public class ValidateOrderServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String phonenumber = request.getParameter("phonenumber");
 		String street = request.getParameter("street");
-		String buildingNumber = request.getParameter("buildingNumber");
+		String buildingNumber = request.getParameter("buildingnumber");
 		String city = request.getParameter("city");
 		String zipcode = request.getParameter("zipcode");
 		String fullname = request.getParameter("fullname");
@@ -69,68 +69,57 @@ public class ValidateOrderServlet extends HttpServlet {
 		int bdn = 0;
 		int zc = 0;
 		int phone = 0;
-		String common_err = "TrıõÌng naÌy không ğıõòc ğêÒ trôìng.";
-		if (fullname.equals("") || fullname == null) {
+		String common_err = "TrÆ°Æ¡Ì€ng naÌ€y khÃ´ng Ä‘Æ°Æ¡Ì£c Ä‘ÃªÌ‰ trÃ´Ìng.";
+		if (fullname == null || fullname.equals("")) {
 			fullname_err += common_err;
-			fullname="";
 		}
 
-		if (email.equals("") || email == null) {
+		if (email == null || email.equals("")) {
 			email_err += common_err;
-			email="";
 		} else {
 			email_err += ValidateData.isEmail(email) ? ""
-					: "Email không hõòp lêò.";
+					: "Email khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 		}
 
-		if (phonenumber.equals("") || phonenumber == null) {
+		if (phonenumber == null || phonenumber.equals("")) {
 			phonenumber_err += common_err;
-			phonenumber="";
 		} else {
 			try {
 				phone = Integer.parseInt(phonenumber);
 			} catch (NumberFormatException e) {
-				phonenumber_err += "Sôì ğiêòn thoaòi không hõòp lêò.";
+				phonenumber_err += "SÃ´Ì Ä‘iÃªÌ£n thoaÌ£i khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 			}
 		}
 
-		if (street.equals("") || street == null) {
+		if (street == null || street.equals("")) {
 			street_err += common_err;
-			street="";
 		}
 
-		if (buildingNumber.equals("") || buildingNumber == null) {
+		if (buildingNumber == null || buildingNumber.equals("")) {
 			buildingNumber_err += common_err;
-			buildingNumber="";
 		} else {
 			try {
 				bdn = Integer.parseInt(buildingNumber);
 			} catch (NumberFormatException e) {
-				buildingNumber_err += "Sôì nhaÌ không hõòp lêò.";
+				buildingNumber_err += "SÃ´Ì nhaÌ€ khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 			}
 		}
 
-		if (zipcode.equals("") || zipcode == null) {
+		if (zipcode == null || zipcode.equals("")) {
 			zipcode_err += common_err;
-			zipcode="";
 		} else {
 			try {
 				zc = Integer.parseInt(zipcode);
 			} catch (NumberFormatException e) {
-				zipcode_err += "MaŞ Zipcode không hõòp lêò.";
+				zipcode_err += "MaÌƒ Zipcode khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 			}
 		}
 
-		if (city.equals("") || city == null) {
+		if (city == null || city.equals("")) {
 			city_err += common_err;
-			city="";
 		}
 
-		if (listProduct == null) {
-			response.sendRedirect("home.jsp");
-		} else if (listProduct.size() == 0) {
-			response.sendRedirect("menu.jsp");
-		} else if (user == null) {
+		 if (user == null) {
 			if (email_err.length() == 0 && phonenumber_err.length() == 0
 					&& street_err.length() == 0
 					&& buildingNumber_err.length() == 0
@@ -147,14 +136,19 @@ public class ValidateOrderServlet extends HttpServlet {
 				newUser.setDatecreated(new Date());
 				newUser.setFullname(fullname);
 				newUser.setPermission(false);
-				newUser.setPhoneNumber(phone+"");
-				OrderService orderService= new OrderService();
-				if(orderService.order(listProduct, newUser, address, new Date())){
-					response.sendRedirect("thanks.jsp");
+				newUser.setPhoneNumber(phone + "");
+				OrderService orderService = new OrderService();
+				if (orderService.order(listProduct, newUser, address,
+						new Date())) {
+					String message = "Cáº£m Æ¡n " + newUser.getFullname()
+							+ " Ä‘Ã£ mua hÃ ng á»Ÿ Ä‘Ã¢y.";
+					request.setAttribute("message", message);
+					request.getRequestDispatcher("thanks.jsp").forward(request,
+							response);
 				} else {
 					response.sendError(200);
 				}
-				
+
 			} else {
 				request.setAttribute("fullname_err", fullname_err);
 				request.setAttribute("email_err", email_err);
@@ -163,7 +157,7 @@ public class ValidateOrderServlet extends HttpServlet {
 				request.setAttribute("buildingnumber_err", buildingNumber_err);
 				request.setAttribute("city_err", city_err);
 				request.setAttribute("zipcode_err", zipcode_err);
-				
+
 				request.setAttribute("fullname", fullname);
 				request.setAttribute("email", email);
 				request.setAttribute("phonenumber", phonenumber);
@@ -171,12 +165,17 @@ public class ValidateOrderServlet extends HttpServlet {
 				request.setAttribute("buildingNumber", buildingNumber);
 				request.setAttribute("city", city);
 				request.setAttribute("zipcode", zipcode);
-				request.getRequestDispatcher("").forward(request, response);
+				request.getRequestDispatcher("order/validatecart.jsp").forward(
+						request, response);
 			}
 		} else {
 			OrderService orderService = new OrderService();
 			if (orderService.order(listProduct, user, new Date())) {
-				response.sendRedirect("thanks.jsp");
+				String message = "Cáº£m Æ¡n " + user.getFullname()
+						+ " Ä‘Ã£ mua hÃ ng á»Ÿ Ä‘Ã¢y.";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("thanks.jsp").forward(request,
+						response);
 			} else {
 				response.sendError(200);
 			}

@@ -15,6 +15,7 @@ import model.User;
 import service.RegisterService;
 import util.PasswordUtil;
 import util.ValidateData;
+import exception.UsernameException;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -22,144 +23,133 @@ import util.ValidateData;
 @WebServlet("/Register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public RegisterServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public RegisterServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		toDo(request, response);
 	}
-	protected void toDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+
+	protected void toDo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("utf8");
 		response.setCharacterEncoding("utf8");
-		
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		String phonenumber = request.getParameter("phonenumber");
-		String gioitinh = request.getParameter("gioitinh");
+		String gioitinh = request.getParameter("gender");
 		String buildingNumber = request.getParameter("buildingnumber");
 		String city = request.getParameter("city");
 		String zipcode = request.getParameter("zipcode");
 		String street = request.getParameter("street");
-		
+
 		String username_err = "";
 		String password_err = "";
 		String fullname_err = "";
 		String email_err = "";
 		String phonenumber_err = "";
-		String buildingNumber_err ="";
+		String buildingNumber_err = "";
 		String city_err = "";
 		String zipcode_err = "";
 		String street_err = "";
 		int bdn = 0;
 		int zc = 0;
-		int phone = 0;
-		byte[] pass =new byte[8];
-		byte[] salt =new byte[8];
-		String common_err = "TrıõÌng naÌy không ğıõòc ğêÒ trôìng.";
-		boolean gender = gioitinh.equals("Nam")? true: false;
-		if(username.equals("") || username==null){
-			username_err+=common_err;
-			username="";
+		byte[] pass = new byte[8];
+		byte[] salt = new byte[8];
+		String common_err = "TrÆ°Æ¡Ì€ng naÌ€y khÃ´ng Ä‘Æ°Æ¡Ì£c Ä‘ÃªÌ‰ trÃ´Ìng.";
+		boolean gender = gioitinh.equals("Nam") ? true : false;
+		if (username.equals("") || username == null) {
+			username_err += common_err;
 		}
-		
-		if(password.equals("") || password==null){
-			password_err+=common_err;
-			password="";
+
+		if (password.equals("") || password == null) {
+			password_err += common_err;
 		} else {
-			if(!ValidateData.isPassword(password)){
-			password_err+=  "Password phaÒi coì 1 kiì tıò in hoa, 1 chıŞ sôì.";}
-			else{
+			if (!ValidateData.isPassword(password)) {
+				password_err += "Password phaÌ‰i coÌ 1 kiÌ tÆ°Ì£ in hoa, 1 chÆ°Ìƒ sÃ´Ì.";
+			} else {
 				try {
 					salt = PasswordUtil.generateSalt();
 					pass = PasswordUtil.getEncryptedPassword(password, salt);
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-				
+
 		}
-		
+
 		if (fullname.equals("") || fullname == null) {
 			fullname_err += common_err;
-			fullname="";
 		}
 
 		if (email.equals("") || email == null) {
 			email_err += common_err;
-			email="";
 		} else {
 			email_err += ValidateData.isEmail(email) ? ""
-					: "Email không hõòp lêò.";
+					: "Email khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 		}
 
 		if (phonenumber.equals("") || phonenumber == null) {
 			phonenumber_err += common_err;
-			phonenumber="";
 		} else {
 			try {
-				phone = Integer.parseInt(phonenumber);
+				Integer.parseInt(phonenumber);
 			} catch (NumberFormatException e) {
-				phonenumber_err += "Sôì ğiêòn thoaòi không hõòp lêò.";
+				phonenumber_err += "SÃ´Ì Ä‘iÃªÌ£n thoaÌ£i khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 			}
 		}
 
 		if (street.equals("") || street == null) {
 			street_err += common_err;
-			street="";
 		}
 
 		if (buildingNumber.equals("") || buildingNumber == null) {
 			buildingNumber_err += common_err;
-			buildingNumber="";
 		} else {
 			try {
 				bdn = Integer.parseInt(buildingNumber);
 			} catch (NumberFormatException e) {
-				buildingNumber_err += "Sôì nhaÌ không hõòp lêò.";
+				buildingNumber_err += "SÃ´Ì nhaÌ€ khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 			}
 		}
 
 		if (zipcode.equals("") || zipcode == null) {
 			zipcode_err += common_err;
-			zipcode="";
 		} else {
 			try {
 				zc = Integer.parseInt(zipcode);
 			} catch (NumberFormatException e) {
-				zipcode_err += "MaŞ Zipcode không hõòp lêò.";
+				zipcode_err += "MaÌƒ Zipcode khÃ´ng hÆ¡Ì£p lÃªÌ£.";
 			}
 		}
 
 		if (city.equals("") || city == null) {
 			city_err += common_err;
-			city="";
 		}
-		
-		if(username_err.length() ==0 &&
-		password_err.length() == 0 &&
-		fullname_err.length() == 0 &&
-		  email_err.length() == 0 &&
-		  phonenumber_err.length() == 0 &&
-		  buildingNumber_err.length() == 0 &&
-		  city_err.length() == 0 &&
-		  zipcode_err.length() == 0 &&
-		  street_err.length()==0)
-		{
+
+		if (username_err.length() == 0 && password_err.length() == 0
+				&& fullname_err.length() == 0 && email_err.length() == 0
+				&& phonenumber_err.length() == 0
+				&& buildingNumber_err.length() == 0 && city_err.length() == 0
+				&& zipcode_err.length() == 0 && street_err.length() == 0) {
 			Address address = new Address();
 			address.setBuildingNumber(bdn);
 			address.setCity(city);
 			address.setStreet(street);
 			address.setZipCode(zc);
-			
+
 			User user = new User();
 			user.setDatecreated(new Date());
 			user.setEmail(email);
@@ -169,12 +159,39 @@ public class RegisterServlet extends HttpServlet {
 			user.setUsername(username);
 			user.setSalt(salt);
 			user.setPassword(pass);
-			RegisterService registerService = new RegisterService();
-			if(registerService.register(user, address)){
-				response.sendRedirect("complete.jsp");
-			} else {
-				response.sendError(200);
+			user.setPhoneNumber(phonenumber);
+
+			try {
+				RegisterService registerService = new RegisterService();
+				registerService.register(user, address);
+
+			} catch (UsernameException e) {
+				System.out.println(e.getMessage());
+				username_err += e.getMessage();
+				request.setAttribute("username", username);
+				request.setAttribute("email", email);
+				request.setAttribute("fullname", fullname);
+				request.setAttribute("buildingnumber", buildingNumber);
+				request.setAttribute("city", city);
+				request.setAttribute("street", street);
+				request.setAttribute("zipcode", zipcode);
+				request.setAttribute("phonenumber", phonenumber);
+
+				request.setAttribute("username_err", username_err);
+				request.setAttribute("email_err", email_err);
+				request.setAttribute("fullname_err", fullname_err);
+				request.setAttribute("buildingnumber_err", buildingNumber_err);
+				request.setAttribute("city_err", city_err);
+				request.setAttribute("street_err", street_err);
+				request.setAttribute("zipcode_err", zipcode_err);
+				request.setAttribute("phonenumber_err", phonenumber_err);
+
+				request.getRequestDispatcher("register.jsp").forward(request,
+						response);
 			}
+			String message = "Báº¡n Ä‘Ã£ Ä‘Äƒng kÃ­ thÃ nh cÃ´ng!";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("complete.jsp").forward(request, response);;
 		} else {
 			request.setAttribute("username", username);
 			request.setAttribute("email", email);
@@ -183,7 +200,8 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute("city", city);
 			request.setAttribute("street", street);
 			request.setAttribute("zipcode", zipcode);
-			
+			request.setAttribute("phonenumber", phonenumber);
+
 			request.setAttribute("username_err", username_err);
 			request.setAttribute("email_err", email_err);
 			request.setAttribute("fullname_err", fullname_err);
@@ -191,7 +209,10 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute("city_err", city_err);
 			request.setAttribute("street_err", street_err);
 			request.setAttribute("zipcode_err", zipcode_err);
-			request.getRequestDispatcher("register.jsp").forward(request, response);
+			request.setAttribute("phonenumber_err", phonenumber_err);
+
+			request.getRequestDispatcher("register.jsp").forward(request,
+					response);
 		}
 	}
 

@@ -35,7 +35,7 @@ public class OrderService {
 
 	public boolean order(List<Product> listProduct, User user, Date date) {
 		try {
-			DAOService<User, Integer> userdao = new DAOService<>(new UserDAO());
+//			DAOService<User, Integer> userdao = new DAOService<>(new UserDAO());
 			DAOService<UserOrder, Integer> userorderdao = new DAOService<>(
 					new UserOrderDAO());
 			DAOService<OrderItem, Integer> orderitemdao = new DAOService<>(
@@ -49,6 +49,7 @@ public class OrderService {
 			userOrder.setUser(user);
 			userOrder.setOrderStatus(orderStatus);
 			userorderdao.addObject(userOrder);
+			System.out.println(set);
 			for (Product p : set) {
 				int count = 0;
 				for (Product pd : listProduct) {
@@ -60,9 +61,9 @@ public class OrderService {
 				orderitemdao.addObject(item);
 				setProducts.add(item);
 			}
-			userOrder.setOrderItems(setProducts);
-			userorderdao.updateObject(userOrder);
-			userdao.updateObject(user);
+//			userOrder.setOrderItems(setProducts);
+//			userorderdao.updateObject(userOrder);
+//			userdao.updateObject(user);
 			return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -82,6 +83,8 @@ public class OrderService {
 			addressdao.addObject(address);
 			userdao.addObject(user);
 			UserAddressHistory addressHistory = new UserAddressHistory();
+			UserAddressHistoryId historyId = new UserAddressHistoryId(user.getUserId(),address.getAddressId(),date);
+			addressHistory.setId(historyId);
 			addressHistory.setUser(user);
 			addressHistory.setAddress(address);
 			useraddresshistorydao.addObject(addressHistory);

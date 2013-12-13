@@ -13,6 +13,7 @@ import model.UserAddressHistoryId;
 import dao.AddressDAO;
 import dao.UserAddressHistoryDAO;
 import dao.UserDAO;
+import exception.UsernameException;
 
 /**
  * @author Thuan
@@ -20,7 +21,8 @@ import dao.UserDAO;
  */
 public class RegisterService {
 
-	public boolean register(User user, Address address) {
+	public boolean register(User user, Address address)
+			throws UsernameException {
 		try {
 			DAOService<User, Integer> userService = new DAOService<>(
 					new UserDAO());
@@ -32,8 +34,9 @@ public class RegisterService {
 			for (User u : listUser) {
 				if (u.getUsername().equals(user.getUsername())
 						|| u.getEmail().equals(user.getEmail())) {
-					System.out.println("t��n ta�i");
-					return false;
+					System.out.println("tồn tại");
+					throw new UsernameException("Username này đã tồn tại.");
+
 				}
 			}
 			boolean esxit = false;
@@ -44,18 +47,21 @@ public class RegisterService {
 					esxit = true;
 				}
 			}
-			if (!esxit)
+			if (!esxit) {
 				addressService.addObject(address);
+			}
 			Date date = new Date();
-			UserAddressHistoryId addressHistoryId = new UserAddressHistoryId(user.getUserId(), address.getAddressId(), date);
+			userService.addObject(user);
+			UserAddressHistoryId addressHistoryId = new UserAddressHistoryId(
+					user.getUserId(), address.getAddressId(), date);
 			UserAddressHistory addressHistory = new UserAddressHistory();
 			addressHistory.setId(addressHistoryId);
-			userService.addObject(user);
+
 			userAddressService.addObject(addressHistory);
 			return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-			System.out.println("l��i");
+			System.out.println("lỗi");
 			return false;
 		}
 	}

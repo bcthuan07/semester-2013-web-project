@@ -10,125 +10,124 @@
 	User user = (User) session.getAttribute("user");
 	List<Product> listProduct = (List<Product>) session
 			.getAttribute("listproduct");
+	String username = user == null ? "Thành Viên" : user.getUsername();
 %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lien He</title>
-<link rel="stylesheet" href="css/style.css" />
-<!-- 			<script src="js/jquery.1.7.js" ></script>
-			<script src="js/jquery.masonry.min.js" ></script>
-			<script src="js/modernizr-2.5.3.min.js" ></script>
-			<script src="js/home.js" ></script>  -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
 
+<title>Trang Chủ</title>
 
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- Custom CSS for the '3 Col Portfolio' Template -->
 </head>
 
 <body>
-	<div class="container">
-		<div class="bg">
-			<div class="left">
-				<div class="logo">
-					<a href="#"> <img src="images/logo.png" />
-					</a>
-					<div class="share">
-						<ul>
-							<li><a href="#"> <img src="images/icon/tumblr.png">
-							</a></li>
-							<li><a href="#"> <img src="images/icon/pinterest.png">
-							</a></li>
-							<li><a href="#"> <img src="images/icon/flickr.png">
-							</a></li>
-							<li><a href="#"> <img src="images/icon/facebook.png">
-							</a></li>
-							<li><a href="#"> <img src="images/icon/dribbble.png">
-							</a></li>
-							<li><a href="#"> <img src="images/icon/behance.png">
-							</a></li>
-							<li><a href="#"> <img src="images/icon/aim.png">
-							</a></li>
-						</ul>
-					</div>
-				</div>
 
-
-				<div class="menu">
-					<ul>
-						<%
-							if (user != null) {
-						%>
-						<li><label>Xin Chào <a class="username" href=""><%=user.getUsername()%></a></label></li>
-						<%
-							}
-						%>
-						<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
-						<li><a class="menuitem" href="login.jsp">Đăng Nhập /
-								Đăng Kí</a>
-						<li><a class="menuitem" href="Menu">Thực Đơn </a></li>
-						<li><a class="menuitem" href="order.jsp">Đặt Hàng</a></li>
-						<li><a class="menuitem" href="lienhe.jsp" id="active">Liên
-								Hệ </a></li>
-					</ul>
-				</div>
+	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://startbootstrap.com">Nhà
+					Hàng Jamie's Oliver</a>
 			</div>
 
-			<div class="right" style="margin-left: 20px; margin-top: 20px;">
-				<div class="lienhe a">
-					<p id="lh">Liên Hệ</p>
-					<div class="maps">
-						<iframe width="450" height="350" frameborder="0" scrolling="no"
-							marginheight="0" marginwidth="0"
-							src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=vi&amp;geocode=&amp;q=tr%C6%B0%E1%BB%9Dng+%C4%91%E1%BA%A1i+h%E1%BB%8Dc+n%C3%B4ng+l%C3%A2m+th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=42.85226,86.572266&amp;vpsrc=6&amp;ie=UTF8&amp;hq=tr%C6%B0%E1%BB%9Dng+%C4%91%E1%BA%A1i+h%E1%BB%8Dc+n%C3%B4ng+l%C3%A2m&amp;hnear=Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh,+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam&amp;ll=10.872103,106.792817&amp;spn=0.052091,0.084543&amp;t=m&amp;z=14&amp;iwloc=A&amp;cid=8109727644112951129&amp;output=embed"></iframe>
-						<br /> <small><a
-							href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=vi&amp;geocode=&amp;q=tr%C6%B0%E1%BB%9Dng+%C4%91%E1%BA%A1i+h%E1%BB%8Dc+n%C3%B4ng+l%C3%A2m+th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=42.85226,86.572266&amp;vpsrc=6&amp;ie=UTF8&amp;hq=tr%C6%B0%E1%BB%9Dng+%C4%91%E1%BA%A1i+h%E1%BB%8Dc+n%C3%B4ng+l%C3%A2m&amp;hnear=Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh,+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam&amp;ll=10.872103,106.792817&amp;spn=0.052091,0.084543&amp;t=m&amp;z=14&amp;iwloc=A&amp;cid=8109727644112951129"
-							style="color: #0000FF; text-align: left">Xem Bản đồ cỡ lớn
-								hơn</a></small>
-						<p></p>
-						<ul>
-							<li><a href="#"><b>Điện Thoại</b> : 11111111111</a> <a
-								href="#"><b>Email</b> : contact@contact.vn</a> <a href="#"><b>Địa
-										Chỉ</b> : TP Hồ Chí Minh</a></li>
-						</ul>
-					</div>
-					<div class="mail">
-						<form action="phanhoi" method="post">
-							<h1>Email</h1>
-							<p>Họ và tên :</p>
-							<input type="text" name="hovaten"></input>
-							<p>Địa chỉ Email :</p>
-							<input type="text" name="email"></input>
-							<p>Nội Dung :</p>
-							<textarea style="font-size: 16px; font-family: tahoma;"
-								name="content" id="nd"></textarea>
-							<div class="submit">
-								<input
-									style="height: 80px; width: 100%; font-size: 20px; border: 0;"
-									type="submit" value="Gửi Thư">
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#about">Trang Chủ</a></li>
+					<li><a href="#services">Thực Đơn</a></li>
+					<li><a href="#contact">Liên Hệ</a></li>
+
+					<li class="dropdown"><a href="" class="dropdown-toggle"
+						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<%
+								if (user == null) {
+							%><li><a href="login.jsp">Đăng Nhập</a></li>
+							<li><a href="register.jsp">Đăng Ký</a></li>
+							<%
+								}
+							%>
+							<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
+							<li class="divider"></li>
+							<!--<li class="dropdown-header">Nav header</li>-->
+							<%
+								if (user != null) {
+							%><li><a href="Logout">Thoát</a></li>
+							<%
+								}
+							%>
+						</ul></li>
+					<li>
+						<form class="navbar-form navbar-right" role="form">
+							<div class="form-group">
+								<input type="text" class="form-control"
+									placeholder="Tìm Kiếm Món Ăn">
 							</div>
+							<input type="submit" value="Tìm" class="btn btn-success">
 						</form>
-					</div>
-				</div>
-
-
-
-
+					</li>
+				</ul>
 			</div>
-			<!-- hết phần phải -->
-
-
-
-
-
+			<!-- /.navbar-collapse -->
 		</div>
+		<!-- /.container -->
+	</nav>
 
+	<div class="container">
+	<br>
+	<br>
+	<br>
+		<div class="row">
+			<div class="col-md-7">
+			<iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;t=m&amp;source=embed&amp;ll=10.869216,106.802559&amp;spn=0.04046,0.054932&amp;z=14&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/?ie=UTF8&amp;t=m&amp;source=embed&amp;ll=10.869216,106.802559&amp;spn=0.04046,0.054932&amp;z=14" style="color:#0000FF;text-align:left">Xem Bản đồ cỡ lớn hơn</a></small>
+			<div class="clearfix visible-xs"></div>
+			</div>
+			<div class="col-md-3">
+			<h1>Địa chỉ:</h1>
+			<p>Số 327 Biên Hòa</p>
+			<p>Số ĐT: 1234567</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<hr>
+
+		<footer>
+			<div class="row">
+				<div class="col-lg-12">
+					<p>Copyright &copy; Company 2013</p>
+				</div>
+			</div>
+		</footer>
 
 	</div>
-	<footer>
-		<div class="info">
-			<p>COPYRIGHT © 2013</p>
-			<a href="lienhe.jsp"> <b>Liên Hệ </b>
-			</a>
-		</div>
-	</footer>
+	<!-- /.container -->
+
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/holder.js"></script>
+
+
 </body>
+
 </html>

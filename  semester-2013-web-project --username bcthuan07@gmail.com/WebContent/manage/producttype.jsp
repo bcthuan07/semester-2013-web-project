@@ -82,5 +82,12 @@
 
 		</div>
 	</div>
+	<footer>
+			<div class="info">
+				<p>COPYRIGHT © 2013</p>
+				<a href="lienhe.jsp"> <b>Liên Hệ </b>
+				</a>
+			</div>
+		</footer>
 </body>
 </html>

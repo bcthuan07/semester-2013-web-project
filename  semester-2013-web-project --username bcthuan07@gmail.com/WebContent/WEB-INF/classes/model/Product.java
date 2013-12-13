@@ -32,16 +32,17 @@ public class Product implements java.io.Serializable {
 	private ProductType productType;
 	private String productName;
 	private String description;
-	private double price;
+	private Double price;
 	private String imagePath;
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>(0);
-
+	private Integer quantity;
+	
 	public Product() {
 	}
 
 	public Product(Integer productId, ProductType productType,
-			String productName, String description, double price,
-			String imagePath, Set<OrderItem> orderItems) {
+			String productName, String description, Double price,
+			String imagePath, Set<OrderItem> orderItems, Integer quantity) {
 		super();
 		this.productId = productId;
 		this.productType = productType;
@@ -94,11 +95,11 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Column(name = "price", nullable = false, precision = 22, scale = 0)
-	public double getPrice() {
+	public Double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
@@ -119,6 +120,76 @@ public class Product implements java.io.Serializable {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+	
+	@Column(name="quantity", nullable=false)
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result
+				+ ((imagePath == null) ? 0 : imagePath.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result
+				+ ((productId == null) ? 0 : productId.hashCode());
+		result = prime * result
+				+ ((productName == null) ? 0 : productName.hashCode());
+		result = prime * result
+				+ ((quantity == null) ? 0 : quantity.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (imagePath == null) {
+			if (other.imagePath != null)
+				return false;
+		} else if (!imagePath.equals(other.imagePath))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (productId == null) {
+			if (other.productId != null)
+				return false;
+		} else if (!productId.equals(other.productId))
+			return false;
+		if (productName == null) {
+			if (other.productName != null)
+				return false;
+		} else if (!productName.equals(other.productName))
+			return false;
+		if (quantity == null) {
+			if (other.quantity != null)
+				return false;
+		} else if (!quantity.equals(other.quantity))
+			return false;
+		return true;
 	}
 
 	@Override

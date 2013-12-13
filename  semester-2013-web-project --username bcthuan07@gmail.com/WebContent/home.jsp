@@ -10,284 +10,145 @@
 	User user = (User) session.getAttribute("user");
 	List<Product> listProduct = (List<Product>) session
 			.getAttribute("listproduct");
+	String username = user==null? "Thành Viên": "Xin Chào "+user.getUsername();
+	boolean permission = user==null? false: user.getPermission();
 %>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Nhà Hàng</title>
-<link rel="stylesheet" href="css/style.css" />
-<script src="js/jquery.1.7.js"></script>
-<script src="js/jquery.masonry.min.js"></script>
-<script src="js/modernizr-2.5.3.min.js"></script>
-<script src="js/home.js"></script>
-<script src="js/top.js"></script>
-</head>
-<body>
-	<div class="container">
-		<!--<div class="bg">-->
-		<div class="left">
-			<div class="logo">
-				<a href="#"> <img src="images/logo.png" />
-				</a>
-				<div class="share">
-					<ul>
-						<li><a href="#"> <img src="images/icon/tumblr.png"></a>
-						</li>
-						<li><a href="#"> <img src="images/icon/pinterest.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/flickr.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/facebook.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/dribbble.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/behance.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/aim.png">
-						</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="menu">
-				<ul>
-					<%
-						if (user != null) {
-					%>
-					<li><label>Xin Chào <a class="username" href="">TEst</a></label></li>
-					<%
-						}
-					%>
-					<li><a class="menuitem" href="home.jsp" id="active">Trang
-							Chủ </a></li>
-					<li><a class="menuitem" href="login.jsp">Đăng Nhập/Đăng
-							kí</a>
-					<li><a class="menuitem" href="Menu">Thực Đơn </a></li>
-					<li><a class="menuitem" href="Order">Đặt Hàng</a></li>
-					<li><a class="menuitem" href="lienhe.jsp">Liên Hệ </a></li>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-				</ul>
-			</div>
+    <title>Trang Chủ</title>
 
-			<a class="back-to-top" href="#" title="Quay lên trên">Lên Đầu
-				Trang</a>
-		</div>
-		<!-- hết phần trái -->
-		<div class="right">
-			<div class="khoi1 a">
-				<!-- khối to thứ nhất -->
-				<div class="anh">
-					<a href="#"> <img src="images/9.jpg" />
-					</a>
-				</div>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-				<div class="tin">
-					<div class="tieude" id="xanhlama">
-						<b> <a href="#">Tiêu Đề</a> <!--<b id="view"> </b>					-->
-						</b>
-					</div>
-					<div class="link">
-						<i> <a href="#">Tác giả</a>
-						</i>
-					</div>
-					<div class="noidung">
-						<p>Nội dung</p>
-					</div>
-					<div class="morexanhlama">
+    <!-- Custom CSS for the '3 Col Portfolio' Template -->
+    <link href="css/3-col-portfolio.css" rel="stylesheet">
+	<link href="css/carousel.css" rel="stylesheet">
 
-						<a href="#"> <span></span>Xem Tiếp
-						</a>
-					</div>
+  </head>
 
-				</div>
+  <body>
 
-			</div>
-			<div class="khoi2 a">
-				<!-- khối to thứ nhất -->
-				<div class="anh">
-					<a href="#"> <img src="images/1.jpg" />
-					</a>
-				</div>
+    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://startbootstrap.com">Nhà Hàng Jamie's Oliver</a>
+        </div>
 
-				<div class="tin">
-					<div class="tieude">
-						<b> <a href="#">Tiêu Đề </a>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#about" >Trang Chủ</a></li>
+            <li><a href="#services">Thực Đơn</a></li>
+            <li><a href="#contact">Liên Hệ</a></li>
+			
+			<li class="dropdown">
+			<a href="" class="dropdown-toggle" data-toggle="dropdown"><%=username %><b class="caret"></b></a>
+			<ul class="dropdown-menu">
+			<%if(user==null){ %><li><a href="login.jsp">Đăng Nhập</a></li>
+			<li><a href="register.jsp">Đăng Ký</a></li><%} %>
+			<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
+			<li class="divider"></li>
+			<!--<li class="dropdown-header">Nav header</li>-->
+			<%if(user!=null){ %>
+			<%if(permission){ %>
+				<li><a href="Manage">Trang Quản Lý</a></li>
+			<%} %>
+			<li><a href="Logout">Thoát</a></li><%} %>
+			</ul>
+			</li>
+			<li>
+				<form class="navbar-form navbar-right" role="form">
+					<div class="form-group"><input type="text" class="form-control" placeholder="Tìm Kiếm Món Ăn"></div>
+					<input type="submit" value="Tìm" class="btn btn-success">
+				</form >
+			</li>			
+			</ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
 
-						</b>
-					</div>
-					<div class="link">
-						<i> <a href="#">Tác Giả</a>
-						</i>
-					</div>
-					<div class="noidung">
-						<p>Nội dung.</p>
-					</div>
-					<div class="more">
+     <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+        <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+		<img src="image/background/bg.jpg">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Đăng kí thành viên</h1>
+              <p>Đăng kí làm thành viên ngay, để nhận hàng loạt ưu đãi hấp dẫn!</p>
+              <p><a class="btn btn-lg btn-primary" href="register.jsp" role="button">Đăng kí</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+		<img src="image/background/bg.jpg">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Thực Đơn</h1>
+              <p>Thực đơn phong phú, hấp dẫn</p>
+              <p><a class="btn btn-lg btn-primary" href="Menu" role="button">Xem Thực Đơn</a></p>
+            </div>
+          </div>
+        </div>
+       
+        <div class="item">
+		<img src="image/background/bg.jpg">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Liên Hệ</h1>
+              <p>Thực đơn phong phú, hấp dẫn</p>
+              <p><a class="btn btn-lg btn-primary" href="lienhe.jsp" role="button">Xem</a></p>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      <a class="left carousel-control" href="http://getbootstrap.com/examples/carousel/#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="http://getbootstrap.com/examples/carousel/#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	  
+    </div><!-- /.carousel -->
 
-						<a href="#"> <span></span>Xem Tiếp
-						</a>
-					</div>
+    <div class="container">
 
-				</div>
+      <hr>
 
-			</div>
-			<div class="khoi2 a">
-				<!-- khối to thứ nhất -->
-				<div class="anh">
-					<a href="#"> <img src="images/1.jpg" />
-					</a>
-				</div>
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Copyright &copy; Company 2013</p>
+          </div>
+        </div>
+      </footer>
+      
+    </div><!-- /.container -->
 
-				<div class="tin">
-					<div class="tieude">
-						<b> <a href="#">Tiêu Đề </a>
+   
+	
+	    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/holder.js"></script>
 
-						</b>
-					</div>
-					<div class="link">
-						<i> <a href="#">Tác Giả</a>
-						</i>
-					</div>
-					<div class="noidung">
-						<p>Nội dung.</p>
-					</div>
-					<div class="more">
 
-						<a href="#"> <span></span>Xem Tiếp
-						</a>
-					</div>
+  </body>
 
-				</div>
-
-			</div>
-			<div class="khoi2 a">
-				<!-- khối to thứ nhất -->
-				<div class="anh">
-					<a href="#"> <img src="images/1.jpg" />
-					</a>
-				</div>
-
-				<div class="tin">
-					<div class="tieude">
-						<b> <a href="#">Tiêu Đề </a>
-
-						</b>
-					</div>
-					<div class="link">
-						<i> <a href="#">Tác Giả</a>
-						</i>
-					</div>
-					<div class="noidung">
-						<p>Nội dung.</p>
-					</div>
-					<div class="more">
-
-						<a href="#"> <span></span>Xem Tiếp
-						</a>
-					</div>
-
-				</div>
-
-			</div>
-			<div class="khoi2 a">
-				<!-- khối to thứ nhất -->
-				<div class="anh">
-					<a href="#"> <img src="images/1.jpg" />
-					</a>
-				</div>
-
-				<div class="tin">
-					<div class="tieude">
-						<b> <a href="#">Tiêu Đề </a>
-
-						</b>
-					</div>
-					<div class="link">
-						<i> <a href="#">Tác Giả</a>
-						</i>
-					</div>
-					<div class="noidung">
-						<p>Nội dung.</p>
-					</div>
-					<div class="more">
-
-						<a href="#"> <span></span>Xem Tiếp
-						</a>
-					</div>
-
-				</div>
-
-			</div>
-			<div class="khoi2 a">
-				<!-- khối to thứ nhất -->
-				<div class="anh">
-					<a href="#"> <img src="images/1.jpg" />
-					</a>
-				</div>
-
-				<div class="tin">
-					<div class="tieude">
-						<b> <a href="#">Tiêu Đề </a>
-
-						</b>
-					</div>
-					<div class="link">
-						<i> <a href="#">Tác Giả</a>
-						</i>
-					</div>
-					<div class="noidung">
-						<p>Nội dung.</p>
-					</div>
-					<div class="more">
-
-						<a href="#"> <span></span>Xem Tiếp
-						</a>
-					</div>
-
-				</div>
-
-			</div>
-			<div class="khoi2 a">
-				<!-- khối to thứ nhất -->
-				<div class="anh">
-					<a href="#"> <img src="images/1.jpg" />
-					</a>
-				</div>
-
-				<div class="tin">
-					<div class="tieude">
-						<b> <a href="#">Tiêu Đề </a>
-
-						</b>
-					</div>
-					<div class="link">
-						<i> <a href="#">Tác Giả</a>
-						</i>
-					</div>
-					<div class="noidung">
-						<p>Nội dung.</p>
-					</div>
-					<div class="more">
-
-						<a href="#"> <span></span>Xem Tiếp
-						</a>
-					</div>
-
-				</div>
-
-			</div>
-
-		</div>
-		<!-- hết phần phải -->
-
-	</div>
-	<!--</div>-->
-	<footer>
-		<div class="info">
-			<p>COPYRIGHT © 2013</p>
-			<a href="../mainpage/lienhe.html"> <b>Liên Hệ </b>
-			</a>
-		</div>
-	</footer>
-
-</body>
 </html>
