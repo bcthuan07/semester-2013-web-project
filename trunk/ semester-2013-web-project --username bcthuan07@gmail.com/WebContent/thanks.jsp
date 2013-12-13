@@ -1,67 +1,96 @@
+<%@page import="model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
+	
+	User user = (User) session.getAttribute("user");
+	String username = user==null? "Thành Viên": "Xin Chào "+user.getUsername();
 %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/style.css" />
-<script src="js/jquery.1.7.js"></script>
-<script src="js/jquery.masonry.min.js"></script>
-<script src="js/modernizr-2.5.3.min.js"></script>
-<script src="js/home.js"></script>
-<script src="js/top.js"></script>
-<title>Cảm Ơn</title>
-</head>
-<body>
-	<div class="container">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
 
-		<div class="left">
-			<div class="logo">
-				<a href="#"> <img src="images/logo.png" />
-				</a>
-				<div class="share">
-					<ul>
-						<li><a href="#"> <img src="images/icon/tumblr.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/pinterest.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/flickr.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/facebook.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/dribbble.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/behance.png">
-						</a></li>
-						<li><a href="#"> <img src="images/icon/aim.png">
-						</a></li>
-					</ul>
-				</div>
+<title>Cảm ơn</title>
+
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.css" rel="stylesheet">
+
+<!-- Custom CSS for the '3 Col Portfolio' Template -->
+<link href="css/3-col-portfolio.css" rel="stylesheet">
+<link href="css/carousel.css" rel="stylesheet">
+<link href="css/formsignin.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://startbootstrap.com">Nhà
+					Hàng Jamie's Oliver</a>
 			</div>
-			<div class="menu">
-				<ul>
-					<li><a class="menuitem" href="home.jsp">Trang Chủ </a></li>
-					<li><a class="menuitem" href="login.jsp" id="active">Đăng
-							Nhập / Đăng Kí</a>
-					<li><a class="menuitem" href="Menu">Thực Đơn </a></li>
-					<li><a class="menuitem" href="order.jsp">Đặt Hàng</a></li>
-					<li><a class="menuitem" href="lienhe.jsp">Liên Hệ </a></li>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#about">Trang Chủ</a></li>
+					<li><a href="#services">Thực Đơn</a></li>
+					<li><a href="#contact">Liên Hệ</a></li>
+
+					<li class="dropdown"><a href="" class="dropdown-toggle"
+						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<%
+								if (user == null) {
+							%><li><a href="login.jsp">Đăng Nhập</a></li>
+							<li><a href="register.jsp">Đăng Ký</a></li>
+							<%
+								}
+							%>
+							<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
+							<li class="divider"></li>
+							<!--<li class="dropdown-header">Nav header</li>-->
+							<%
+								if (user != null) {
+							%><li><a href="Logout">Thoát</a></li>
+							<%
+								}
+							%>
+						</ul></li>
+					<li>
+						<form action="SearchProductByName" class="navbar-form navbar-right" role="form">
+							<div class="form-group">
+								<input type="text" class="form-control"
+									placeholder="Tìm Kiếm Món Ăn" name="search">
+							</div>
+							<input type="submit" value="Tìm" class="btn btn-success">
+						</form>
+					</li>
 				</ul>
 			</div>
+			<!-- /.navbar-collapse -->
 		</div>
-		<div class="right">Cảm ơn bạn đã mua hàng</div>
+		<!-- /.container -->
+	</nav>
 
-		<footer>
-			<div class="info">
-				<p>COPYRIGHT © 2013</p>
-				<a href="lienhe.jsp"> <b>Liên Hệ </b>
-				</a>
-			</div>
-		</footer>
-
-	</div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/holder.js"></script>
+	
 </body>
 </html>

@@ -1,26 +1,14 @@
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import service.DAOService;
-import service.LoginService;
-import service.RegisterService;
-import sun.org.mozilla.javascript.internal.ast.ArrayLiteral;
-import util.PasswordUtil;
 import model.Address;
 import model.PaymentMethod;
-import model.ProductType;
 import model.User;
-import dao.AddressDAO;
-import dao.GeneralDAO;
-import dao.PaymentMethodDAO;
-import dao.ProductTypeDAO;
+import service.DAOService;
+import service.RegisterService;
+import util.PasswordUtil;
 import dao.UserDAO;
+import exception.UsernameException;
 
 public class testcsdl {
 
@@ -29,10 +17,10 @@ public class testcsdl {
 		User user = new User();
 		byte[] salt = PasswordUtil.generateSalt();
 		byte[] pass = PasswordUtil.getEncryptedPassword("thuan", salt);
-		user.setUsername("bcthuan07");
+		user.setUsername("test");
 		user.setPassword(pass);
 		user.setSalt(salt);
-		user.setEmail("Thuần");
+		user.setEmail("test");
 		user.setFullname("test");
 		PaymentMethod p = new PaymentMethod();
 		p.setPaymentMethodId(1);
@@ -40,6 +28,19 @@ public class testcsdl {
 		user.setPermission(true);
 		user.setDatecreated(new Date());
 		user.setPhoneNumber(23553636+"");
-		userDaoService.addObject(user);
+		Address a = new Address();
+		a.setBuildingNumber(1);
+		a.setCity("Biên Hòa");
+		a.setStreet("23");
+		a.setZipCode(23);
+		RegisterService registerService = new RegisterService();
+		try {
+			System.out.println(registerService.register(user, a));
+		} catch (UsernameException e) {
+			// TODO Auto-generated catch block
+//			System.err.println(e.getMessage());
+//			System.out.println(e.getMessage());
+			
+		}
 	}
 }

@@ -36,7 +36,7 @@ public class ProductInfoServlet extends HttpServlet {
 		request.setCharacterEncoding("utf8");
 		response.setCharacterEncoding("utf8");
 
-		String idProduct = request.getParameter("idProduct");
+		String idProduct = request.getParameter("product");
 		if(idProduct==null){
 			response.sendRedirect("menu.jsp");
 		} else {

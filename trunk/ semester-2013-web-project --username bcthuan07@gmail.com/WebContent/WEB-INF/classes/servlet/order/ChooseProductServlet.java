@@ -37,7 +37,7 @@ public class ChooseProductServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("utf8");
 		response.setCharacterEncoding("utf8");
 
@@ -54,30 +54,42 @@ public class ChooseProductServlet extends HttpServlet {
 		}
 		DAOService<Product, Integer> daoService = new DAOService<>(
 				new ProductDAO());
-		
+
 		if (!isNumber) {
-			number_err += "Xin ha�y nh��p s�� l���ng sa�n ph��m.";
+			number_err += "Xin hãy nhập số lượng sản phẩm.";
 			request.setAttribute("number_err", number_err);
-			request.setAttribute("product", daoService.getObjectById(Integer.parseInt(idProduct)));
+			request.setAttribute("product",
+					daoService.getObjectById(Integer.parseInt(idProduct)));
 			request.getRequestDispatcher("detail/productdetail.jsp").forward(
 					request, response);
 		} else {
-			@SuppressWarnings("unchecked")
-			List<Product> listProduct = (List<Product>) request.getSession()
-					.getAttribute("listproduct");
-			if (listProduct == null) {
-				listProduct = new ArrayList<>();
-			}
-			
-			for (int i = 0; i < no; i++) {
-				listProduct.add(daoService.getObjectById(Integer
-						.parseInt(idProduct)));
-			}
+			Product p = daoService.getObjectById(Integer.parseInt(idProduct));
+			int left = p.getQuantity();
+			if (no <= left) {
+				@SuppressWarnings("unchecked")
+				List<Product> listProduct = (List<Product>) request
+						.getSession().getAttribute("listproduct");
+				if (listProduct == null) {
+					listProduct = new ArrayList<>();
+				}
 
-			request.getSession().setAttribute("listproduct", listProduct);
-			System.out.println("---List Product----");
-			System.out.println(listProduct);
-			response.sendRedirect("Menu");
+				for (int i = 0; i < no; i++) {
+					listProduct.add(daoService.getObjectById(Integer
+							.parseInt(idProduct)));
+				}
+				p.setQuantity(left-no);
+				daoService.updateObject(p);
+				request.getSession().setAttribute("listproduct", listProduct);
+				System.out.println("---List Product----");
+				System.out.println(listProduct);
+				response.sendRedirect("Menu");
+			} else {
+				number_err += "Số lượng sản phẩm không đủ cho yêu cầu của bạn.";
+				request.setAttribute("number_err", number_err);
+				request.setAttribute("product", p);
+				request.getRequestDispatcher("detail/productdetail.jsp").forward(request, response);
+
+			}
 		}
 	}
 

@@ -42,20 +42,22 @@ public class LoginService {
 			} catch (Exception e) {
 				System.err.println("error with password authenticate");
 			}
-			if(isRight){
+			if (isRight) {
 				return user;
 			}
 		}
 		return null;
 	}
-	
-	public boolean hasUser(String username){
+
+	public boolean hasUser(String username) {
 		GeneralDAO<User, Integer> userDao = new UserDAO();
 		List<User> listUser = userDao.listObject();
 		boolean hasUser = false;
-		for(User user: listUser){
-			if(user.getUsername().equals(username)){
-				hasUser = true;
+		for (User user : listUser) {
+			if (user.getUsername() != null) {
+				if (user.getUsername().equals(username)) {
+					hasUser = true;
+				}
 			}
 		}
 		return hasUser;

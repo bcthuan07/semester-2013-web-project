@@ -16,7 +16,7 @@ public class ValidateData {
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private static final String USER_NAME_PATTERN = "^[a-z0-9_-]{3,15}$";
 
-	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
 
 	private static Pattern pattern;
 	private static Matcher matcher;
