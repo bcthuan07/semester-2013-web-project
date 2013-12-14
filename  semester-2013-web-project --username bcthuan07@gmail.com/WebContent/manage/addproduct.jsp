@@ -13,11 +13,7 @@
 			new ProductTypeDAO());
 	List<ProductType> list = dao.listObject();
 
-	User user = (User) session.getAttribute("user");
-	boolean permission = user == null ? false : user.getPermission();
-	if (!permission)
-		response.sendRedirect("home.jsp");
-	String username = user == null ? "" : user.getUsername();
+	String path = request.getContextPath() + "/manage/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,11 +26,12 @@
 <title>Trang Quản Lý - SB Admin</title>
 
 <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.css" rel="stylesheet">
+<link href="<%=path%>css/bootstrap.css" rel="stylesheet">
 
 <!-- Add custom CSS here -->
-<link href="css/sb-admin.css" rel="stylesheet">
-<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link href="<%=path%>css/sb-admin.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="<%=path%>font-awesome/css/font-awesome.min.css">
 <!-- Page Specific CSS -->
 <link rel="stylesheet"
 	href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
@@ -45,81 +42,43 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-ex1-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">SB Admin</a>
-			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<ul class="nav navbar-nav side-nav">
-					<li class="active"><a href="index.html"><i
-							class="fa fa-dashboard"></i> Thống Kê</a></li>
-					<li><a href="charts.html"><i class="fa fa-bar-chart-o"></i>
-							Charts</a></li>
-					<li><a href="tables.html"><i class="fa fa-table"></i>
-							Tables</a></li>
-					<li><a href="forms.html"><i class="fa fa-edit"></i> Forms</a></li>
-					<li><a href="typography.html"><i class="fa fa-font"></i>
-							Typography</a></li>
-					<li><a href="bootstrap-elements.html"><i
-							class="fa fa-desktop"></i> Bootstrap Elements</a></li>
-					<li><a href="bootstrap-grid.html"><i class="fa fa-wrench"></i>
-							Bootstrap Grid</a></li>
-					<li><a href="blank-page.html"><i class="fa fa-file"></i>
-							Blank Page</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
-							Dropdown <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Dropdown Item</a></li>
-							<li><a href="#">Another Item</a></li>
-							<li><a href="#">Third Item</a></li>
-							<li><a href="#">Last Item</a></li>
-						</ul></li>
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right navbar-user">
-
-
-					<li class="dropdown user-dropdown"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown"><i
-							class="fa fa-user"></i> <%=username%> <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#"><i class="fa fa-user"></i> Tài Khoản</a></li>
-							<li class="divider"></li>
-							<li><a href="#"><i class="fa fa-power-off"></i> Thoát</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</nav>
-		<h1>Thêm Sản Phẩm</h1>
-		<form action="<%=request.getContextPath()%>/AddProduct" method="post">
-			<label>Tên: </label> <input name="productname" type="text">
-			<br> <label>Mô Tả: </label> <input name="description"
-				type="text"> <label>Ảnh trưng bày </label> <input
-				name="firstname" type="file"> <label>Loại
-				Sản Phẩm:</label> <select name="producttype">
-				<%
-					for (ProductType pt : list) {
-				%>
-				<option value="<%=pt.getProductTypeId()%>"><%=pt.getDescription()%></option>
-				<%
-					}
-				%>
-			</select> <label>Giá: </label> <input name="price" type="text"> <label>Số
-				Lượng Sản Phẩm:</label><input name="quantity" type="number"> <input
-				type="submit" value="Thêm">
-		</form>
+		<jsp:include page="admin-header.jsp"></jsp:include>
+		<div id="page-wrapper">
+			<h1>Thêm Sản Phẩm</h1>
+			<form action="<%=request.getContextPath()%>/AddProduct" method="post">
+				<label for="pro">Tên: </label> <input name="productname" type="text"
+					class="form-control" id="pro"> <label for="des">Mô
+					Tả: </label> <input name="description" type="text" class="form-control"
+					id="des"> <label for="fn">Ảnh trưng bày </label> <input
+					name="firstname" class="form-control" id="fn" type="file">
+				<label for="pt">Loại Sản Phẩm:</label> <select id="pt"
+					class="form-control" name="producttype">
+					<%
+						for (ProductType pt : list) {
+					%>
+					<option value="<%=pt.getProductTypeId()%>"><%=pt.getDescription()%></option>
+					<%
+						}
+					%>
+				</select> <label for="price">Giá: </label> <input name="price"
+					class="form-control" id="price" type="text"> <label
+					for="quantity">Số Lượng Sản Phẩm:</label> <input
+					class="form-control" id="quantity" name="quantity" type="number">
+				<input class="form-control" type="submit" value="Thêm">
+			</form>
+		</div>
 	</div>
+	<!-- JavaScript -->
+	<script src="<%=path%>js/jquery-1.10.2.js"></script>
+	<script src="<%=path%>js/bootstrap.js"></script>
+
+	<!-- Page Specific Plugins -->
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+	<script src="<%=path%>js/morris/chart-data-morris.js"></script>
+	<script src="<%=path%>js/tablesorter/jquery.tablesorter.js"></script>
+	<script src="<%=path%>js/tablesorter/tables.js"></script>
 
 </body>
 </html>

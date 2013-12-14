@@ -51,33 +51,42 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		if (username_err.length() == 0 && password_err.length() == 0) {
-		
+
 			LoginService ls = new LoginService();
 			boolean hasUser = ls.hasUser(username);
-			if(!hasUser){
-				username_err+="User không tôÌn taòi!";
+			if (!hasUser) {
+				username_err += "User không tôÌn taòi!";
 				request.setAttribute("username_err", username_err);
 				request.setAttribute("password_err", password_err);
-				request.getRequestDispatcher("login.jsp").forward(request, response);
+				request.getRequestDispatcher("login.jsp").forward(request,
+						response);
 			} else {
 				User user = ls.authenticate(username, password);
-				if(user == null){
-					password_err+="Password không ðuìng!";
+				if (user == null) {
+					password_err += "Password không ðuìng!";
 					request.setAttribute("username_err", username_err);
 					request.setAttribute("password_err", password_err);
-					request.getRequestDispatcher("login.jsp").forward(request, response);
+					request.getRequestDispatcher("login.jsp").forward(request,
+							response);
 				} else {
 					HttpSession session = request.getSession();
 					session.setAttribute("user", user);
-					response.sendRedirect("home.jsp");
+					boolean permission = user.getPermission();
+					if (permission) {
+						response.sendRedirect("manage/manage.jsp");
+					} else {
+						response.sendRedirect("home.jsp");
+					}
+
 				}
 			}
-			
+
 		} else {
 			request.setAttribute("username_err", username_err);
 			request.setAttribute("password_err", password_err);
 			request.setAttribute("username", username);
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+			request.getRequestDispatcher("login.jsp")
+					.forward(request, response);
 		}
 	}
 

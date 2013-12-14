@@ -17,11 +17,11 @@ public class testcsdl {
 		User user = new User();
 		byte[] salt = PasswordUtil.generateSalt();
 		byte[] pass = PasswordUtil.getEncryptedPassword("thuan", salt);
-		user.setUsername("test");
+		user.setUsername("bcthuan");
 		user.setPassword(pass);
 		user.setSalt(salt);
-		user.setEmail("test");
-		user.setFullname("test");
+		user.setEmail("bcthuan@gaga.com");
+		user.setFullname("bùi chính thuần");
 		PaymentMethod p = new PaymentMethod();
 		p.setPaymentMethodId(1);
 		user.setPaymentMethod(p);
@@ -39,7 +39,8 @@ public class testcsdl {
 		} catch (UsernameException e) {
 			// TODO Auto-generated catch block
 //			System.err.println(e.getMessage());
-//			System.out.println(e.getMessage());
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			
 		}
 	}

@@ -25,6 +25,7 @@ public class LoginService {
 			return null;
 		User user = null;
 		for (User u : listUser) {
+			if(u.getUsername()!=null)
 			if (u.getUsername().equals(username)) {
 				user = u;
 				break;
