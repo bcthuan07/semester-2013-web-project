@@ -9,94 +9,100 @@
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
-	User user = (User) session.getAttribute("user");
-	List<UserOrder> listUserOrders = new ArrayList<UserOrder>();
-	if (user != null) {
-		boolean permission = user.getPermission();
-		DAOService<UserOrder, Integer> daoService = new DAOService<UserOrder, Integer>(
-				new UserOrderDAO());
-		listUserOrders = permission ? daoService.listObject()
-				: new ArrayList<UserOrder>();
-	}
-	response.setHeader("Refresh", "10");
-%>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Quản lý hóa đơn</title>
+	List<UserOrder> listUserOrders = request
+			.getAttribute("listuserorder") == null ? new ArrayList<UserOrder>()
+			: (List<UserOrder>) request.getAttribute("listuserorder");
+	String location = request.getContextPath()+"/ManageOrder";
+	response.setHeader("Refresh", "10;url="+location);
+	String path = request.getContextPath()+"/manage/";
 
-<link rel="stylesheet" href="../css/style.css" />
-<script src="../js/jquery.1.7.js"></script>
-<script src="../js/jquery.masonry.min.js"></script>
-<script src="../js/modernizr-2.5.3.min.js"></script>
-<script src="../js/home.js"></script>
-<script src="../js/top.js"></script>
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Trang Quản Lý - Hóa Đơn</title>
+
+<!-- Bootstrap core CSS -->
+<link href="<%=path %>css/bootstrap.css" rel="stylesheet">
+
+<!-- Add custom CSS here -->
+<link href="<%=path %>css/sb-admin.css" rel="stylesheet">
+<link rel="stylesheet" href="<%=path %>font-awesome/css/font-awesome.min.css">
+<!-- Page Specific CSS -->
+<link rel="stylesheet"
+	href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
 </head>
+
 <body>
-	<div class="container">
-		<div class="left">
-			<div class="logo">
-				<a href="#"> <img src="../images/logo.png" />
-				</a>
-				<div class="share">
-					<ul>
-						<li><a href="#"> <img src="../images/icon/tumblr.png"></a>
-						</li>
-						<li><a href="#"> <img src="../images/icon/pinterest.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/flickr.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/facebook.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/dribbble.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/behance.png">
-						</a></li>
-						<li><a href="#"> <img src="../images/icon/aim.png">
-						</a></li>
-					</ul>
+
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<jsp:include page="admin-header.jsp"></jsp:include>
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>
+						Sản Phẩm <small>Sort Your Data</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a href="Manage"><i class="fa fa-dashboard"></i>
+								Thống Kê</a></li>
+						<li class="active"><i class="fa fa-table"></i> Sản Phẩm</li>
+					</ol>
 				</div>
 			</div>
-			<div class="menu">
-				<ul>
-					<li><a class="menuitem" href="../home.jsp" id="trangchu">Trang
-							Chủ </a></li>
-					<li><a class="menuitem" href="user.jsp">Khách Hàng</a></li>
-					<li><a class="menuitem" href="product.jsp">Sản Phẩm</a></li>
-					<li><a class="menuitem" href="../manage/order.jsp">Hóa
-							Đơn</a></li>
-				</ul>
+
+			<div class="row">
+				<div class="col-lg-8">
+					<h2>Sản Phẩm</h2>
+					<div class="table-responsive">
+						<table
+							class="table table-bordered table-hover table-striped tablesorter">
+							<thead>
+								<tr>
+									<th><i class="fa fa-sort"></i>Tên khách hàng</th>
+									<th><i class="fa fa-sort"></i>Tình trạng thanh toán</th>
+									<th><i class="fa fa-sort"></i>Ngày Lập</th>
+									<th>Thao Tác</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									for (UserOrder userOrder : listUserOrders) {
+								%>
+								<tr>
+									<td><%=userOrder.getUser().getFullname()%></td>
+									<td><%=userOrder.getOrderStatus().getDescription()%></td>
+									<td><%=userOrder.getOrderDate()%></td>
+									<td><a class="btn btn-danger" href="<%=request.getContextPath() %>/DeleteUserOrder?userorder="<%=userOrder.getUserOrderId() %>></a></td>
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
-
-			<a class="back-to-top" href="#" title="Quay lên trên">Lên Đầu
-				Trang</a>
-		</div>
-		<div class="right">
-			<%
-				for (UserOrder userOrder : listUserOrders) {
-			%>
-			<p>
-				Tên KH:
-				<%=userOrder.getUser().getFullname()%></p>
-			<p>
-				Tình Trạng Thanh Toán:
-				<%=userOrder.getOrderStatus().getDescription()%></p>
-			<p>
-				Ngày lập:
-				<%=userOrder.getOrderDate()%></p>
-
-
-			<%
-				}
-			%>
 		</div>
 	</div>
-	<footer>
-		<div class="info">
-			<p>COPYRIGHT © 2013</p>
-			<a href="lienhe.jsp"> <b>Liên Hệ </b>
-			</a>
-		</div>
-	</footer>
+	<!-- JavaScript -->
+	<script src="<%=path %>js/jquery-1.10.2.js"></script>
+	<script src="<%=path %>js/bootstrap.js"></script>
+
+	<!-- Page Specific Plugins -->
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+	<script src="<%=path %>js/morris/chart-data-morris.js"></script>
+	<script src="<%=path %>js/tablesorter/jquery.tablesorter.js"></script>
+	<script src="<%=path %>js/tablesorter/tables.js"></script>
+
 </body>
 </html>

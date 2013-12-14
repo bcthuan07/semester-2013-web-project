@@ -32,6 +32,7 @@ public class RegisterService {
 					new UserAddressHistoryDAO());
 			List<User> listUser = userService.listObject();
 			for (User u : listUser) {
+				if(u.getUsername()!=null)
 				if (u.getUsername().equals(user.getUsername())
 						|| u.getEmail().equals(user.getEmail())) {
 					System.out.println("tồn tại");
@@ -61,6 +62,7 @@ public class RegisterService {
 			return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+			e.printStackTrace();
 			System.out.println("lỗi");
 			return false;
 		}
