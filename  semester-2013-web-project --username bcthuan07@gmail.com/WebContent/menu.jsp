@@ -30,10 +30,6 @@
 	} else {
 		listProduct = new ProductDAO().listObject();
 	}
-	
-	User user = (User) session.getAttribute("user");
-	String username = user==null? "Thành Viên": "Xin Chào "+user.getUsername();
-	boolean permission = user == null? false: user.getPermission();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,20 +41,15 @@
 
 <title>Thực Đơn</title>
 
+<script src="js/pace.min.js"></script>
+<link href="css/loading.css" rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
-
-<!-- Custom CSS for the '3 Col Portfolio' Template -->
 <link href="css/3-col-portfolio.css" rel="stylesheet">
-<style>
-.ac {
-	background-color: #43bc9f;
-}
-</style>
+<link href="css/menu.css" rel="stylesheet">
 </head>
 
 <body>
-
 	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -68,133 +59,105 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://startbootstrap.com">Start
-					Bootstrap</a>
+				<a class="navbar-brand" href="home.jsp">Nhà Hàng Jamie Oliver's</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#about">About</a></li>
-					<li><a href="#services">Services</a></li>
-					<li><a href="#contact">Contact</a></li>
+					<li><a href="home.jsp">Home</a></li>
+					<li class="active"><a href="Menu">Thực Đơn</a></li>
+					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<jsp:include page="header.jsp"></jsp:include>
 
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<%
-								if (user == null) {
-							%><li><a href="login.jsp">Đăng Nhập</a></li>
-							<li><a href="register.jsp">Đăng Ký</a></li>
-							<%
-								}
-							%>
-							<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
-							<li class="divider"></li>
-							<!--<li class="dropdown-header">Nav header</li>-->
-							<%
-								if (user != null) {
-							%>
-							<%
-								if (permission) {
-							%>
-							<li><a href="Manage">Trang Quản Lý</a></li>
-							<%
-								}
-							%>
-							<li><a href="Logout">Thoát</a></li>
-							<%
-								}
-							%>
-						</ul></li>
-					<li>
-						<form action="SearchProductByName"
-							class="navbar-form navbar-right" role="form">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="Tìm Kiếm Món Ăn" name="search">
-							</div>
-							<input type="submit" value="Tìm" class="btn btn-success">
-						</form>
-					</li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container -->
 	</nav>
-	<br>
-	<nav class="navbar navbar-inverse"
-		style="background-color: white; border-radius: 0; border: 0;"
-		role="navigation">
-		<div class="container"
-			style="max-width: 1200px; margin-right: auto; margin-left: auto; background-color: #63cab3;">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" style="border: white;"
-					data-toggle="collapse" data-target=".navbar-ex2-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="Menu">Thực Đơn</a>
-			</div>
 
-			<div class="collapse navbar-collapse navbar-ex2-collapse">
-				<ul class="nav navbar-nav">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<p class="lead">Thực Đơn</p>
+				<div class="list-group">
 					<%
 						for (ProductType pt : list) {
 							String c = "";
 							if (ptString.equals(pt.getDescription())) {
-								c = "ac";
+								c = "active";
 							}
 					%>
 
-					<li class="<%=c%>"><a
-						href="Menu?producttype=<%=pt.getProductTypeId()%>" title="Món ăn"><%=pt.getDescription()%></a></li>
+					<a class="list-group-item <%=c%>"
+						href="Menu?producttype=<%=pt.getProductTypeId()%>" title="Món ăn"><%=pt.getDescription()%></a>
 
 					<%
 						}
 					%>
-				</ul>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="row carousel-holder">
+
+					<div class="col-md-12">
+						<div id="carousel-example-generic" class="carousel slide"
+							data-ride="carousel">
+							<ol class="carousel-indicators">
+								<li data-target="#carousel-example-generic" data-slide-to="0"
+									class="active"></li>
+								<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+								<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+							</ol>
+							<div class="carousel-inner">
+								<div class="item active">
+									<img class="slide-image" src="http://placehold.it/800x300">
+								</div>
+								<div class="item">
+									<img class="slide-image" src="http://placehold.it/800x300">
+								</div>
+								<div class="item">
+									<img class="slide-image" src="http://placehold.it/800x300">
+								</div>
+							</div>
+							<a class="left carousel-control" href="#carousel-example-generic"
+								data-slide="prev"> <span
+								class="glyphicon glyphicon-chevron-left"></span>
+							</a> <a class="right carousel-control"
+								href="#carousel-example-generic" data-slide="next"> <span
+								class="glyphicon glyphicon-chevron-right"></span>
+							</a>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<%
+						for (Product product : listProduct) {
+					%>
+					<div class="col-sm-4 col-lg-4 col-md-4">
+						<div class="thumbnail">
+							<img src="http://placehold.it/320x150" alt="">
+							<div class="caption">
+								<h4 class="pull-right">Gias</h4>
+								<h4>
+									<a href="ProductInfo?product=<%=product.getProductId()%>"><%=product.getProductName()%></a>
+								</h4>
+								<p><%=product.getDescription()%></p>
+							</div>
+						</div>
+					</div>
+					<%
+						}
+					%>
+				</div>
 			</div>
 		</div>
-	</nav>
-
-
-	<div class="container">
-		<%
-			int count = 0;
-			for (Product product : listProduct) {
-				count++;
-				if (count % 3 == 1) {
-		%>
-		<div class="row">
-			<%
-				}
-			%>
-
-			<div class="col-md-4 portfolio-item">
-				<a href="ProductInfo?product=<%=product.getProductId()%>"><img
-					class="img-responsive" src="http://placehold.it/700x400"></a>
-				<h3>
-					<a href="ProductInfo?product=<%=product.getProductId()%>"><%=product.getProductName()%></a>
-				</h3>
-				<p><%=product.getDescription()%></p>
-			</div>
-			<%
-				if (count % 3 == 0) {
-			%>
-		</div>
-
-		<%
-			}
-			}
-		%>
 	</div>
+
 	<div class="container">
-
 		<hr>
-
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
@@ -202,7 +165,6 @@
 				</div>
 			</div>
 		</footer>
-
 	</div>
 	<!-- /.container -->
 

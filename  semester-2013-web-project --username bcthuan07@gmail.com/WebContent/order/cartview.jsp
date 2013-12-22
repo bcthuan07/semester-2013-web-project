@@ -18,9 +18,6 @@
 		listProduct = new ArrayList<Product>();
 	}
 
-	String username = user == null ? "Thành Viên" : "Xin Chào "
-			+ user.getUsername();
-	boolean permission = user == null ? false : user.getPermission();
 	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
@@ -53,58 +50,17 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://startbootstrap.com">Nhà
+				<a class="navbar-brand" href="home.jsp">Nhà
 					Hàng Jamie's Oliver</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#about">Trang Chủ</a></li>
-					<li><a href="#services">Thực Đơn</a></li>
-					<li><a href="#contact">Liên Hệ</a></li>
-
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<%
-								if (user == null) {
-							%><li><a href="<%=contextPath%>login.jsp">Đăng Nhập</a></li>
-							<li><a href="<%=contextPath%>register.jsp">Đăng Ký</a></li>
-							<%
-								}
-							%>
-							<li><a href="<%=contextPath%>order/cartview.jsp">Giỏ
-									Hàng</a></li>
-
-							<!--<li class="dropdown-header">Nav header</li>-->
-							<%
-								if (user != null) {
-							%>
-							<li><a href="<%=contextPath%>detail/prolifeinfo.jsp">Thông
-									tin tài khoản</a></li>
-							<li class="divider"></li>
-							<%
-								if (permission) {
-							%>
-							<li><a href="Manage">Trang Quản Lý</a></li>
-							<%
-								}
-							%>
-							<li><a href="Logout">Thoát</a></li>
-							<%
-								}
-							%>
-						</ul></li>
-					<li>
-						<form class="navbar-form navbar-right" role="form">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="Tìm Kiếm Món Ăn">
-							</div>
-							<input type="submit" value="Tìm" class="btn btn-success">
-						</form>
-					</li>
+					<li class="active"><a href="home.jsp">Trang Chủ</a></li>
+					<li><a href="Menu">Thực Đơn</a></li>
+					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -130,7 +86,7 @@
 					<a href="ProductInfo?product=<%=product.getProductId()%>"><%=product.getProductName()%></a>
 				</h3>
 				<p><%=product.getDescription()%></p>
-				<a href="<%=contextPath %>RemoveProduct?index=<%=count-1 %>">Bỏ Sản Phẩm</a>
+				<a href="<%=contextPath %>RemoveProduct?product<%=product.getProductId() %>">Bỏ Sản Phẩm</a>
 			</div>
 			<%
 				if (count % 3 == 0) {
@@ -141,9 +97,8 @@
 			}
 			}
 		%>
-	<%=listProduct%>
 	<%=amount.toString()%>
-	<a href="<%=contextPath%>/ValidateOrder" title="Thanh Toán">Thanh
+	<a class="btn btn-success" href="<%=contextPath%>/ValidateOrder" title="Thanh Toán">Thanh
 		Toán</a>
 		
 	</div>

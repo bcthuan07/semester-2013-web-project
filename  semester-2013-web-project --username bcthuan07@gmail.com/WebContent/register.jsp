@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="dao.CityDAO"%>
+<%@page import="model.City"%>
+<%@page import="service.DAOService"%>
 <%@page import="model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -5,10 +9,6 @@
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
 
-	User user = (User) session.getAttribute("user");
-	if (user != null) {
-		response.sendRedirect("home.jsp");
-	}
 	String username = request.getAttribute("username") != null ? (String) request
 			.getAttribute("username") : "";
 	String phonenumber = request.getAttribute("phonenumber") != null ? (String) request
@@ -45,6 +45,10 @@
 			.getAttribute("city_err") : "";
 	String password_err = request.getAttribute("password_err") != null ? (String) request
 			.getAttribute("password_err") : "";
+
+	DAOService<City, Integer> service = new DAOService<City, Integer>(
+			new CityDAO());
+	List<City> list = service.listObject();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,46 +80,15 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://startbootstrap.com">Nhà
-					Hàng Jamie's Oliver</a>
+				<a class="navbar-brand" href="home.jsp">Nhà Hàng Jamie Oliver's</a>
 			</div>
-
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#about">Trang Chủ</a></li>
-					<li><a href="#services">Thực Đơn</a></li>
-					<li><a href="#contact">Liên Hệ</a></li>
-
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<%
-								if (user == null) {
-							%><li><a href="login.jsp">Đăng Nhập</a></li>
-							<li><a href="register.jsp">Đăng Ký</a></li>
-							<%
-								}
-							%>
-							<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
-							<li class="divider"></li>
-							<!--<li class="dropdown-header">Nav header</li>-->
-							<%
-								if (user != null) {
-							%><li><a href="Logout">Thoát</a></li>
-							<%
-								}
-							%>
-						</ul></li>
-					<li>
-						<form class="navbar-form navbar-right" role="form">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="Tìm Kiếm Món Ăn">
-							</div>
-							<input type="submit" value="Tìm" class="btn btn-success">
-						</form>
-					</li>
+					<li><a href="home.jsp">Home</a></li>
+					<li><a href="Menu">Thực Đơn</a></li>
+					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -124,82 +97,77 @@
 	</nav>
 	<div class="container">
 		<div style="max-width: 900px; margin-left: auto; margin-right: auto;">
-		<form method="post" action="Register">
-			<legend>Đăng Ký:</legend>
-			<div class="form-group">
-				<label for="username">Username:</label> <input type="text"
-					class="form-control" id="username" placeholder="Username"
-					name="username" value="<%=username%>">
-				<p class="help-block"><%=username_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="password">Password:</label> <input type="password"
-					class="form-control" id="password" placeholder="Password"
-					name="password">
-				<p class="help-block"><%=password_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="fullname">Tên Đầy Đủ:</label> <input type="text"
-					class="form-control" id="fullname" placeholder="Tên Đầy Đủ"
-					name="fullname" value="<%=fullname%>">
-				<p class="help-block"><%=fullname_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="email">Email:</label> <input type="email"
-					class="form-control" id="email" placeholder="Email"
-					name="email" value="<%=email%>">
-				<p class="help-block"><%=email_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="phone">Số Điện Thoại:</label> <input type="text"
-					class="form-control" id="phone" placeholder="Số Điện Thoại"
-					name="phonenumber" value="<%=phonenumber%>">
-				<p class="help-block"><%=phonenumber_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="gend">Giới Tính</label>
-			</div>
-			<div class="radio" id="gend">
-				<label>
-					<input type="radio" value="Nam" name="gender" checked="checked">
-					Nam
-				</label>
-			</div>
-			<div class="radio">
-				<label>
-					<input type="radio" value="Nu" name="gender">
-					Nữ
-				</label>
-			</div>
-			<div class="form-group">
-				<label for="buildingnumber">Số Nhà:</label> <input type="text"
-					class="form-control" id="buildingnumber" placeholder="Số Nhà"
-					name="buildingnumber" value="<%=buildingnumber%>">
-				<p class="help-block"><%=buildingnumber_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="street">Đường:</label> <input type="text"
-					class="form-control" id="street" placeholder="Đường"
-					name="street" value="<%=street%>">
-				<p class="help-block"><%=street_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="zipcode">Mã Zip Code:</label> <input type="text"
-					class="form-control" id="zipcode" placeholder="Mã Zip Code"
-					name="zipcode" value="<%=zipcode%>">
-				<p class="help-block"><%=zipcode_err%></p>
-			</div>
-			<div class="form-group">
-				<label for="city">Thành Phố:</label> <input type="text"
-					class="form-control" id="city" placeholder="Thành Phố"
-					name="city" value="<%=city%>">
-				<p class="help-block"><%=city_err%></p>
-			</div>
-			<div class="form-group">
-				<input type="submit" class="form-control" value="Đăng Ký">
-			</div>
-		</form>
-	</div>
+			<form method="post" action="Register">
+				<legend>Đăng Ký:</legend>
+				<div class="form-group">
+					<label for="username">Username:</label> <input type="text"
+						class="form-control" id="username" placeholder="Username"
+						name="username" value="<%=username%>">
+					<p class="help-block"><%=username_err%></p>
+				</div>
+				<div class="form-group">
+					<label for="password">Password:</label> <input type="password"
+						class="form-control" id="password" placeholder="Password"
+						name="password">
+					<p class="help-block"><%=password_err%></p>
+				</div>
+				<div class="form-group">
+					<label for="fullname">Tên Đầy Đủ:</label> <input type="text"
+						class="form-control" id="fullname" placeholder="Tên Đầy Đủ"
+						name="fullname" value="<%=fullname%>">
+					<p class="help-block"><%=fullname_err%></p>
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label> <input type="email"
+						class="form-control" id="email" placeholder="Email" name="email"
+						value="<%=email%>">
+					<p class="help-block"><%=email_err%></p>
+				</div>
+				<div class="form-group">
+					<label for="phone">Số Điện Thoại:</label> <input type="text"
+						class="form-control" id="phone" placeholder="Số Điện Thoại"
+						name="phonenumber" value="<%=phonenumber%>">
+					<p class="help-block"><%=phonenumber_err%></p>
+				</div>
+				<div class="form-group">
+					<label for="gend">Giới Tính</label>
+				</div>
+				<div class="radio" id="gend">
+					<label> <input type="radio" value="Nam" name="gender"
+						checked="checked"> Nam
+					</label>
+				</div>
+				<div class="radio">
+					<label> <input type="radio" value="Nu" name="gender">
+						Nữ
+					</label>
+				</div>
+				<div class="form-group">
+					<label for="buildingnumber">Số Nhà:</label> <input type="text"
+						class="form-control" id="buildingnumber" placeholder="Số Nhà"
+						name="buildingnumber" value="<%=buildingnumber%>">
+					<p class="help-block"><%=buildingnumber_err%></p>
+				</div>
+				<div class="form-group">
+					<label for="street">Đường:</label> <input type="text"
+						class="form-control" id="street" placeholder="Đường" name="street"
+						value="<%=street%>">
+					<p class="help-block"><%=street_err%></p>
+				</div>
+				<div class="form-group">
+					<label for="city">Thành Phố:</label>
+					<select id="city" name="city">
+						<%for(City c: list){%>
+						<option value="<%=c.getId()%>"><%=c.getName() %></option>
+						<% }%>
+					</select>
+					<p class="help-block"><%=city_err%></p>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="form-control" value="Đăng Ký">
+				</div>
+			</form>
+		</div>
 	</div>
 	<div class="container">
 

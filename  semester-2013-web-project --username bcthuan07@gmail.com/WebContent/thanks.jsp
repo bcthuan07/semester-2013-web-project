@@ -4,9 +4,6 @@
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
-	
-	User user = (User) session.getAttribute("user");
-	String username = user==null? "Thành Viên": "Xin Chào "+user.getUsername();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,46 +35,16 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://startbootstrap.com">Nhà
-					Hàng Jamie's Oliver</a>
+				<a class="navbar-brand" href="home.jsp">Nhà Hàng Jamie Oliver's</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#about">Trang Chủ</a></li>
-					<li><a href="#services">Thực Đơn</a></li>
-					<li><a href="#contact">Liên Hệ</a></li>
-
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<%
-								if (user == null) {
-							%><li><a href="login.jsp">Đăng Nhập</a></li>
-							<li><a href="register.jsp">Đăng Ký</a></li>
-							<%
-								}
-							%>
-							<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
-							<li class="divider"></li>
-							<!--<li class="dropdown-header">Nav header</li>-->
-							<%
-								if (user != null) {
-							%><li><a href="Logout">Thoát</a></li>
-							<%
-								}
-							%>
-						</ul></li>
-					<li>
-						<form action="SearchProductByName" class="navbar-form navbar-right" role="form">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="Tìm Kiếm Món Ăn" name="search">
-							</div>
-							<input type="submit" value="Tìm" class="btn btn-success">
-						</form>
-					</li>
+					<li><a href="home.jsp">Home</a></li>
+					<li><a href="Menu">Thực Đơn</a></li>
+					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -91,6 +58,6 @@
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/holder.js"></script>
-	
+
 </body>
 </html>

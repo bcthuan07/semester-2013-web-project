@@ -13,7 +13,6 @@
 	if (user != null) {
 		username = user.getUsername();
 		fullname = user.getFullname();
-		phonenumber = user.getPhoneNumber() + "";
 		email = user.getEmail();
 		paymentmethod = user.getPaymentMethod().getDescription();
 		gioitinh = user.getGender() ? "Nam" : "Nữ";
@@ -21,7 +20,6 @@
 	}
 
 	String contextPath = request.getContextPath() + "/";
-	boolean permission = user == null ? false : user.getPermission();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,49 +58,11 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#about">Trang Chủ</a></li>
-					<li><a href="#services">Thực Đơn</a></li>
-					<li><a href="#contact">Liên Hệ</a></li>
-
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<%
-								if (user == null) {
-							%><li><a href="<%=contextPath %>login.jsp">Đăng Nhập</a></li>
-							<li><a href="<%=contextPath %>register.jsp">Đăng Ký</a></li>
-							<%
-								}
-							%>
-							<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
-							
-							<!--<li class="dropdown-header">Nav header</li>-->
-							<%
-								if (user != null) {
-							%>
-							<li><a href="<%=contextPath %>detail/prolifeinfo.jsp">Thông tin tài khoản</a></li>
-							<li class="divider"></li>
-							<%
-								if (permission) {
-							%>
-							<li><a href="Manage">Trang Quản Lý</a></li>
-							<%
-								}
-							%>
-							<li><a href="Logout">Thoát</a></li>
-							<%
-								}
-							%>
-						</ul></li>
-					<li>
-						<form class="navbar-form navbar-right" role="form">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="Tìm Kiếm Món Ăn">
-							</div>
-							<input type="submit" value="Tìm" class="btn btn-success">
-						</form>
-					</li>
+					<li><a href="home.jsp">Trang Chủ</a></li>
+					<li><a href="Menu">Thực Đơn</a></li>
+					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<jsp:include page="header.jsp"></jsp:include>
+					
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->

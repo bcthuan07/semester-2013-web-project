@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath() + "/";
+	String pathToMarkUp = path+"manage/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,24 +12,24 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Trang Quản Lý - SB Admin</title>
+<title>Đăng nhập - Admin</title>
 
 <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.css" rel="stylesheet">
+<link href="<%=pathToMarkUp %>css/bootstrap.css" rel="stylesheet">
 
 <!-- Add custom CSS here -->
-<link href="<%=path%>css/sb-admin.css" rel="stylesheet">
+<link href="<%=pathToMarkUp%>css/sb-admin.css" rel="stylesheet">
 <link rel="stylesheet"
-	href="<%=path%>font-awesome/css/font-awesome.min.css">
+	href="<%=pathToMarkUp%>font-awesome/css/font-awesome.min.css">
 <!-- Page Specific CSS -->
 <link rel="stylesheet"
 	href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-<link rel="stylesheet" href="<%=path %>css/formsignin.css">
+<link rel="stylesheet" href="<%=pathToMarkUp %>css/formsignin.css">
 </head>
 
 <body>
 	<div class="container">
-		<form action="<%=path %>Login" method="post" class="form-signin" role="form">
+		<form action="<%=path %>Manage/LoginManage" method="post" class="form-signin" role="form">
 			<div class="form-group">
 				<label for="username">Username:</label><input class="form-control"
 					type="text" id="username" name="username" placeholder="Username">
