@@ -18,22 +18,15 @@
 		fullname = request.getAttribute("fullname") == null ? user
 				.getFullname() : (String) request
 				.getAttribute("fullname");
-		phonenumber = request.getAttribute("phonenumber") == null ? user
-				.getPhoneNumber() : (String) request
-				.getAttribute("phonenumber");
 		email = request.getAttribute("email") == null ? user.getEmail()
 				: (String) request.getAttribute("email");
 		gioitinh = user.getGender();
 	}
 
-	String phonenumber_err = "";
 	String email_err = "";
 	String oldpassword_err = "";
 	String password1_err = "";
 	String password2_err = "";
-	if (request.getAttribute("phonenumber_err") != null)
-		phonenumber_err = (String) request
-				.getAttribute("phonenumber_err");
 
 	if (request.getAttribute("email_err") != null)
 		email_err = (String) request.getAttribute("email_err");
@@ -48,7 +41,6 @@
 	if (request.getAttribute("phonenumber_err") != null)
 		password2_err = (String) request.getAttribute("password2_err");
 	String contextPath = request.getContextPath() + "/";
-	boolean permission = user == null ? false : user.getPermission();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,50 +79,10 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#about">Trang Chủ</a></li>
-					<li><a href="#services">Thực Đơn</a></li>
-					<li><a href="#contact">Liên Hệ</a></li>
-
-					<li class="dropdown"><a href="" class="dropdown-toggle"
-						data-toggle="dropdown"><%=username%><b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<%
-								if (user == null) {
-							%><li><a href="login.jsp">Đăng Nhập</a></li>
-							<li><a href="register.jsp">Đăng Ký</a></li>
-							<%
-								}
-							%>
-							<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
-							<!--<li class="dropdown-header">Nav header</li>-->
-							<%
-								if (user != null) {
-							%>
-							<li><a href="<%=contextPath%>detail/prolifeinfo.jsp">Thông
-									tin tài khoản</a></li>
-							<li class="divider"></li>
-
-							<%
-								if (permission) {
-							%>
-							<li><a href="Manage">Trang Quản Lý</a></li>
-							<%
-								}
-							%>
-							<li><a href="Logout">Thoát</a></li>
-							<%
-								}
-							%>
-						</ul></li>
-					<li>
-						<form class="navbar-form navbar-right" role="form">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="Tìm Kiếm Món Ăn">
-							</div>
-							<input type="submit" value="Tìm" class="btn btn-success">
-						</form>
-					</li>
+					<li><a href="home.jsp">Trang Chủ</a></li>
+					<li><a href="Menu">Thực Đơn</a></li>
+					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -167,7 +119,6 @@
 				value="<%=email%>"> <input type="submit" value="Lưu">
 		</form>
 		<%=email_err%>
-		<%=phonenumber_err%>
 		<%=oldpassword_err%>
 		<%=password1_err%>
 		<%=password2_err%>
