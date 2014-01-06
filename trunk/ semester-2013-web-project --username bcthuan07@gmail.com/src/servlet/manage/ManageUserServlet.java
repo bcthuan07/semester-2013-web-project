@@ -55,12 +55,19 @@ public class ManageUserServlet extends HttpServlet {
 						new UserDAO());
 				List<User> listuser = service.listObject();
 				List<User> listcustomer = new ArrayList<User>();
+				List<User> liststaff = new ArrayList<User>();
 				for (User u : listuser) {
 					Set<RoleMember> set = u.getUserRoleMembers();
-					if (set.contains(new RoleMember(new RoleMemberId(user.getUserId(), 2))))
+					System.out.println(set);
+					if (set.contains(new RoleMember(new RoleMemberId(user.getUserId(), new Integer(3)))))
 						listcustomer.add(u);
+					else if (set.contains(new RoleMember(new RoleMemberId(user.getUserId(), new Integer(2)))))
+						liststaff.add(u);
 				}
+				System.out.println(liststaff);
+				System.out.println(listcustomer);
 				request.setAttribute("listcustomer", listcustomer);
+				request.setAttribute("liststaff", liststaff);
 				getServletContext().getRequestDispatcher(
 						"/manage/admin-user.jsp").forward(request, response);
 			} else {

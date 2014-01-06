@@ -66,6 +66,11 @@ public class ValidateOrderServlet extends HttpServlet {
 		String buildingNumber_err = "";
 		String fullname_err = "";
 
+		String emailManageUser = getServletContext().getInitParameter("manageuser");
+		String emailAdmin= getServletContext().getInitParameter("admin");
+
+		
+		
 		int bdn = 0;
 		Integer city_id = 0;
 		try {
@@ -129,8 +134,10 @@ public class ValidateOrderServlet extends HttpServlet {
 				newUser.setDatecreated(new Date());
 				newUser.setFullname(fullname);
 				OrderService orderService = new OrderService();
+				
+				
 				if (orderService.order(listProduct, newUser, address,
-						new Date())) {
+						new Date(),emailManageUser, emailAdmin)) {
 					listProduct.clear();
 					session.setAttribute("listproduct", listProduct);
 
@@ -162,7 +169,7 @@ public class ValidateOrderServlet extends HttpServlet {
 			}
 		} else {
 			OrderService orderService = new OrderService();
-			if (orderService.order(listProduct, user, new Date())) {
+			if (orderService.order(listProduct, user, new Date(), emailManageUser, emailAdmin)) {
 				listProduct.clear();
 				session.setAttribute("listproduct", listProduct);
 				String message = "Cảm ơn " + user.getFullname()

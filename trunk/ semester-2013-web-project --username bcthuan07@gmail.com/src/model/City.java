@@ -22,8 +22,12 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="city")
-public class City {
+public class City implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	private Set<Address> addresses = new HashSet<Address>(0);

@@ -1,4 +1,4 @@
-package servlet.detail;
+package servlet.common;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -153,7 +153,9 @@ public class RegisterServlet extends HttpServlet {
 
 			try {
 				RegisterService registerService = new RegisterService();
-				registerService.register(user, address);
+				String emailManageUser = getServletContext().getInitParameter("manageuser");
+				String emailAdmin = getServletContext().getInitParameter("admin");
+				registerService.register(user, address, emailManageUser, emailAdmin);
 
 			} catch (UsernameException e) {
 				System.out.println(e.getMessage());
@@ -175,6 +177,7 @@ public class RegisterServlet extends HttpServlet {
 				request.getRequestDispatcher("register.jsp").forward(request,
 						response);
 			}
+			
 			String message = "Bạn đã đăng ký thành công!";
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("complete.jsp").forward(request, response);;

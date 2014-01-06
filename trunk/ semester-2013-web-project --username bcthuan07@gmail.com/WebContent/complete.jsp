@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	
 	String message = request.getAttribute("message") == null ? ""
 			: (String) request.getAttribute("message");
 %>

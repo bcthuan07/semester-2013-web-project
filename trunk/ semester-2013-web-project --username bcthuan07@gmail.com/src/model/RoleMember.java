@@ -83,6 +83,8 @@ public class RoleMember implements java.io.Serializable {
 		this.role = role;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,6 +128,11 @@ public class RoleMember implements java.io.Serializable {
 	public RoleMember(RoleMemberId id) {
 		super();
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "RoleMember [role=" + role + ", id=" + id + "]";
 	}
 	
 	
