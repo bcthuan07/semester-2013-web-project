@@ -17,8 +17,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="ads")
-public class Ads {
+public class Ads implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String content;
 	private String imagePath;

@@ -44,19 +44,17 @@ public class User implements java.io.Serializable {
 	private Set<UserOrder> userOrders = new HashSet<UserOrder>(0);
 	private Set<UserAddressHistory> userAddressHistories = new HashSet<UserAddressHistory>(
 			0);
-	private Set<Feedback> feedbacks = new HashSet<Feedback>(0);
 	private Set<RoleMember> userRoleMembers = new HashSet<RoleMember>(0);
+
 	public User() {
 	}
 
-	public User(Integer userId, String username, byte[] password,
-			PaymentMethod paymentMethod, String fullname, String email,
-			boolean gender, Date datecreated, byte[] salt,
-			Set<UserOrder> userOrders,
+	public User(String username, byte[] password, PaymentMethod paymentMethod,
+			String fullname, String email, boolean gender, Date datecreated,
+			byte[] salt, Set<UserOrder> userOrders,
 			Set<UserAddressHistory> userAddressHistories,
-			Set<Feedback> feedbacks, Set<RoleMember> userRoleMembers) {
+			Set<RoleMember> userRoleMembers) {
 		super();
-		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.paymentMethod = paymentMethod;
@@ -67,10 +65,8 @@ public class User implements java.io.Serializable {
 		this.salt = salt;
 		this.userOrders = userOrders;
 		this.userAddressHistories = userAddressHistories;
-		this.feedbacks = feedbacks;
 		this.userRoleMembers = userRoleMembers;
 	}
-
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -94,9 +90,7 @@ public class User implements java.io.Serializable {
 		this.paymentMethod = paymentMethod;
 	}
 
-
-	
-	@Column(name="fullname")
+	@Column(name = "fullname")
 	public String getFullname() {
 		return fullname;
 	}
@@ -114,7 +108,6 @@ public class User implements java.io.Serializable {
 		this.email = email;
 	}
 
-	
 	@Column(name = "gender", nullable = false)
 	public boolean getGender() {
 		return this.gender;
@@ -155,16 +148,6 @@ public class User implements java.io.Serializable {
 		this.userAddressHistories = userAddressHistories;
 	}
 
-	@OneToMany(mappedBy = "user")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	public Set<Feedback> getFeedbacks() {
-		return this.feedbacks;
-	}
-
-	public void setFeedbacks(Set<Feedback> feedbacks) {
-		this.feedbacks = feedbacks;
-	}
-
 	@Column(name = "username")
 	public String getUsername() {
 		return username;
@@ -182,8 +165,8 @@ public class User implements java.io.Serializable {
 	public void setPassword(byte[] password) {
 		this.password = password;
 	}
-	
-	@Column(name="salt")
+
+	@Column(name = "salt")
 	public byte[] getSalt() {
 		return salt;
 	}
@@ -191,7 +174,7 @@ public class User implements java.io.Serializable {
 	public void setSalt(byte[] salt) {
 		this.salt = salt;
 	}
-	
+
 	@OneToMany(mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	public Set<RoleMember> getUserRoleMembers() {
@@ -263,6 +246,4 @@ public class User implements java.io.Serializable {
 		return true;
 	}
 
-	
-	
 }

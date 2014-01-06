@@ -9,7 +9,7 @@
     <param-value>bcthuan07@gmail.com</param-value>
   </context-param>
   <context-param>
-    <param-name>acountsend</param-name>
+    <param-name>admin</param-name>
     <param-value>doublefaces1211@gmail.com</param-value>
   </context-param>
 </web-app>

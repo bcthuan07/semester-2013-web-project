@@ -26,9 +26,11 @@
 <ul class="nav navbar-nav navbar-right navbar-user">
 	<li class="dropdown user-dropdown"><a href="#"
 		class="dropdown-toggle" data-toggle="dropdown"><i
-			class="fa fa-user"></i><%=username%><b class="caret"></b></a>
+			class="fa fa-user"></i> <%=username%><b class="caret"></b></a>
 		<ul class="dropdown-menu">
-			<li><a href="#"><i class="fa fa-user"></i> Tài Khoản</a></li>
+			<li><a href="#"> Tài Khoản</a></li>
+			<li><a href="<%=path%>home.jsp" title="Quay lại trang chính"> Trang
+					Chính</a></li>
 			<li class="divider"></li>
 			<li><a href="<%=path%>Logout"><i class="fa fa-power-off"></i>
 					Thoát</a></li>

@@ -6,6 +6,7 @@ package service;
 import java.util.Date;
 import java.util.List;
 
+import util.MailUtil;
 import model.Address;
 import model.Role;
 import model.RoleMember;
@@ -25,8 +26,8 @@ import exception.UsernameException;
  */
 public class RegisterService {
 
-	public boolean register(User user, Address address)
-			throws UsernameException {
+	public boolean register(User user, Address address, String emailManageUser,
+			String emailAdmin) throws UsernameException {
 		try {
 			DAOService<User, Integer> userService = new DAOService<>(
 					new UserDAO());
@@ -60,7 +61,8 @@ public class RegisterService {
 			Role role = new Role();
 			role.setRoleId(new Integer(3));
 			userService.addObject(user);
-			RoleMemberId roleMemberId = new RoleMemberId(user.getUserId(),role.getRoleId());
+			RoleMemberId roleMemberId = new RoleMemberId(user.getUserId(),
+					role.getRoleId());
 			RoleMember roleMember = new RoleMember();
 			roleMember.setId(roleMemberId);
 			roleService.addObject(roleMember);
@@ -70,10 +72,22 @@ public class RegisterService {
 			addressHistory.setId(addressHistoryId);
 
 			userAddressService.addObject(addressHistory);
+
+			// gui mail thong bao cho khach hang
+			String pass = "dfghjhFGHJKL";
+			String msgBody = "Username: " + user.getUsername()
+					+ "\n\rHọ và tên: " + user.getFullname() + "\n\rĐịa chỉ: "
+					+ address.getBuildingNumber() + ", " + address.getCity()
+					+ ", \n\r" + "Số ĐT: " + address.getPhonenumber();
+			MailUtil.send(emailManageUser, "Quản lý tài khoản", pass,
+					user.getEmail(), user.getFullname(),
+					"Thông tin đăng ký tài khoản", msgBody);
+
+			MailUtil.send(emailManageUser, "Quản lý tài khoản", pass,
+					emailAdmin, "Admin", "Đăng ký tài khoản", msgBody);
 			return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-			e.printStackTrace();
 			return false;
 		}
 	}

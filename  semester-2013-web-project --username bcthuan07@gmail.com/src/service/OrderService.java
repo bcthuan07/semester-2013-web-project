@@ -28,7 +28,7 @@ public class OrderService {
 
 	}
 
-	public boolean order(List<Product> listProduct, User user, Date date) {
+	public boolean order(List<Product> listProduct, User user, Date date, String emailManageUser, String emailAdmin) {
 		try {
 //			DAOService<User, Integer> userdao = new DAOService<>(new UserDAO());
 			DAOService<UserOrder, Integer> userorderdao = new DAOService<>(
@@ -56,6 +56,16 @@ public class OrderService {
 				orderitemdao.addObject(item);
 				setProducts.add(item);
 			}
+			//gui mail
+			String pass = "dfghjhFGHJKL";
+			String msgBody = "";
+			
+			
+			
+			
+			
+			
+			
 //			userOrder.setOrderItems(setProducts);
 //			userorderdao.updateObject(userOrder);
 //			userdao.updateObject(user);
@@ -67,7 +77,7 @@ public class OrderService {
 	}
 
 	public boolean order(List<Product> listProduct, User user, Address address,
-			Date date) {
+			Date date, String emailManageUser, String emailAdmin) {
 		try {
 //			DAOService<Address, Integer> addressdao = new DAOService<>(
 //					new AddressDAO());
@@ -84,8 +94,8 @@ public class OrderService {
 //			addressHistory.setAddress(address);
 //			useraddresshistorydao.addObject(addressHistory);
 			RegisterService rs = new RegisterService();
-			rs.register(user, address);
-			return order(listProduct, user, date);
+			rs.register(user, address, emailManageUser, emailAdmin);
+			return order(listProduct, user, date, emailManageUser, emailAdmin);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return false;

@@ -23,20 +23,13 @@ public class MailUtil {
 
 	/**
 	 * 
-	 * @param username
-	 *            : tài khoản gmail người gửi
-	 * @param userInfo
-	 *            : tên người gửi
+	 * @param username: dia chi email nguoi gui
+	 * @param userInfo: ten nguoi gui
 	 * @param pass
-	 *            :
-	 * @param dest
-	 *            : tài khoản người nhận
-	 * @param destInfo
-	 *            : tên người nhận
-	 * @param subject
-	 *            : tiêu đề email
-	 * @param msgBody
-	 *            : nội dung
+	 * @param dest dia chi email nguoi nhan
+	 * @param destInfo: ten nguoi nhan
+	 * @param subject: tieu de
+	 * @param msgBody: noi dung
 	 */
 	public static void send(final String username, String userInfo, final String pass,
 			String dest, String destInfo, String subject, String msgBody) {

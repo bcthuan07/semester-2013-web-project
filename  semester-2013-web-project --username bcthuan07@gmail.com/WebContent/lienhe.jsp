@@ -6,6 +6,20 @@
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
+
+	String fullname = request.getAttribute("fullname") == null ? ""
+			: (String) request.getAttribute("fullname");
+	String content = request.getAttribute("content") == null ? ""
+			: (String) request.getAttribute("content");
+	String email = request.getAttribute("email") == null ? ""
+			: (String) request.getAttribute("email");
+
+	String fullname_err = request.getAttribute("fullname_err") == null ? ""
+			: (String) request.getAttribute("fullname_err");
+	String content_err = request.getAttribute("content_err") == null ? ""
+			: (String) request.getAttribute("content_err");
+	String email_err = request.getAttribute("email_err") == null ? ""
+			: (String) request.getAttribute("email_err");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,8 +31,8 @@
 
 <title>Trang Chủ</title>
 
-	<script src="js/pace.min.js"></script>
-	<link href="css/loading.css" rel="stylesheet">
+<script src="js/pace.min.js"></script>
+<link href="css/loading.css" rel="stylesheet">
 
 
 <!-- Bootstrap core CSS -->
@@ -58,14 +72,36 @@
 		<br> <br> <br>
 		<div class="row">
 			<div class="col-md-7">
-				<iframe width="640" height="480" frameborder="0" scrolling="no"
-					marginheight="0" marginwidth="0"
-					src="https://maps.google.com/?ie=UTF8&amp;t=m&amp;source=embed&amp;ll=10.869216,106.802559&amp;spn=0.04046,0.054932&amp;z=14&amp;output=embed"></iframe>
-				<br />
-				<small><a
-					href="https://maps.google.com/?ie=UTF8&amp;t=m&amp;source=embed&amp;ll=10.869216,106.802559&amp;spn=0.04046,0.054932&amp;z=14"
-					style="color: #0000FF; text-align: left">Xem Bản đồ cỡ lớn hơn</a></small>
-				<div class="clearfix visible-xs"></div>
+				<h2>Phản hồi:</h2>
+				<form action="Feedback" method="post">
+					<div class="row">
+						<div class="col-md-5 form-group">
+							<label for="fullname">Họ và Tên:</label> <input type="text"
+								name="fullname" id="fullname" class="form-control"
+								value="<%=fullname%>">
+							<p class="help-block"><%=fullname_err%></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class=" col-md-5 form-group">
+							<label for="email">Email:</label> <input type="email"
+								name="email" id="email" value="<%=email%>" class="form-control">
+							<p class="help-block"><%=email_err%></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 form-group">
+							<label for="content">Nội dung:</label>
+							<textarea rows="6" class="form-control" name="content"></textarea>
+							<p class="help-block"><%=content_err%></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<input type="submit" value="Gửi" class="form-control">
+						</div>
+					</div>
+				</form>
 			</div>
 			<div class="col-md-3">
 				<h1>Địa chỉ:</h1>
