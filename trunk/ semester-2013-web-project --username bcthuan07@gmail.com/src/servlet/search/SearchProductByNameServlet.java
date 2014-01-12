@@ -10,11 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Product;
+import model.ProductType;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import service.DAOService;
 import util.HibernateUtil;
+import dao.ProductTypeDAO;
 
 /**
  * Servlet implementation class SearchProductByNameServlet
@@ -46,12 +49,15 @@ public class SearchProductByNameServlet extends HttpServlet {
 		session.beginTransaction();
 		Query query = session
 				.createQuery("from Product where productName like :name ");
-		query.setString("name", "%"+input+"%");
+		query.setString("name", "%" + input + "%");
 		@SuppressWarnings("unchecked")
 		List<Product> list = query.list();
 		session.getTransaction().commit();
 		session.close();
 		System.out.println(list);
+		request.setAttribute("listproducttype",
+				new DAOService<ProductType, Integer>(new ProductTypeDAO())
+						.listObject());
 		request.setAttribute("listproduct", list);
 		request.getRequestDispatcher("menu.jsp").forward(request, response);
 	}

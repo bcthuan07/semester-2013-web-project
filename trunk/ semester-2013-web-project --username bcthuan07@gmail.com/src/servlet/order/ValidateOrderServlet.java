@@ -11,14 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.CityDAO;
 import model.Address;
 import model.City;
+import model.PaymentMethod;
 import model.Product;
 import model.User;
 import service.DAOService;
 import service.OrderService;
+import service.RegisterService;
 import util.ValidateData;
+import dao.CityDAO;
+import dao.PaymentMethodDAO;
+import dao.UserDAO;
+import exception.UsernameException;
 
 /**
  * Servlet implementation class ValidateOrderServlet
@@ -59,6 +64,7 @@ public class ValidateOrderServlet extends HttpServlet {
 		String buildingNumber = request.getParameter("buildingnumber");
 		String cityString = request.getParameter("city");
 		String fullname = request.getParameter("fullname");
+		String paymentmethod = request.getParameter("payment");
 
 		String email_err = "";
 		String phonenumber_err = "";
@@ -66,24 +72,24 @@ public class ValidateOrderServlet extends HttpServlet {
 		String buildingNumber_err = "";
 		String fullname_err = "";
 
-		String emailManageUser = getServletContext().getInitParameter("manageuser");
-		String emailAdmin= getServletContext().getInitParameter("admin");
+		String emailManageUser = getServletContext().getInitParameter(
+				"manageuser");
+		String emailAdmin = getServletContext().getInitParameter("admin");
 
-		
-		
 		int bdn = 0;
-		Integer city_id = 0;
+		Integer cityId = 0, paymentId = 0;
+		;
 		try {
-			city_id = Integer.parseInt(cityString);
+			cityId = Integer.parseInt(cityString);
+			paymentId = Integer.parseInt(paymentmethod);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		if (fullname == null || fullname.equals("")) {
-			fullname_err += "Tên không được để trống!";
+			fullname_err += user == null ? "Tên không được để trống!" : "";
 		}
 
 		if (email == null || email.equals("")) {
-			email_err += "Email không được để trống!";
+			email_err += user == null ? "Email không được để trống!" : "";
 		} else {
 			email_err += ValidateData.isEmail(email) ? ""
 					: "Email không hợp lệ!";
@@ -113,65 +119,46 @@ public class ValidateOrderServlet extends HttpServlet {
 			}
 		}
 
+		if (email_err.length() == 0 && phonenumber_err.length() == 0
+				&& street_err.length() == 0 && buildingNumber_err.length() == 0
+				&& fullname_err.length() == 0) {
+			DAOService<City, Integer> cityService = new DAOService<>(
+					new CityDAO());
+			City city = cityService.getObjectById(cityId);
+			DAOService<PaymentMethod, Integer> paymentMethodService = new DAOService<PaymentMethod, Integer>(
+					new PaymentMethodDAO());
+			PaymentMethod paymentMethod = paymentMethodService
+					.getObjectById(paymentId);
 
-
-		if (user == null) {
-			if (email_err.length() == 0 && phonenumber_err.length() == 0
-					&& street_err.length() == 0
-					&& buildingNumber_err.length() == 0
-					&& fullname_err.length() == 0) {
-				DAOService<City, Integer> cityService = new DAOService<>(new CityDAO());
-				City city = cityService.getObjectById(city_id);
-						
-				Address address = new Address();
-				address.setBuildingNumber(bdn);
-				address.setCity(city);
-				address.setStreet(street);
-				address.setPhonenumber(phonenumber);
-				
-				User newUser = new User();
-				newUser.setEmail(email);
-				newUser.setDatecreated(new Date());
-				newUser.setFullname(fullname);
-				OrderService orderService = new OrderService();
-				
-				
-				if (orderService.order(listProduct, newUser, address,
-						new Date(),emailManageUser, emailAdmin)) {
-					listProduct.clear();
-					session.setAttribute("listproduct", listProduct);
-
-					String message = "Cảm ơn " + newUser.getFullname()
-							+ " đã mua hàng ở đây!";
-					request.setAttribute("message", message);
-					request.getRequestDispatcher("thanks.jsp").forward(request,
-							response);
-				} else {
-					String error = "Rất tiếc, không thể thực hiện được giao dịch!";
-					request.setAttribute("error", error);
-					request.getRequestDispatcher("error/commonerror.jsp").forward(request, response);
+			Address address = new Address();
+			address.setBuildingNumber(bdn);
+			address.setCity(city);
+			address.setStreet(street);
+			if (user == null) {
+				user = new User();
+				user.setEmail(email);
+				user.setDatecreated(new Date());
+				user.setFullname(fullname);
+				user.setPhoneNumber(phonenumber);
+				user.setPaymentMethod(paymentMethod);
+				RegisterService rs = new RegisterService();
+				try {
+					rs.register(user, address, "", "", false);
+				} catch (UsernameException e) {
 				}
-
 			} else {
-				request.setAttribute("fullname_err", fullname_err);
-				request.setAttribute("email_err", email_err);
-				request.setAttribute("phoneumber_err", phonenumber_err);
-				request.setAttribute("street_err", street_err);
-				request.setAttribute("buildingnumber_err", buildingNumber_err);
-
-				request.setAttribute("fullname", fullname);
-				request.setAttribute("email", email);
-				request.setAttribute("phonenumber", phonenumber);
-				request.setAttribute("street", street);
-				request.setAttribute("buildingNumber", buildingNumber);
-				request.getRequestDispatcher("order/validatecart.jsp").forward(
-						request, response);
+				DAOService<User, Integer> userDaoService = new DAOService<User, Integer>(
+						new UserDAO());
+				user.setPhoneNumber(phonenumber);
+				userDaoService.updateObject(user);
 			}
-		} else {
 			OrderService orderService = new OrderService();
-			if (orderService.order(listProduct, user, new Date(), emailManageUser, emailAdmin)) {
+
+			if (orderService.order(listProduct, user, new Date(),
+					emailManageUser, emailAdmin, address)) {
 				listProduct.clear();
 				session.setAttribute("listproduct", listProduct);
+
 				String message = "Cảm ơn " + user.getFullname()
 						+ " đã mua hàng ở đây!";
 				request.setAttribute("message", message);
@@ -180,9 +167,24 @@ public class ValidateOrderServlet extends HttpServlet {
 			} else {
 				String error = "Rất tiếc, không thể thực hiện được giao dịch!";
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("error/commonerror.jsp").forward(request, response);
+				request.getRequestDispatcher("error/commonerror.jsp").forward(
+						request, response);
 			}
+
+		} else {
+			request.setAttribute("fullname_err", fullname_err);
+			request.setAttribute("email_err", email_err);
+			request.setAttribute("phonenumber_err", phonenumber_err);
+			request.setAttribute("street_err", street_err);
+			request.setAttribute("buildingnumber_err", buildingNumber_err);
+
+			request.setAttribute("fullname", fullname);
+			request.setAttribute("email", email);
+			request.setAttribute("phonenumber", phonenumber);
+			request.setAttribute("street", street);
+			request.setAttribute("buildingNumber", buildingNumber);
+			request.getRequestDispatcher("order/validatecart.jsp").forward(
+					request, response);
 		}
 	}
-
 }

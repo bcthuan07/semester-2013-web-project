@@ -1,3 +1,8 @@
+<%@page import="dao.PaymentMethodDAO"%>
+<%@page import="model.PaymentMethod"%>
+<%@page import="model.City"%>
+<%@page import="dao.CityDAO"%>
+<%@page import="service.DAOService"%>
 <%@page import="model.User"%>
 <%@page import="model.Product"%>
 <%@page import="java.util.List"%>
@@ -7,14 +12,19 @@
 	List<Product> list = (List<Product>) session
 			.getAttribute("listproduct");
 	Double amount = 0.0;
+
+	DAOService<City, Integer> service = new DAOService<City, Integer>(
+			new CityDAO());
+	DAOService<PaymentMethod, Integer> paymentList = new DAOService<PaymentMethod, Integer>(
+			new PaymentMethodDAO());
 	if (list == null) {
-		response.sendRedirect(request.getContextPath()+"/home.jsp");
+		response.sendRedirect(request.getContextPath() + "/home.jsp");
 	} else if (list.size() == 0) {
-		response.sendRedirect(request.getContextPath()+"/Menu");
+		response.sendRedirect(request.getContextPath() + "/Menu");
 	}
-	if(list!=null)
-	for (Product p : list)
-		amount += p.getPrice();
+	if (list != null)
+		for (Product p : list)
+			amount += p.getPrice();
 
 	String fullname = request.getAttribute("fullname") == null ? ""
 			: (String) request.getAttribute("fullname");
@@ -24,13 +34,16 @@
 			: (String) request.getAttribute("phonenumber");
 	String street = request.getAttribute("street") == null ? ""
 			: (String) request.getAttribute("street");
-	String city = request.getAttribute("city") == null ? ""
-			: (String) request.getAttribute("city");
-	String zipcode = request.getAttribute("zipcode") == null ? ""
-			: (String) request.getAttribute("zipcode");
 	String buildingnumber = request.getAttribute("buildingnumber") == null ? ""
 			: (String) request.getAttribute("buildingnumber");
 
+	User user = (User) session.getAttribute("user");
+	boolean hasLogin = user == null ? false:true;
+	String disabled = hasLogin? "disabled": "";
+	fullname = hasLogin? user.getFullname(): "";
+	email = hasLogin? user.getEmail(): "";
+
+	
 	String fullname_err = request.getAttribute("fullname_err") == null ? ""
 			: (String) request.getAttribute("fullname_err");
 	String email_err = request.getAttribute("email_err") == null ? ""
@@ -39,15 +52,11 @@
 			: (String) request.getAttribute("phonenumber_err");
 	String street_err = request.getAttribute("street_err") == null ? ""
 			: (String) request.getAttribute("street_err");
-	String city_err = request.getAttribute("city_err") == null ? ""
-			: (String) request.getAttribute("city_err");
-	String zipcode_err = request.getAttribute("zipcode_err") == null ? ""
-			: (String) request.getAttribute("zipcode_err");
 	String buildingnumber_err = request
 			.getAttribute("buildingnumber_err") == null ? ""
 			: (String) request.getAttribute("buildingnumber_err");
 
-	String contextPath = request.getContextPath()+"/";
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,11 +69,11 @@
 <title>Trang Chủ</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<%=contextPath %>css/bootstrap.css" rel="stylesheet">
+<link href="<%=contextPath%>css/bootstrap.css" rel="stylesheet">
 
 <!-- Custom CSS for the '3 Col Portfolio' Template -->
-<link href="<%=contextPath %>css/3-col-portfolio.css" rel="stylesheet">
-<link href="<%=contextPath %>css/carousel.css" rel="stylesheet">
+<link href="<%=contextPath%>css/3-col-portfolio.css" rel="stylesheet">
+<link href="<%=contextPath%>css/carousel.css" rel="stylesheet">
 
 </head>
 
@@ -97,58 +106,75 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container">
-	<form action="<%=request.getContextPath()%>/ValidateOrder"
-		method="post">
-		<legend>Thanh Toán</legend>
-		<div class="form-group">
-		<label for="fullname">Tên đầy đủ</label>
-		<input class="form-control" id="fullname" type="text" name="fullname" value="<%=fullname%>">
-		<p class="help-block"><%=fullname_err %>
-		</div>
-		
-		<div class="form-group">
-		<label for="email">Email</label>
-		<input class="form-control" id="email" type="text" name="email" value="<%=email%>">
-		<p class="help-block"><%=email_err %></p>
-		</div>
-		
-		<div class="form-group">
-		<label for="phone">Số điện thoại</label>
-		<input class="form-control" id="phone" type="text" name="phonenumber" value="<%=phonenumber%>">
-		<p><%=phonenumber_err %></p>
-		</div>
-		
-		<div class="form-group">
-		<label for="street">Đường</label>
-		<input class="form-control" id="street" type="text" name="street" value="<%=street%>">
-		<p><%=street_err %></p>
-		</div>
-		
-		<div class="form-group">
-		<label for="city">Thành Phố</label>
-		<input class="form-control" id="city" type="text" name="city" value="<%=city%>">
-		<p><%=city_err%></p>
-		</div>
-		
-		<div class="form-group">
-		<label for="zip">Zip code:</label>
-		<input class="form-control" id="zip" type="text" name="zipcode" value="<%=zipcode%>">
-		<p><%=zipcode_err%></p>
-		</div>
-		
-		<div class="form-group">
-		<label for="number">Số nhà</label>
-		<input class="form-control" id="number" type="text" name="buildingnumber" value="<%=buildingnumber%>">
-		<p><%=buildingnumber_err%></p>
-		</div>
-		
-		<div class="form-group">
-		<label for="amount">Tổng Thành Tiền:</label>
-		<p><%=amount%></p>
-		</div>
-		<input class="form-control" type="submit" value="Mua">
-		
-	</form>
+		<form action="<%=request.getContextPath()%>/ValidateOrder"
+			method="post">
+			<legend>Thanh Toán</legend>
+			<div class="form-group">
+				<label for="fullname">Tên đầy đủ</label> <input class="form-control"
+					id="fullname" type="text" name="fullname" value="<%=fullname%>"
+					<%=disabled%>>
+				<p class="help-block"><%=fullname_err%>
+			</div>
+
+			<div class="form-group">
+				<label for="email">Email</label> <input class="form-control"
+					id="email" type="text" name="email" value="<%=email%>"
+					<%=disabled%>>
+				<p class="help-block"><%=email_err%></p>
+			</div>
+
+			<div class="form-group">
+				<label for="phone">Số điện thoại</label> <input class="form-control"
+					id="phone" type="text" name="phonenumber" value="<%=phonenumber%>">
+				<p><%=phonenumber_err%></p>
+			</div>
+
+			<div class="form-group">
+				<label for="street">Đường</label> <input class="form-control"
+					id="street" type="text" name="street" value="<%=street%>">
+				<p><%=street_err%></p>
+			</div>
+
+			<div class="form-group">
+				<label for="city">Thành Phố</label> <select name="city"
+					class="form-control" id="city">
+					<%
+						for (City c : service.listObject()) {
+					%>
+					<option value=<%=c.getId()%>><%=c.getName()%></option>
+					<%
+						}
+					%>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="number">Số nhà</label> <input class="form-control"
+					id="number" type="text" name="buildingnumber"
+					value="<%=buildingnumber%>">
+				<p><%=buildingnumber_err%></p>
+			</div>
+
+			<div class="form-group">
+				<label for="payment">Hình thức thanh toán</label> <select
+					class="form-control" id="payment" name="payment">
+					<%
+						for (PaymentMethod p : paymentList.listObject()) {
+					%>
+					<option value="<%=p.getPaymentMethodId()%>"><%=p.getDescription()%></option>
+					<%
+						}
+					%>
+				</select>
+
+			</div>
+			<div class="form-group">
+				<label for="amount">Tổng Thành Tiền:</label>
+				<p><%=amount%></p>
+			</div>
+			<input class="form-control" type="submit" value="Mua">
+
+		</form>
 	</div>
 	<div class="container">
 
@@ -166,8 +192,8 @@
 	<!-- /.container -->
 
 	<!-- JavaScript -->
-	<script src="<%=contextPath %>js/jquery-1.10.2.js"></script>
-	<script src="<%=contextPath %>js/bootstrap.js"></script>
+	<script src="<%=contextPath%>js/jquery-1.10.2.js"></script>
+	<script src="<%=contextPath%>js/bootstrap.js"></script>
 
 </body>
 

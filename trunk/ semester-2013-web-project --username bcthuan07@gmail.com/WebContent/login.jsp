@@ -6,6 +6,14 @@
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
+
+	String password_err = request.getAttribute("password_err") == null ? ""
+			: (String) request.getAttribute("password_err");
+	String username_err = request.getAttribute("username_err") == null ? ""
+			: (String) request.getAttribute("username_err");
+
+	String username = request.getAttribute("username") == null ? ""
+			: (String) request.getAttribute("username");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,18 +66,21 @@
 		<form action="Login" method="post" class="form-signin" role="form">
 			<div class="form-group">
 				<label for="username">Username:</label><input class="form-control"
-					type="text" id="username" name="username" placeholder="Username">
+					type="text" id="username" name="username" placeholder="Username" value="<%=username%>">
+				<p class="help-block"><%=username_err%></p>
 			</div>
 			<div class="form-group">
 				<label for="password">Password:</label><input class="form-control"
 					placeholder="Password" id="password" type="password"
-					name="password"><br>
+					name="password">
+				<p class="help-block">
+					<%=password_err%>
+				</p>
 			</div>
 			<div class="form-group">
 				<code>
-					<input class="btn btn-success" type="submit"
-						value="Đăng Nhập">Hoặc <a href="register.jsp"
-						class="btn btn-primary">Đăng Ký</a>
+					<input class="btn btn-success" type="submit" value="Đăng Nhập">Hoặc
+					<a href="register.jsp" class="btn btn-primary">Đăng Ký</a>
 				</code>
 			</div>
 		</form>

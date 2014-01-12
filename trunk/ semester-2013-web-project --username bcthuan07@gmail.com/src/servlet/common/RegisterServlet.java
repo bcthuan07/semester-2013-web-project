@@ -10,14 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.CityDAO;
 import model.Address;
 import model.City;
+import model.PaymentMethod;
 import model.User;
 import service.DAOService;
 import service.RegisterService;
 import util.PasswordUtil;
 import util.ValidateData;
+import dao.CityDAO;
+import dao.PaymentMethodDAO;
 import exception.UsernameException;
 
 /**
@@ -56,7 +58,8 @@ public class RegisterServlet extends HttpServlet {
 		String buildingNumber = request.getParameter("buildingnumber");
 		String cityString = request.getParameter("city");
 		String street = request.getParameter("street");
-
+		String paymentMethodStr = request.getParameter("payment"); 
+		
 		String username_err = "";
 		String password_err = "";
 		String fullname_err = "";
@@ -65,15 +68,16 @@ public class RegisterServlet extends HttpServlet {
 		String buildingNumber_err = "";
 		String street_err = "";
 		int bdn = 0;
-		Integer city_id = 0;
+		Integer city_id = 0, paymentId=0;
 		byte[] pass = new byte[8];
 		byte[] salt = new byte[8];
 		boolean gender = gioitinh.equals("Nam") ? true : false;
 		try {
 			city_id = Integer.parseInt(cityString);
+			paymentId = Integer.parseInt(paymentMethodStr);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
+		
 		if (username.equals("") || username == null) {
 			username_err += "Username không được để trống!";
 		}
@@ -136,11 +140,13 @@ public class RegisterServlet extends HttpServlet {
 				&& street_err.length() == 0) {
 			DAOService<City, Integer> cityService = new DAOService<City, Integer>(new CityDAO());
 			City city = cityService.getObjectById(city_id);
+			
+			DAOService<PaymentMethod, Integer> paymentService = new DAOService<PaymentMethod, Integer>(new PaymentMethodDAO());
+			PaymentMethod payment = paymentService.getObjectById(paymentId);
 			Address address = new Address();
 			address.setBuildingNumber(bdn);
 			address.setCity(city);
 			address.setStreet(street);
-			address.setPhonenumber(phonenumber);
 
 			User user = new User();
 			user.setDatecreated(new Date());
@@ -150,12 +156,14 @@ public class RegisterServlet extends HttpServlet {
 			user.setUsername(username);
 			user.setSalt(salt);
 			user.setPassword(pass);
+			user.setPhoneNumber(phonenumber);
+			user.setPaymentMethod(payment);
 
 			try {
 				RegisterService registerService = new RegisterService();
 				String emailManageUser = getServletContext().getInitParameter("manageuser");
 				String emailAdmin = getServletContext().getInitParameter("admin");
-				registerService.register(user, address, emailManageUser, emailAdmin);
+				registerService.register(user, address, emailManageUser, emailAdmin, true);
 
 			} catch (UsernameException e) {
 				System.out.println(e.getMessage());
@@ -173,6 +181,7 @@ public class RegisterServlet extends HttpServlet {
 				request.setAttribute("buildingnumber_err", buildingNumber_err);
 				request.setAttribute("street_err", street_err);
 				request.setAttribute("phonenumber_err", phonenumber_err);
+				request.setAttribute("password_err", password_err);
 
 				request.getRequestDispatcher("register.jsp").forward(request,
 						response);
@@ -195,7 +204,8 @@ public class RegisterServlet extends HttpServlet {
 			request.setAttribute("buildingnumber_err", buildingNumber_err);
 			request.setAttribute("street_err", street_err);
 			request.setAttribute("phonenumber_err", phonenumber_err);
-
+			request.setAttribute("password_err", password_err);
+			
 			request.getRequestDispatcher("register.jsp").forward(request,
 					response);
 		}

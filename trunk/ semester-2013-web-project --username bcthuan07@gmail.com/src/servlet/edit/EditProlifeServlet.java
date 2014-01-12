@@ -49,7 +49,7 @@ public class EditProlifeServlet extends HttpServlet {
 		String password2 = request.getParameter("password2");
 		String gioitinh = request.getParameter("gioitinh");
 		String fullname = request.getParameter("fullname");
-
+		String phonenumber = request.getParameter("phonenumber");
 		String phonenumber_err = "";
 		String email_err = "";
 		String oldpassword_err = "";
@@ -91,6 +91,9 @@ public class EditProlifeServlet extends HttpServlet {
 			password2_err += "Password và password nhập lại không khớp nhau!";
 		}
 
+		if(phonenumber==null||phonenumber.equals("")){
+			phonenumber_err+="Số điện thoại không được để trống!";
+		}
 		gender = gioitinh.equals("Nam") ? true : false;
 
 		if (  password1_err.length() == 0
@@ -111,6 +114,7 @@ public class EditProlifeServlet extends HttpServlet {
 			userUpdate.setPassword(PasswordUtil.getEncryptedPassword(password1, saltUpdate));
 			userUpdate.setFullname(fullname);
 			userUpdate.setGender(gender);
+			userUpdate.setPhoneNumber(phonenumber);
 			System.out.println(userService.updateObject(userUpdate));
 			String message = "Bạn đã thay đổi thông tin tài khoản thành công!";
 			request.setAttribute("message", message);
@@ -124,6 +128,7 @@ public class EditProlifeServlet extends HttpServlet {
 			request.setAttribute("email_err", email_err);
 			request.setAttribute("password1_err", password1_err);
 			request.setAttribute("password2_err", password2_err);
+			request.setAttribute("phonenumber_err", phonenumber_err);
 			request.getRequestDispatcher("detail/prolifeedit.jsp").forward(request, response);
 		}
 

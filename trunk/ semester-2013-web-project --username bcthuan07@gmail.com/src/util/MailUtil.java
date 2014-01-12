@@ -31,7 +31,7 @@ public class MailUtil {
 	 * @param subject: tieu de
 	 * @param msgBody: noi dung
 	 */
-	public static void send(final String username, String userInfo, final String pass,
+	public static boolean send(final String username, String userInfo, final String pass,
 			String dest, String destInfo, String subject, String msgBody) {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -58,16 +58,20 @@ public class MailUtil {
 
 			// msg.writeTo(new FileOutputStream("d:\\msg.txt"));
 			Transport.send(msg);
+			return true;
 
 		} catch (AddressException e) {
 //			e.printStackTrace();
 			System.out.println(e.getMessage());
+			return false;
 		} catch (UnsupportedEncodingException e2) {
 //			e2.printStackTrace();
 			System.out.println(e2.getMessage());
+			return false;
 		} catch (MessagingException e3) {
 //			e3.printStackTrace();
 			System.out.println(e3.getMessage());
+			return false;
 		}
 
 	}

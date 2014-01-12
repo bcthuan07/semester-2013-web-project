@@ -25,7 +25,7 @@
 <title>Trang Quản Lý - SB Admin</title>
 
 <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.css" rel="stylesheet">
+<link href="<%=path %>css/bootstrap.css" rel="stylesheet">
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -60,12 +60,10 @@
 				<ul class="nav navbar-nav side-nav">
 					<li class="active"><a href="<%=contextPath%>Manage"><i
 							class="fa fa-dashboard"></i> Thống Kê</a></li>
-					<li><a href="<%=contextPath%>Manage/User"><i
-							class="fa fa-bar-chart-o"></i> Khách Hàng</a></li>
 					<li><a href="<%=contextPath%>Manage/Order"><i
 							class="fa fa-table"></i> Hóa Đơn</a></li>
-					<li><a href="<%=contextPath%>Manage/Product"><i
-							class="fa fa-edit"></i> Sản Phẩm</a></li>
+					<li><a href="<%=contextPath%>Manage/Feedback"><i
+							class="fa fa-edit"></i> Phản Hồi</a></li>
 				</ul>
 				<jsp:include page="admin-header.jsp"></jsp:include>
 			</div>

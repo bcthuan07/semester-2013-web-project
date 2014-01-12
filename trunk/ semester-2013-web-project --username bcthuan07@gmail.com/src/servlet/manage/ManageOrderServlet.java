@@ -45,15 +45,18 @@ public class ManageOrderServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		if (user != null) {
 			Set<RoleMember> roleSet = user.getUserRoleMembers();
-			if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 1)))) {
-				DAOService<UserOrder, Integer> service = new DAOService<UserOrder, Integer>(
-						new UserOrderDAO());
-				List<UserOrder> listuserorder = service.listObject();
-				request.setAttribute("listuserorder", listuserorder);
+			DAOService<UserOrder, Integer> service = new DAOService<UserOrder, Integer>(
+					new UserOrderDAO());
+			List<UserOrder> listuserorder = service.listObject();
+			request.setAttribute("listorder", listuserorder);
+			if (roleSet.contains(new RoleMember(new RoleMemberId(user
+					.getUserId(), 1)))) {
 				getServletContext().getRequestDispatcher(
 						"/manage/admin-order.jsp").forward(request, response);
-			} else if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 2)))) {
-
+			} else if (roleSet.contains(new RoleMember(new RoleMemberId(user
+					.getUserId(), 2)))) {
+				getServletContext().getRequestDispatcher(
+						"/manage/staff-order.jsp").forward(request, response);
 			} else {
 				response.sendRedirect(request.getContextPath()
 						+ "/manage/managelogin.jsp");

@@ -1,6 +1,8 @@
-package servlet.manage.edit;
+package servlet.manage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -13,18 +15,17 @@ import javax.servlet.http.HttpSession;
 import model.RoleMember;
 import model.RoleMemberId;
 import model.User;
-import model.UserOrder;
 import service.DAOService;
-import dao.UserOrderDAO;
+import dao.UserDAO;
 
 /**
- * Servlet implementation class DeleteUserOrderServlet
+ * Servlet implementation class ManageCustomerServlet
  */
-@WebServlet("/Manage/DeleteUserOrder")
-public class DeleteUserOrderServlet extends HttpServlet {
+@WebServlet("/Manage/Customer")
+public class ManageCustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public DeleteUserOrderServlet() {
+	public ManageCustomerServlet() {
 		super();
 	}
 
@@ -41,43 +42,38 @@ public class DeleteUserOrderServlet extends HttpServlet {
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		request.setCharacterEncoding("utf8");
-		response.setCharacterEncoding("utf8");
-
-		String userOrder = request.getParameter("userorder");
 		HttpSession session = request.getSession();
-
 		User user = (User) session.getAttribute("user");
-
 		if (user != null) {
 
 			Set<RoleMember> roleSet = user.getUserRoleMembers();
 
 			if (roleSet.contains(new RoleMember(new RoleMemberId(user
 					.getUserId(), 1)))) {
-				Integer id = Integer.parseInt(userOrder);
-				DAOService<UserOrder, Integer> daoService = new DAOService<>(
-						new UserOrderDAO());
-				boolean isDeleted = daoService.removeObject(id);
-				if (isDeleted) {
-					getServletContext().getRequestDispatcher("/Manage/Order")
-							.forward(request, response);
-				} else {
-					String error = "Đã có lỗi xảy ra. Không thể xóa hóa đơn này!";
-					request.setAttribute("error", error);
-					getServletContext().getRequestDispatcher(
-							"/error/commonerror.jsp")
-							.forward(request, response);
+				DAOService<User, Integer> service = new DAOService<User, Integer>(
+						new UserDAO());
+				List<User> listcustomer = new ArrayList<User>();
+				for (User u : service.listObject()) {
+					Set<RoleMember> set = u.getUserRoleMembers();
+					System.out.println(set);
+					if (set.contains(new RoleMember(new RoleMemberId(user
+							.getUserId(), new Integer(3)))))
+						listcustomer.add(u);
 				}
-			} else {
+				System.out.println(listcustomer);
+				request.setAttribute("listcustomer", listcustomer);
 				getServletContext().getRequestDispatcher(
-						"/manage/managelogin.jsp").forward(request, response);
+						"/manage/admin-customer.jsp").forward(request, response);
+			} else {
+				response.sendRedirect(request.getContextPath()
+						+ "/manage/managelogin.jsp");
 			}
 		} else {
-			getServletContext().getRequestDispatcher("/manage/managelogin.jsp")
-					.forward(request, response);
+			response.sendRedirect(request.getContextPath()
+					+ "/manage/managelogin.jsp");
 
 		}
+
 	}
 
 }

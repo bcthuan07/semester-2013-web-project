@@ -1,17 +1,19 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.UserOrder"%>
 <%@page import="java.util.List"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="model.User"%>
+<%@page import="service.DAOService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-    <%
-    
-    String contextPath = request.getContextPath()+"/";
-    String path = contextPath+"manage/";
-    List<UserOrder> listUserOrders = request
-			.getAttribute("listorder") == null ? new ArrayList<UserOrder>()
-			: (List<UserOrder>) request.getAttribute("listorder");
-    %>
+	pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("utf8");
+	response.setCharacterEncoding("utf8");
+
+	List<User> listStaff = request.getAttribute("liststaff") == null ? new ArrayList<User>()
+			: (List<User>) request.getAttribute("liststaff");
+	String path = request.getContextPath() + "/manage/";
+	String contextPath = request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +41,7 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
+
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -54,14 +57,31 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav side-nav">
-					<li><a href="<%=contextPath%>Manage"><i
+					<li class="active"><a href="<%=contextPath%>Manage"><i
 							class="fa fa-dashboard"></i> Thống Kê</a></li>
-					<li class="active"><a href="<%=contextPath%>Manage/Order"><i
+
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Người Dùng <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<%=contextPath%>Manage/Staff">Nhân Viên</a></li>
+							<li><a href="<%=contextPath%>Manage/Customer">Khách Hàng</a></li>
+						</ul></li>
+					<li><a href="<%=contextPath%>Manage/Order"><i
 							class="fa fa-table"></i> Hóa Đơn</a></li>
+					<li><a href="<%=contextPath%>Manage/Product"><i
+							class="fa fa-edit"></i> Sản Phẩm</a></li>
 					<li><a href="<%=contextPath%>Manage/Feedback"><i
 							class="fa fa-edit"></i> Phản Hồi</a></li>
-				</ul>
 
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Cài đặt <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<%=contextPath%>Manage/Image">Hình ảnh</a></li>
+							<li><a href="<%=contextPath%>Manage/Ad">Quảng cáo</a></li>
+						</ul></li>
+				</ul>
 
 				<jsp:include page="admin-header.jsp"></jsp:include>
 			</div>
@@ -69,9 +89,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>
-						Sản Phẩm
-					</h1>
+					<h1>Người Dùng</h1>
 					<ol class="breadcrumb">
 						<li><a href="Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
@@ -79,35 +97,40 @@
 					</ol>
 				</div>
 			</div>
-
 			<div class="row">
-				<div class="col-lg-8">
-					<h2>Sản Phẩm</h2>
-					<div class="table-responsive">
-						<table
-							class="table table-bordered table-hover table-striped tablesorter">
-							<thead>
-								<tr>
-									<th><i class="fa fa-sort"></i>Tên khách hàng</th>
-									<th><i class="fa fa-sort"></i>Tình trạng thanh toán</th>
-									<th><i class="fa fa-sort"></i>Ngày Lập</th>
-									<th>Thao Tác</th>
-								</tr>
-							</thead>
-							<tbody>
-								<%
-									for (UserOrder userOrder : listUserOrders) {
-								%>
-								<tr>
-									<td><%=userOrder.getUser().getFullname()%></td>
-									<td><%=userOrder.getOrderStatus().getDescription()%></td>
-									<td><%=userOrder.getOrderDate()%></td>
-								</tr>
-								<%
-									}
-								%>
-							</tbody>
-						</table>
+				<div class="row">
+					<div class="col-lg-12">
+						<h2>Nhân Viên</h2>
+						<div class="table-responsive">
+							<table
+								class="table table-bordered table-hover table-striped tablesorter">
+								<thead>
+									<tr>
+										<th><i class="fa fa-sort"></i>Tên</th>
+										<th><i class="fa fa-sort"></i>Username</th>
+										<th><i class="fa fa-sort"></i>Email</th>
+										<th><i class="fa fa-sort"></i>Ngày Đăng Ký</th>
+										<th>Thao Tác</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (User c : listStaff) {
+									%>
+									<tr>
+										<td><%=c.getFullname()%></td>
+										<td><%=c.getUsername()%></td>
+										<td><%=c.getEmail()%></td>
+										<td><%=c.getDatecreated()%></td>
+										<td><a href="Manage/DeleteUser?user=<%=c.getUserId()%>"
+											class="btn btn-danger">Xóa</a></td>
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

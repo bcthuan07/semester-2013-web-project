@@ -39,6 +39,8 @@ public class FeedbackServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf8");
+		response.setCharacterEncoding("utf8");
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		String content = request.getParameter("content");
@@ -58,7 +60,7 @@ public class FeedbackServlet extends HttpServlet {
 		}
 
 		if (content == null || content.equals(""))
-			content += "Nội dung không được để trống!";
+			content_err += "Nội dung không được để trống!";
 
 		if (content_err.length() == 0 && email_err.length() == 0
 				&& fullname_err.length() == 0) {

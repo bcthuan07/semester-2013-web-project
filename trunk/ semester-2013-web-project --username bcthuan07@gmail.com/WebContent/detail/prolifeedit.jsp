@@ -14,7 +14,7 @@
 	} else if (user != null) {
 		username = request.getAttribute("username") == null ? user
 				.getUsername() : (String) request
-				.getAttribute("usernam");
+				.getAttribute("username");
 		fullname = request.getAttribute("fullname") == null ? user
 				.getFullname() : (String) request
 				.getAttribute("fullname");
@@ -22,7 +22,7 @@
 				: (String) request.getAttribute("email");
 		gioitinh = user.getGender();
 	}
-
+	
 	String email_err = "";
 	String oldpassword_err = "";
 	String password1_err = "";
@@ -35,12 +35,17 @@
 		oldpassword_err = (String) request
 				.getAttribute("oldpassword_err");
 
-	if (request.getAttribute("phonenumber_err") != null)
+	if (request.getAttribute("password1_err") != null)
 		password1_err = (String) request.getAttribute("password1_err");
 
-	if (request.getAttribute("phonenumber_err") != null)
+	if (request.getAttribute("password2_err") != null)
 		password2_err = (String) request.getAttribute("password2_err");
 	String contextPath = request.getContextPath() + "/";
+
+	String phonenumber_err = request.getAttribute("phonenumber_err") == null ? ""
+			: (String) request.getAttribute("phonenumber_err");
+	
+	String fullname_err = request.getAttribute("fullname_err")==null?"":(String)request.getAttribute("fullname_err");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,16 +77,16 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://startbootstrap.com">Nhà
+				<a class="navbar-brand" href="<%=contextPath%>home.jsp">Nhà
 					Hàng Jamie's Oliver</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="home.jsp">Trang Chủ</a></li>
-					<li><a href="Menu">Thực Đơn</a></li>
-					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="<%=contextPath%>home.jsp">Trang Chủ</a></li>
+					<li><a href="<%=contextPath%>Menu">Thực Đơn</a></li>
+					<li><a href="<%=contextPath%>lienhe.jsp">Liên Hệ</a></li>
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
@@ -92,36 +97,74 @@
 
 
 	<div class="container">
-		<form action="<%=request.getContextPath()%>/EditProlife" method="post">
-			<label>Username:</label> <input type="text" name="username"
-				value="<%=username%>"><br> <label>Password cũ:</label>
-			<input type="password" name="oldpassword"><br> <label>Password
-				mới:</label> <input type="password" name="password1"><br> <label>Nhap
-				lai password</label> <input type="password" name="password2"><br>
-			<label>Ten day du:</label> <input type="text" name="fullname"
-				value="<%=fullname%>"><br> <label>Phonenumber</label> <input
-				type="text" name="phonenumber" value="<%=phonenumber%>"><br>
-			<label>Gioi tinh</label> <select name="gioitinh">
-				<%
-					if (gioitinh) {
-				%>
-				<option value="Nam" selected>Nam</option>
-				<option value="Nu">Nữ</option>
-				<%
-					} else {
-				%>
-				<option value="Nam">Nam</option>
-				<option value="Nu" selected>Nữ</option>
-				<%
-					}
-				%>
-			</select><br> <label>email</label> <input type="text" name="email"
-				value="<%=email%>"> <input type="submit" value="Lưu">
+		<form action="<%=contextPath%>EditProlife" method="post">
+			<div class="form-group">
+				<label for="username">Username:</label> <input class="form-control"
+					id="username" type="text" name="username" value="<%=username%>"
+					disabled="disabled">
+			</div>
+
+			<div class="form-group">
+				<label for="oldpass">Password cũ:</label> <input type="password"
+					name="oldpassword" class="form-control" id="oldpass">
+					<p class="help-block"><%=oldpassword_err %></p>
+
+			</div>
+
+			<div class="form-group">
+				<label for="pass1">Password mới:</label> <input type="password"
+					name="password1" class="form-control" id="pass1">
+					<p class="help-block"><%=password1_err %></p>
+
+			</div>
+
+			<div class="form-group">
+				<label for="pass2">Nhập lại Password mới:</label> <input type="password"
+					name="password2" class="form-control" id="pass2">
+					<p class="help-block"><%=password2_err %></p>
+
+			</div>
+
+			<div class="form-group">
+				<label for="fullname">Họ và tên:</label> <input type="text" name="fullname"
+					value="<%=fullname%>" class="form-control" id="fullname">
+					<p class="help-block"><%=fullname_err %></p>
+
+			</div>
+
+			<div class="form-group">
+				<label for="phone">Số điện thoại:</label> <input type="text" name="phonenumber"
+					value="<%=phonenumber%>" class="form-control" id="phone">
+				<p class="help-block"><%=phonenumber_err%></p>
+			</div>
+
+			<div class="form-group">
+				<label for="gender">Giới tính:</label> <select name="gioitinh"
+					id="gender" class="form-control">
+					<%
+						if (gioitinh) {
+					%>
+					<option value="Nam" selected>Nam</option>
+					<option value="Nu">Nữ</option>
+					<%
+						} else {
+					%>
+					<option value="Nam">Nam</option>
+					<option value="Nu" selected>Nữ</option>
+					<%
+						}
+					%>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="email">Địa chỉ Email:</label> <input type="text"
+					name="email" value="<%=email%>" id="email" class="form-control">
+				<p class="help-block"><%=email_err%></p>
+			</div>
+
+			<input type="submit" value="Lưu">
 		</form>
-		<%=email_err%>
-		<%=oldpassword_err%>
-		<%=password1_err%>
-		<%=password2_err%>
 	</div>
 	<div class="container">
 

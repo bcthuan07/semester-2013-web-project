@@ -28,7 +28,7 @@
 		class="dropdown-toggle" data-toggle="dropdown"><i
 			class="fa fa-user"></i> <%=username%><b class="caret"></b></a>
 		<ul class="dropdown-menu">
-			<li><a href="#"> Tài Khoản</a></li>
+			<li><a href="<%=path%>ProlifeInfo"> Tài Khoản</a></li>
 			<li><a href="<%=path%>home.jsp" title="Quay lại trang chính"> Trang
 					Chính</a></li>
 			<li class="divider"></li>

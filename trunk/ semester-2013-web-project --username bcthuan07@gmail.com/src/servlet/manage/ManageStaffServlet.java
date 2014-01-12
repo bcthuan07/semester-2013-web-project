@@ -21,11 +21,11 @@ import dao.UserDAO;
 /**
  * Servlet implementation class ManageUserServlet
  */
-@WebServlet("/Manage/User")
-public class ManageUserServlet extends HttpServlet {
+@WebServlet("/Manage/Staff")
+public class ManageStaffServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ManageUserServlet() {
+	public ManageStaffServlet() {
 		super();
 	}
 
@@ -53,23 +53,17 @@ public class ManageUserServlet extends HttpServlet {
 			if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 1)))) {
 				DAOService<User, Integer> service = new DAOService<User, Integer>(
 						new UserDAO());
-				List<User> listuser = service.listObject();
-				List<User> listcustomer = new ArrayList<User>();
 				List<User> liststaff = new ArrayList<User>();
-				for (User u : listuser) {
+				for (User u : service.listObject()) {
 					Set<RoleMember> set = u.getUserRoleMembers();
 					System.out.println(set);
-					if (set.contains(new RoleMember(new RoleMemberId(user.getUserId(), new Integer(3)))))
-						listcustomer.add(u);
-					else if (set.contains(new RoleMember(new RoleMemberId(user.getUserId(), new Integer(2)))))
+					if (set.contains(new RoleMember(new RoleMemberId(user.getUserId(), new Integer(2)))))
 						liststaff.add(u);
 				}
 				System.out.println(liststaff);
-				System.out.println(listcustomer);
-				request.setAttribute("listcustomer", listcustomer);
 				request.setAttribute("liststaff", liststaff);
 				getServletContext().getRequestDispatcher(
-						"/manage/admin-user.jsp").forward(request, response);
+						"/manage/admin-staff.jsp").forward(request, response);
 			} else {
 				response.sendRedirect(request.getContextPath()
 						+ "/manage/managelogin.jsp");
