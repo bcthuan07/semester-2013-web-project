@@ -40,9 +40,12 @@ public class ManageEditImageServlet extends HttpServlet {
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int hWidth=900,hHeight=500,mWidth=800,mHeight=300;
+		int hWidth = 900, hHeight = 500, mWidth = 800, mHeight = 300;
 		Part image = request.getPart("image");
 		String index = request.getParameter("index");
+		if (index == null)
+			getServletContext().getRequestDispatcher("/manage/admin-image.jsp")
+					.forward(request, response);
 		int i = Integer.parseInt(index);
 		String error = "";
 		String origin = request.getParameter("origin");
@@ -55,17 +58,19 @@ public class ManageEditImageServlet extends HttpServlet {
 
 		if (error.length() == 0) {
 			image.write(request.getContextPath() + "/" + origin);
-			if(i>=0 && i<=3)
-				ImageUtil.resizeImage(hWidth, hHeight, request.getContextPath()+"/"+origin);
+			if (i >= 0 && i <= 3)
+				ImageUtil.resizeImage(hWidth, hHeight, request.getContextPath()
+						+ "/" + origin);
 			else
-				ImageUtil.resizeImage(mWidth, mHeight, request.getContextPath()+"/"+origin);
+				ImageUtil.resizeImage(mWidth, mHeight, request.getContextPath()
+						+ "/" + origin);
 			getServletContext().getRequestDispatcher("/manage/admin-image.jsp")
 					.forward(request, response);
 		} else {
-			String home1 = i == 1 ? "Hình ảnh không được để trống!":"";
-			String home2 = i == 2 ? "Hình ảnh không được để trống!":"";
-			String home3 = i == 3 ? "Hình ảnh không được để trống!":"";
-			
+			String home1 = i == 1 ? "Hình ảnh không được để trống!" : "";
+			String home2 = i == 2 ? "Hình ảnh không được để trống!" : "";
+			String home3 = i == 3 ? "Hình ảnh không được để trống!" : "";
+
 			String menu1 = i == 4 ? "Hình ảnh không được để trống!" : "";
 			String menu2 = i == 5 ? "Hình ảnh không được để trống!" : "";
 			String menu3 = i == 6 ? "Hình ảnh không được để trống!" : "";

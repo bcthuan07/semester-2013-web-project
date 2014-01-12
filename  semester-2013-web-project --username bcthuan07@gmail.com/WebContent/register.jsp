@@ -1,3 +1,5 @@
+<%@page import="dao.PaymentMethodDAO"%>
+<%@page import="model.PaymentMethod"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.CityDAO"%>
 <%@page import="model.City"%>
@@ -21,10 +23,6 @@
 			.getAttribute("street") : "";
 	String buildingnumber = request.getAttribute("buildingnumber") != null ? (String) request
 			.getAttribute("buildingnumber") : "";
-	String zipcode = request.getAttribute("zipcode") != null ? (String) request
-			.getAttribute("zipcode") : "";
-	String city = request.getAttribute("city") != null ? (String) request
-			.getAttribute("city") : "";
 
 	String username_err = request.getAttribute("username_err") != null ? (String) request
 			.getAttribute("username_err") : "";
@@ -39,16 +37,13 @@
 	String buildingnumber_err = request
 			.getAttribute("buildingnumber_err") != null ? (String) request
 			.getAttribute("buildingnumber_err") : "";
-	String zipcode_err = request.getAttribute("zipcode_err") != null ? (String) request
-			.getAttribute("zipcode_err") : "";
-	String city_err = request.getAttribute("city_err") != null ? (String) request
-			.getAttribute("city_err") : "";
 	String password_err = request.getAttribute("password_err") != null ? (String) request
 			.getAttribute("password_err") : "";
 
 	DAOService<City, Integer> service = new DAOService<City, Integer>(
 			new CityDAO());
 	List<City> list = service.listObject();
+	DAOService<PaymentMethod, Integer> paymentList = new DAOService<PaymentMethod, Integer>(new PaymentMethodDAO());
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,7 +156,15 @@
 						<option value="<%=c.getId()%>"><%=c.getName() %></option>
 						<% }%>
 					</select>
-					<p class="help-block"><%=city_err%></p>
+				</div>
+				
+				<div class="form-group">
+					<label for="payment">Hình thức thanh toán:</label>
+					<select id="payment" name="payment" class="form-control">
+						<%for(PaymentMethod p: paymentList.listObject()){ %>
+							<option value="<%=p.getPaymentMethodId() %>"><%=p.getDescription() %></option>
+						<%} %>
+					</select>
 				</div>
 				<div class="form-group">
 					<input type="submit" class="form-control" value="Đăng Ký">

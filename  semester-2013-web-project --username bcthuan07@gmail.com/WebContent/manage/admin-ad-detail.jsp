@@ -1,20 +1,24 @@
+
 <%@page import="model.Ads"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-	String contextPath = request.getContextPath()+"/";
-    String path = contextPath+"manage/";
-    
-    Ads ads = (Ads) request.getAttribute("ads");
-    String name = ads==null? "": ads.getName();
-    String link = ads==null? "":ads.getLink();
-    String content = ads==null?"":ads.getContent();
-    String imagePath = ads==null?"":ads.getImagePath();
-    
-    String name_err  = request.getAttribute("name_err")==null?"":(String)request.getAttribute("name_err");
-    String link_err  = request.getAttribute("link_err")==null?"":(String)request.getAttribute("link_err");
-    String content_err  = request.getAttribute("content_err")==null?"":(String)request.getAttribute("content_err");
+	String contextPath = request.getContextPath() + "/";
+	String path = contextPath + "manage/";
+
+	Ads ads = (Ads) request.getAttribute("ads");
+	String name = ads == null ? "" : ads.getName();
+	String link = ads == null ? "" : ads.getLink();
+	String content = ads == null ? "" : ads.getContent();
+	String imagePath = ads == null ? "" : ads.getImagePath();
+
+	String name_err = request.getAttribute("name_err") == null ? ""
+			: (String) request.getAttribute("name_err");
+	String link_err = request.getAttribute("link_err") == null ? ""
+			: (String) request.getAttribute("link_err");
+	String content_err = request.getAttribute("content_err") == null ? ""
+			: (String) request.getAttribute("content_err");
 %>
 
 <!DOCTYPE html>
@@ -28,7 +32,7 @@
 <title>Trang Quản Lý - SB Admin</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<%=path %>css/bootstrap.css" rel="stylesheet">
+<link href="<%=path%>css/bootstrap.css" rel="stylesheet">
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -68,12 +72,17 @@
 							class="fa fa-table"></i> Hóa Đơn</a></li>
 					<li><a href="<%=contextPath%>Manage/Product"><i
 							class="fa fa-edit"></i> Sản Phẩm</a></li>
-					<li><a href="<%=contextPath%>Manage/Image"><i
-							class="fa fa-edit"></i> Hình Ảnh</a></li>
-					<li><a href="<%=contextPath%>Manage/Ad"><i
-							class="fa fa-edit"></i> Quảng Cáo</a></li>
-				</ul>
+					<li><a href="<%=contextPath%>Manage/Feedback"><i
+							class="fa fa-edit"></i> Phản Hồi</a></li>
 
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Cài đặt <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<%=contextPath%>Manage/Image">Hình ảnh</a></li>
+							<li><a href="<%=contextPath%>Manage/Ad">Quảng cáo</a></li>
+						</ul>
+				</ul>
 
 				<jsp:include page="admin-header.jsp"></jsp:include>
 			</div>
@@ -93,31 +102,32 @@
 			<!-- /.row -->
 
 			<form action="<%=contextPath%>Manage/EditAd" method="post">
-				<input type="hidden" name="id" value="<%=ads.getId() %>">
+				<input type="hidden" name="id" value="<%=ads.getId()%>">
 				<div class="form-group">
-					<label for="name">Tên</label>
-					<input class="form-control" type="text" name="name" id="name">
-					<p class="help-block"><%=name_err %></p>
+					<label for="name">Tên</label> <input class="form-control"
+						type="text" name="name" id="name" value="<%=name%>">
+					<p class="help-block"><%=name_err%></p>
 				</div>
-				
+
 				<div class="form-group">
-					<label for="link">Đường dẫn</label>
-					<input class="form-control" type="text" name="link" id="link">
-					<p class="help-block"><%=link_err %></p>
+					<label for="link">Đường dẫn</label> <input class="form-control"
+						type="text" name="link" id="link" value="<%=link%>">
+					<p class="help-block"><%=link_err%></p>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="content">Nội dung</label>
-					<textarea class="form-control" name="content" id="content" rows="4"></textarea>
-					<p class="help-block"><%=content_err %></p>
+					<textarea class="form-control" name="content" id="content" rows="4"><%=content%></textarea>
+					<p class="help-block"><%=content_err%></p>
 				</div>
-				
+
 				<div class="form-group">
-					<label for="img">Hình Ảnh</label>
-					<input class="form-control" type="file" name="image" id="img">
-					<p class="help-block">Kích thước hình ảnh phải có kích cỡ là 140x140px</p>
+					<label for="img">Hình Ảnh</label> <input class="form-control"
+						type="file" name="image" id="img">
+					<p class="help-block">Kích thước hình ảnh phải có kích cỡ là
+						140x140px</p>
 				</div>
-				
+
 				<input class="form-control" type="submit" value="Lưu">
 			</form>
 

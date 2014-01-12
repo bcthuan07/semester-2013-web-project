@@ -34,7 +34,6 @@ public class Address implements java.io.Serializable {
 	private Integer addressId;
 	private String street;
 	private int buildingNumber;
-	private String phonenumber;
 	private City city;
 	private Set<UserAddressHistory> userAddressHistories = new HashSet<UserAddressHistory>(
 			0);
@@ -42,20 +41,15 @@ public class Address implements java.io.Serializable {
 	public Address() {
 	}
 
-
 	public Address(Integer addressId, String street, int buildingNumber,
-			String phonenumber, City city,
-			Set<UserAddressHistory> userAddressHistories) {
+			City city, Set<UserAddressHistory> userAddressHistories) {
 		super();
 		this.addressId = addressId;
 		this.street = street;
 		this.buildingNumber = buildingNumber;
-		this.phonenumber = phonenumber;
 		this.city = city;
 		this.userAddressHistories = userAddressHistories;
 	}
-
-
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -86,7 +80,6 @@ public class Address implements java.io.Serializable {
 		this.buildingNumber = buildingNumber;
 	}
 
-
 	@OneToMany(mappedBy = "address")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	public Set<UserAddressHistory> getUserAddressHistories() {
@@ -97,29 +90,17 @@ public class Address implements java.io.Serializable {
 			Set<UserAddressHistory> userAddressHistories) {
 		this.userAddressHistories = userAddressHistories;
 	}
-	
-	@Column(name="phone_number",nullable=false)
-	public String getPhonenumber() {
-		return phonenumber;
-	}
-
-
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
-	}
 
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name="city_id",nullable=false)
+	@JoinColumn(name = "city_id", nullable = false)
 	public City getCity() {
 		return city;
 	}
 
-
 	public void setCity(City city) {
 		this.city = city;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -127,12 +108,9 @@ public class Address implements java.io.Serializable {
 		int result = 1;
 		result = prime * result + buildingNumber;
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result
-				+ ((phonenumber == null) ? 0 : phonenumber.hashCode());
 		result = prime * result + ((street == null) ? 0 : street.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -150,11 +128,6 @@ public class Address implements java.io.Serializable {
 				return false;
 		} else if (!city.equals(other.city))
 			return false;
-		if (phonenumber == null) {
-			if (other.phonenumber != null)
-				return false;
-		} else if (!phonenumber.equals(other.phonenumber))
-			return false;
 		if (street == null) {
 			if (other.street != null)
 				return false;
@@ -163,8 +136,4 @@ public class Address implements java.io.Serializable {
 		return true;
 	}
 
-
-
-
-	
 }

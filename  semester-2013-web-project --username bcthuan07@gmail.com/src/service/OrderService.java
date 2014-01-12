@@ -13,9 +13,13 @@ import model.OrderItem;
 import model.OrderStatus;
 import model.Product;
 import model.User;
+import model.UserAddressHistory;
+import model.UserAddressHistoryId;
 import model.UserOrder;
+import dao.AddressDAO;
 import dao.OrderItemDAO;
 import dao.OrderStatusDAO;
+import dao.UserAddressHistoryDAO;
 import dao.UserOrderDAO;
 
 /**
@@ -28,17 +32,43 @@ public class OrderService {
 
 	}
 
-	public boolean order(List<Product> listProduct, User user, Date date, String emailManageUser, String emailAdmin) {
+	public boolean order(List<Product> listProduct, User user, Date date,
+			String emailManageUser, String emailAdmin, Address address) {
 		try {
-//			DAOService<User, Integer> userdao = new DAOService<>(new UserDAO());
+			// DAOService<User, Integer> userdao = new DAOService<>(new
+			// UserDAO());
 			DAOService<UserOrder, Integer> userorderdao = new DAOService<>(
 					new UserOrderDAO());
 			DAOService<OrderItem, Integer> orderitemdao = new DAOService<>(
 					new OrderItemDAO());
-			DAOService<OrderStatus, Integer> orderstatusdao = new DAOService<>(new OrderStatusDAO());
-			OrderStatus orderStatus = orderstatusdao.getObjectById(new Integer(1));
+			DAOService<OrderStatus, Integer> orderstatusdao = new DAOService<>(
+					new OrderStatusDAO());
+			OrderStatus orderStatus = orderstatusdao.getObjectById(new Integer(
+					1));
+
+			DAOService<Address, Integer> addressdao = new DAOService<>(
+					new AddressDAO());
+			DAOService<UserAddressHistory, UserAddressHistoryId> useraddresshistorydao = new DAOService<>(
+					new UserAddressHistoryDAO());
+
+			boolean isExists = false;
+			for (Address a : addressdao.listObject()) {
+				if (a.equals(address)) {
+					isExists = true;
+					address = a;
+				}
+			}
+			if (!isExists)
+				addressdao.addObject(address);
+			UserAddressHistory addressHistory = new UserAddressHistory();
+			UserAddressHistoryId historyId = new UserAddressHistoryId(
+					user.getUserId(), address.getAddressId(), date);
+			addressHistory.setId(historyId);
+			addressHistory.setUser(user);
+			addressHistory.setAddress(address);
+			useraddresshistorydao.addObject(addressHistory);
+
 			Set<Product> set = new HashSet<>(listProduct);
-			Set<OrderItem> setProducts = new HashSet<>();
 			UserOrder userOrder = new UserOrder();
 			userOrder.setOrderDate(date);
 			userOrder.setUser(user);
@@ -54,21 +84,14 @@ public class OrderService {
 				}
 				OrderItem item = new OrderItem(userOrder, p, count);
 				orderitemdao.addObject(item);
-				setProducts.add(item);
 			}
-			//gui mail
-			String pass = "dfghjhFGHJKL";
-			String msgBody = "";
-			
-			
-			
-			
-			
-			
-			
-//			userOrder.setOrderItems(setProducts);
-//			userorderdao.updateObject(userOrder);
-//			userdao.updateObject(user);
+			// gui mail
+			// String pass = "dfghjhFGHJKL";
+			// String msgBody = "";
+
+			// userOrder.setOrderItems(setProducts);
+			// userorderdao.updateObject(userOrder);
+			// userdao.updateObject(user);
 			return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -76,29 +99,4 @@ public class OrderService {
 		}
 	}
 
-	public boolean order(List<Product> listProduct, User user, Address address,
-			Date date, String emailManageUser, String emailAdmin) {
-		try {
-//			DAOService<Address, Integer> addressdao = new DAOService<>(
-//					new AddressDAO());
-//			DAOService<UserAddressHistory, UserAddressHistoryId> useraddresshistorydao = new DAOService<>(
-//					new UserAddressHistoryDAO());
-//			DAOService<User, Integer> userdao = new DAOService<>(new UserDAO());
-
-//			addressdao.addObject(address);
-//			userdao.addObject(user);
-//			UserAddressHistory addressHistory = new UserAddressHistory();
-//			UserAddressHistoryId historyId = new UserAddressHistoryId(user.getUserId(),address.getAddressId(),date);
-//			addressHistory.setId(historyId);
-//			addressHistory.setUser(user);
-//			addressHistory.setAddress(address);
-//			useraddresshistorydao.addObject(addressHistory);
-			RegisterService rs = new RegisterService();
-			rs.register(user, address, emailManageUser, emailAdmin);
-			return order(listProduct, user, date, emailManageUser, emailAdmin);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return false;
-		}
-	}
 }

@@ -46,51 +46,69 @@ public class ResetPasswordServlet extends HttpServlet {
 
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	
+
 		String email = request.getParameter("email");
 		String email_err = "";
-		
-		if(email==null || email.equals("")){
-			email_err+="Email không được để trống!";
+
+		if (email == null || email.equals("")) {
+			email_err += "Email không được để trống!";
 		} else {
-			boolean isEmail=ValidateData.isEmail(email);
-			email_err+=isEmail?"":"Email không hợp lệ!";
+			boolean isEmail = ValidateData.isEmail(email);
+			email_err += isEmail ? "" : "Email không hợp lệ!";
 		}
-		
-		if(email_err.length()==0){
+
+		if (email_err.length() == 0) {
 			Session session = HibernateUtil.openSession();
-			Query query = session.createQuery("from User where email = :e ");
-			query.setString(1, email);
+			Query query = session
+					.createQuery("from User u where u.email = :e ");
+			query.setString("e", email);
 			@SuppressWarnings("unchecked")
 			List<User> list = query.list();
-			if(list.size()==0){
-				String error="Không tìm thấy user này!";
+			session.close();
+			if (list.size() == 0) {
+				String error = "Không tìm thấy user này!";
 				request.setAttribute("error", error);
-				getServletContext().getRequestDispatcher("/forgotpassword.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/resetpassword.jsp")
+						.forward(request, response);
 			} else {
 				User u = list.get(0);
-				Random r = new Random(100000);
-				String rPass = r.nextInt()+"";
+				
+				String rPass = u.hashCode() + "";
+				
 				try {
 					byte[] salt = PasswordUtil.generateSalt();
-					byte[] newPass = PasswordUtil.getEncryptedPassword(rPass, salt);
+					byte[] newPass = PasswordUtil.getEncryptedPassword(rPass,
+							salt);
 					u.setPassword(newPass);
 					u.setSalt(salt);
 				} catch (NoSuchAlgorithmException e) {
 				}
-				DAOService<User, Integer> service = new DAOService<>(new UserDAO());
+				DAOService<User, Integer> service = new DAOService<>(
+						new UserDAO());
 				service.updateObject(u);
-				String username = getInitParameter("manageuser");
+				String username = getServletContext().getInitParameter(
+						"manageuser");
 				String pass = "dfghjhFGHJKL";
-				String msgBody="Password mới của bạn là:\n\r\t"+rPass;
-				MailUtil.send(username, "Thay đổi mật khẩu",pass , email, u.getUsername(), "Thay đổi password", msgBody);
-				
-				String message = "Password mới đã được gửi tới email của bạn!";
-				request.setAttribute("message", message);
-				getServletContext().getRequestDispatcher("/complete.jsp").forward(request, response);
+				String msgBody = "Password mới của bạn là:\n\r" + rPass;
+				boolean isSent = MailUtil.send(username, "Thay đổi mật khẩu",
+						pass, email, u.getUsername(), "Thay đổi password",
+						msgBody);
+				if (isSent) {
+					String message = "Password mới đã được gửi tới email của bạn!";
+					request.setAttribute("message", message);
+					getServletContext().getRequestDispatcher("/complete.jsp")
+							.forward(request, response);
+				} else {
+					String message = "Không thể reset password!";
+					request.setAttribute("error", message);
+					getServletContext().getRequestDispatcher(
+							"/error/commonerror.jsp")
+							.forward(request, response);
+
+				}
 			}
 		} else {
-			
+
 		}
 	}
 

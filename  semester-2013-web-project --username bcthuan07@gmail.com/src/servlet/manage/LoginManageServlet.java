@@ -43,10 +43,10 @@ public class LoginManageServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String username_err = "";
 		String password_err = "";
-		if (username.trim().equals("") || username == null) {
+		if (username == null || username.trim().equals("")) {
 			username_err += "Vui loÌng nhâòp username!";
 		}
-		if (password.trim().equals("") || password == null) {
+		if (password == null || password.trim().equals("")) {
 			password_err += "Vui loÌng nhâòp password!";
 		}
 
@@ -56,36 +56,39 @@ public class LoginManageServlet extends HttpServlet {
 			boolean hasUser = ls.hasUser(username);
 			if (!hasUser) {
 				username_err += "User không tôÌn taòi!";
+				request.setAttribute("username", username);
 				request.setAttribute("username_err", username_err);
 				request.setAttribute("password_err", password_err);
-				request.getRequestDispatcher(
-						request.getServletContext().getRealPath("")
-								+ "/managelogin.jsp")
-						.forward(request, response);
+				getServletContext().getRequestDispatcher(
+						"/manage/managelogin.jsp").forward(request, response);
+
 			} else {
 				User user = ls.authenticate(username, password);
 				if (user == null) {
 					password_err += "Password không ðuìng!";
+					request.setAttribute("username", username);
 					request.setAttribute("username_err", username_err);
 					request.setAttribute("password_err", password_err);
 					getServletContext().getRequestDispatcher(
 							"/manage/managelogin.jsp").forward(request,
 							response);
 				} else {
-					
+
 					HttpSession session = request.getSession();
 					Set<RoleMember> roleSet = user.getUserRoleMembers();
-					
-					if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 1)))) {
+
+					if (roleSet.contains(new RoleMember(new RoleMemberId(user
+							.getUserId(), 1)))) {
 						session.setAttribute("user", user);
-						response.sendRedirect("Manage");
-					} else if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 2)))){
+						getServletContext().getRequestDispatcher("/Manage").forward(request, response);
+					} else if (roleSet.contains(new RoleMember(
+							new RoleMemberId(user.getUserId(), 2)))) {
 						session.setAttribute("user", user);
-						response.sendRedirect("Manage");
+						getServletContext().getRequestDispatcher("/Manage").forward(request, response);
 					} else {
 						response.sendRedirect("home.jsp");
 					}
-					
+
 				}
 			}
 

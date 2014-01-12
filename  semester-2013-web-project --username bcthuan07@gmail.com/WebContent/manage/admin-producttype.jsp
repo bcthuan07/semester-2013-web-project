@@ -17,7 +17,7 @@
 	if (request.getAttribute("error") != null)
 		error = (String) request.getAttribute("error");
 	String path = request.getContextPath() + "/manage/";
-	String contextPath = request.getContextPath()+"/";
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,20 +62,31 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav side-nav">
-					<li><a href="<%=contextPath %>Manage"><i
+					<li class="active"><a href="<%=contextPath%>Manage"><i
 							class="fa fa-dashboard"></i> Thống Kê</a></li>
-					<li><a href="<%=contextPath%>Manage/User"><i
-							class="fa fa-bar-chart-o"></i> Người Dùng</a></li>
+
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Người Dùng <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<%=contextPath%>Manage/Staff">Nhân Viên</a></li>
+							<li><a href="<%=contextPath%>Manage/Customer">Khách Hàng</a></li>
+						</ul></li>
 					<li><a href="<%=contextPath%>Manage/Order"><i
 							class="fa fa-table"></i> Hóa Đơn</a></li>
-					<li class="active"><a href="<%=contextPath%>Manage/Product"><i
+					<li><a href="<%=contextPath%>Manage/Product"><i
 							class="fa fa-edit"></i> Sản Phẩm</a></li>
-					<li><a href="<%=contextPath%>Manage/Image"><i
-							class="fa fa-edit"></i> Hình Ảnh</a></li>
-					<li><a href="<%=contextPath%>Manage/Ad"><i
-							class="fa fa-edit"></i> Quảng Cáo</a></li>
-				</ul>
+					<li><a href="<%=contextPath%>Manage/Feedback"><i
+							class="fa fa-edit"></i> Phản Hồi</a></li>
 
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Cài đặt <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<%=contextPath%>Manage/Image">Hình ảnh</a></li>
+							<li><a href="<%=contextPath%>Manage/Ad">Quảng cáo</a></li>
+						</ul></li>
+				</ul>
 				<jsp:include page="admin-header.jsp"></jsp:include>
 			</div>
 		</nav>

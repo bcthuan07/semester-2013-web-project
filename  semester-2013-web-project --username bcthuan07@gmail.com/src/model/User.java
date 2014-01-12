@@ -45,7 +45,7 @@ public class User implements java.io.Serializable {
 	private Set<UserAddressHistory> userAddressHistories = new HashSet<UserAddressHistory>(
 			0);
 	private Set<RoleMember> userRoleMembers = new HashSet<RoleMember>(0);
-
+	private String phoneNumber;
 	public User() {
 	}
 
@@ -53,7 +53,7 @@ public class User implements java.io.Serializable {
 			String fullname, String email, boolean gender, Date datecreated,
 			byte[] salt, Set<UserOrder> userOrders,
 			Set<UserAddressHistory> userAddressHistories,
-			Set<RoleMember> userRoleMembers) {
+			Set<RoleMember> userRoleMembers, String phoneNumber) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -66,6 +66,7 @@ public class User implements java.io.Serializable {
 		this.userOrders = userOrders;
 		this.userAddressHistories = userAddressHistories;
 		this.userRoleMembers = userRoleMembers;
+		this.phoneNumber = phoneNumber;
 	}
 
 	@Id
@@ -183,6 +184,15 @@ public class User implements java.io.Serializable {
 
 	public void setUserRoleMembers(Set<RoleMember> userRoleMembers) {
 		this.userRoleMembers = userRoleMembers;
+	}
+
+	@Column(name="phone_number")
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	@Override

@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Feedback;
 import model.RoleMember;
 import model.RoleMemberId;
 import model.User;
-import model.UserOrder;
 import service.DAOService;
-import dao.UserOrderDAO;
+import dao.FeedbackDAO;
 
 /**
- * Servlet implementation class DeleteUserOrderServlet
+ * Servlet implementation class FeedbackDetailServlet
  */
-@WebServlet("/Manage/DeleteUserOrder")
-public class DeleteUserOrderServlet extends HttpServlet {
+@WebServlet("/Manage/FeedbackDetail")
+public class FeedbackDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public DeleteUserOrderServlet() {
+	public FeedbackDetailServlet() {
 		super();
 	}
 
@@ -41,43 +41,42 @@ public class DeleteUserOrderServlet extends HttpServlet {
 	protected void toDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		request.setCharacterEncoding("utf8");
-		response.setCharacterEncoding("utf8");
-
-		String userOrder = request.getParameter("userorder");
+		String idFeedback = request.getParameter("feedbackid");
+		int id = Integer.parseInt(idFeedback);
+		System.out.println(idFeedback);
 		HttpSession session = request.getSession();
-
 		User user = (User) session.getAttribute("user");
-
 		if (user != null) {
 
 			Set<RoleMember> roleSet = user.getUserRoleMembers();
 
 			if (roleSet.contains(new RoleMember(new RoleMemberId(user
-					.getUserId(), 1)))) {
-				Integer id = Integer.parseInt(userOrder);
-				DAOService<UserOrder, Integer> daoService = new DAOService<>(
-						new UserOrderDAO());
-				boolean isDeleted = daoService.removeObject(id);
-				if (isDeleted) {
-					getServletContext().getRequestDispatcher("/Manage/Order")
-							.forward(request, response);
-				} else {
-					String error = "Đã có lỗi xảy ra. Không thể xóa hóa đơn này!";
-					request.setAttribute("error", error);
+					.getUserId(), 1)))
+					|| roleSet.contains(new RoleMember(new RoleMemberId(user
+							.getUserId(), 2)))) {
+				DAOService<Feedback, Integer> service = new DAOService<Feedback, Integer>(
+						new FeedbackDAO());
+				request.setAttribute("feedback", service.getObjectById(id));
+				if (roleSet.contains(new RoleMember(new RoleMemberId(user
+						.getUserId(), 1))))
 					getServletContext().getRequestDispatcher(
-							"/error/commonerror.jsp")
-							.forward(request, response);
-				}
+							"/manage/admin-feedback.jsp").forward(request,
+							response);
+				else
+					getServletContext().getRequestDispatcher(
+							"/manage/staff-feedback-detail.jsp").forward(request,
+							response);
+
 			} else {
-				getServletContext().getRequestDispatcher(
-						"/manage/managelogin.jsp").forward(request, response);
+				response.sendRedirect(request.getContextPath()
+						+ "/manage/managelogin.jsp");
 			}
 		} else {
-			getServletContext().getRequestDispatcher("/manage/managelogin.jsp")
-					.forward(request, response);
+			response.sendRedirect(request.getContextPath()
+					+ "/manage/managelogin.jsp");
 
 		}
+
 	}
 
 }

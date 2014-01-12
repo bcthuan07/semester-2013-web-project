@@ -2,7 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath() + "/";
-	String pathToMarkUp = path+"manage/";
+	String pathToMarkUp = path + "manage/";
+
+	String username = request.getAttribute("username") == null ? ""
+			: (String) request.getAttribute("username");
+	String username_err = request.getAttribute("username_err") == null ? ""
+			: (String) request.getAttribute("username_err");
+	String password_err = request.getAttribute("password_err") == null ? ""
+			: (String) request.getAttribute("password_err");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +22,7 @@
 <title>Đăng nhập - Admin</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<%=pathToMarkUp %>css/bootstrap.css" rel="stylesheet">
+<link href="<%=pathToMarkUp%>css/bootstrap.css" rel="stylesheet">
 
 <!-- Add custom CSS here -->
 <link href="<%=pathToMarkUp%>css/sb-admin.css" rel="stylesheet">
@@ -24,20 +31,24 @@
 <!-- Page Specific CSS -->
 <link rel="stylesheet"
 	href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-<link rel="stylesheet" href="<%=pathToMarkUp %>css/formsignin.css">
+<link rel="stylesheet" href="<%=pathToMarkUp%>css/formsignin.css">
 </head>
 
 <body>
 	<div class="container">
-		<form action="<%=path %>Manage/LoginManage" method="post" class="form-signin" role="form">
+		<form action="<%=path%>Manage/LoginManage" method="post"
+			class="form-signin" role="form">
 			<div class="form-group">
 				<label for="username">Username:</label><input class="form-control"
-					type="text" id="username" name="username" placeholder="Username">
+					type="text" id="username" name="username" placeholder="Username"
+					value="<%=username%>">
+				<p class="help-block"><%=username_err%></p>
 			</div>
 			<div class="form-group">
 				<label for="password">Password:</label><input class="form-control"
 					placeholder="Password" id="password" type="password"
-					name="password"><br>
+					name="password">
+				<p class="help-block"><%=password_err%></p>
 			</div>
 			<div class="form-group">
 				<input class="form-control btn btn-success" type="submit"

@@ -40,7 +40,7 @@ public class ProlifeInfoServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		request.setAttribute("user", user);
-		request.getRequestDispatcher("prolifeinfo.jsp").forward(request,
+		request.getRequestDispatcher("detail/prolifeedit.jsp").forward(request,
 				response);
 	}
 

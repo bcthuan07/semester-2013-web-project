@@ -6,10 +6,18 @@
   </welcome-file-list>
   <context-param>
     <param-name>manageuser</param-name>
-    <param-value>bcthuan07@gmail.com</param-value>
+    <param-value>nname0188@gmail.com</param-value>
   </context-param>
   <context-param>
     <param-name>admin</param-name>
-    <param-value>doublefaces1211@gmail.com</param-value>
+    <param-value>bcthuan07@gmail.com</param-value>
   </context-param>
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/error/404.jsp</location>
+  </error-page>
+  <error-page>
+  	<exception-type>java.lang.Exception</exception-type>
+  	<location>/home.jsp</location>
+  </error-page>
 </web-app>

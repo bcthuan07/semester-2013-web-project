@@ -1,3 +1,4 @@
+<%@page import="service.DAOService"%>
 <%@page import="model.User"%>
 <%@page import="java.util.Set"%>
 <%@page import="dao.ProductDAO"%>
@@ -13,23 +14,20 @@
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
 
-	GeneralDAO<ProductType, Integer> dao = new ProductTypeDAO();
-	List<ProductType> list = dao.listObject();
+	List<ProductType> list = request.getAttribute("listproducttype") == null ? new ArrayList<ProductType>()
+			: (List<ProductType>) request
+					.getAttribute("listproducttype");
 
-	List<Product> listProduct = new ArrayList<Product>();
-	String ptString = "";
-	if (request.getAttribute("listproduct") != null) {
-		listProduct = (List<Product>) request
-				.getAttribute("listproduct");
-	} else if (request.getAttribute("producttype") != null) {
-		ProductType pt = (ProductType) request
-				.getAttribute("producttype");
-		ptString = pt.getDescription();
-		Set<Product> set = pt.getProducts();
-		listProduct.addAll(set);
-	} else {
-		listProduct = new ProductDAO().listObject();
-	}
+	List<Product> listProduct = request.getAttribute("listproduct") == null ? new DAOService<Product, Integer>(
+			new ProductDAO()).listObject() : (List<Product>) request
+			.getAttribute("listproduct");
+	ProductType pt = request.getAttribute("producttype") == null ? new ProductType(
+			"") : (ProductType) request.getAttribute("producttype");
+
+	int count = request.getAttribute("count") == null ? 1
+			: (Integer) request.getAttribute("count");
+	int index = request.getAttribute("index") == null ? 1
+			: (Integer) request.getAttribute("index");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,15 +81,18 @@
 				<p class="lead">Thực Đơn</p>
 				<div class="list-group">
 					<%
-						for (ProductType pt : list) {
+						for (ProductType ptype : list) {
 							String c = "";
-							if (ptString.equals(pt.getDescription())) {
-								c = "active";
+							if (pt != null) {
+								if (pt.getDescription().equals(ptype.getDescription())) {
+									c = "active";
+								}
 							}
 					%>
 
 					<a class="list-group-item <%=c%>"
-						href="Menu?producttype=<%=pt.getProductTypeId()%>" title="Món ăn"><%=pt.getDescription()%></a>
+						href="Menu?producttype=<%=ptype.getProductTypeId()%>"
+						title="Món ăn"><%=ptype.getDescription()%></a>
 
 					<%
 						}
@@ -152,6 +153,26 @@
 						}
 					%>
 				</div>
+				<div class="center-block">
+					<ul class="pagination">
+						<li><a href="#">&laquo;</a></li>
+
+						<%
+							for (int i = 0; i < count; i++) {
+								String c = ((i+1) == index) ? "active" : "";
+								String productTypeId = pt.getProductTypeId() == null ? "" : pt
+										.getProductTypeId().toString();
+						%>
+						<li class="<%=c%>"><a
+							href="Menu?index=<%=(i + 1)%>&producttype=<%=productTypeId%>"><%=(i + 1)%></a></li>
+						<%
+							}
+						%>
+						<li><a href="#">&raquo;</a></li>
+
+					</ul>
+				</div>
+
 			</div>
 		</div>
 	</div>

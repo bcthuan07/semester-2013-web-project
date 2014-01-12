@@ -22,7 +22,7 @@
 <title>Trang Quản Lý - SB Admin</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<%=path %>css/bootstrap.css" rel="stylesheet">
+<link href="<%=path%>css/bootstrap.css" rel="stylesheet">
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -56,18 +56,29 @@
 				<ul class="nav navbar-nav side-nav">
 					<li class="active"><a href="<%=contextPath%>Manage"><i
 							class="fa fa-dashboard"></i> Thống Kê</a></li>
-					<li><a href="<%=contextPath%>Manage/User"><i
-							class="fa fa-bar-chart-o"></i> Người Dùng</a></li>
+
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Người Dùng <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<%=contextPath%>Manage/Staff">Nhân Viên</a></li>
+							<li><a href="<%=contextPath%>Manage/Customer">Khách Hàng</a></li>
+						</ul></li>
 					<li><a href="<%=contextPath%>Manage/Order"><i
 							class="fa fa-table"></i> Hóa Đơn</a></li>
 					<li><a href="<%=contextPath%>Manage/Product"><i
 							class="fa fa-edit"></i> Sản Phẩm</a></li>
-					<li><a href="<%=contextPath%>Manage/Image"><i
-							class="fa fa-edit"></i> Hình Ảnh</a></li>
-					<li><a href="<%=contextPath%>Manage/Ad"><i
-							class="fa fa-edit"></i> Quảng Cáo</a></li>
-				</ul>
+					<li><a href="<%=contextPath%>Manage/Feedback"><i
+							class="fa fa-edit"></i> Phản Hồi</a></li>
 
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
+							Cài đặt <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="<%=contextPath%>Manage/Image">Hình ảnh</a></li>
+							<li><a href="<%=contextPath%>Manage/Ad">Quảng cáo</a></li>
+						</ul></li>
+				</ul>
 
 				<jsp:include page="admin-header.jsp"></jsp:include>
 			</div>
@@ -86,15 +97,19 @@
 			</div>
 			<!-- /.row -->
 			<div class="row">
-				<%for(Ads a: list){ %>
-				<p><%=a.getName() %></p>
-				<p><%=a.getLink() %></p>
-				<p><%=a.getContent() %></p>
-				<img alt="Ảnh" src="<%=contextPath %><%=a.getImagePath()%>">
-				<a href="<%=contextPath %>Manage/AdDetail?ad=<%=a.getId() %>">Chỉnh Sửa</a>
-				<br><br>
-				
-				<%} %>
+				<%
+					for (Ads a : list) {
+				%>
+				<p><%=a.getName()%></p>
+				<p><%=a.getLink()%></p>
+				<p><%=a.getContent()%></p>
+				<img alt="Ảnh" src="<%=contextPath%><%=a.getImagePath()%>"> <a
+					href="<%=contextPath%>Manage/AdDetail?ad=<%=a.getId()%>">Chỉnh
+					Sửa</a> <br> <br>
+
+				<%
+					}
+				%>
 			</div>
 
 		</div>

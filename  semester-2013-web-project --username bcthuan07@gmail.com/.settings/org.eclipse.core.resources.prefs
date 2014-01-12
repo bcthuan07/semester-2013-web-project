@@ -10,6 +10,7 @@ encoding//src/servlet/edit/EditProlifeServlet.java=UTF-8
 encoding//src/servlet/manage/ManageEditImageServlet.java=UTF-8
 encoding//src/servlet/manage/add/AddProductServlet.java=UTF-8
 encoding//src/servlet/manage/add/AddProductTypeServlet.java=UTF-8
+encoding//src/servlet/manage/edit/DeleteFeedbackServlet.java=UTF-8
 encoding//src/servlet/manage/edit/DeleteProductServlet.java=UTF-8
 encoding//src/servlet/manage/edit/DeleteProductTypeServlet.java=UTF-8
 encoding//src/servlet/manage/edit/DeleteUserOrderServlet.java=UTF-8

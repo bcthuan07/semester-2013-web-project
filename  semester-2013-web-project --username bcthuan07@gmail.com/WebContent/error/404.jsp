@@ -1,24 +1,6 @@
-<%@page import="model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	User user = (User) session.getAttribute("user");
-	String username = "";
-	String phonenumber = "";
-	String fullname = "";
-	String email = "";
-	String paymentmethod = "";
-	String gioitinh = "";
-	String id = "";
-	if (user != null) {
-		username = user.getUsername();
-		fullname = user.getFullname();
-		email = user.getEmail();
-		paymentmethod = user.getPaymentMethod().getDescription();
-		gioitinh = user.getGender() ? "Nam" : "Nữ";
-		id = user.getUserId() + "";
-	}
-
 	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
@@ -62,26 +44,16 @@
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
 					<jsp:include page="header.jsp"></jsp:include>
-					
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container -->
 	</nav>
+	
 	<div class="container">
-
-		<p><%=username%></p>
-		<p><%=fullname%></p>
-		<p><%=phonenumber%></p>
-		<p><%=email%></p>
-		<p><%=gioitinh%></p>
-		<a href="<%=contextPath %>detail/prolifeedit.jsp">Chinh sua account</a>
-	</div>
-	<div class="container">
-
+	<h1>Không tìm thấy bài viết!</h1>
 		<hr>
-
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
@@ -89,20 +61,10 @@
 				</div>
 			</div>
 		</footer>
-
 	</div>
 	<!-- /.container -->
-
-
-
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="<%=contextPath %>js/jquery-1.10.2.js"></script>
-	<script src="<%=contextPath %>js/bootstrap.js"></script>
-	<script src="<%=contextPath %>js/holder.js"></script>
-
-
+	<!-- JavaScript -->
+	<script src="<%=contextPath%>js/jquery-1.10.2.js"></script>
+	<script src="<%=contextPath%>js/bootstrap.js"></script>
 </body>
-
 </html>
