@@ -20,7 +20,7 @@ import dao.FeedbackDAO;
 /**
  * Servlet implementation class DeleteFeedbackServlet
  */
-@WebServlet("/Manage/DeleteFeedbackServlet")
+@WebServlet("/Manage/DeleteFeedback")
 public class DeleteFeedbackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

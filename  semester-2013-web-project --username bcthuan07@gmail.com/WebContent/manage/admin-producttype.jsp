@@ -130,7 +130,8 @@
 										<td><%=pt.toString()%></td>
 										<td><a
 											href="<%=request.getContextPath()%>/Manage/DeleteProductType?pt=<%=pt.getProductTypeId()%>"
-											class="btn btn-danger">Xóa</a></td>
+											class="btn btn-danger"
+											onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nCác sản phẩm có trong loại sản phẩm cũng sẽ bị xóa đi!')">Xóa</a></td>
 									</tr>
 
 									<%

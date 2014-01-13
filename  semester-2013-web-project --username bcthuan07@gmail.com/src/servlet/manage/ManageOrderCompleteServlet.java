@@ -46,18 +46,23 @@ public class ManageOrderCompleteServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		if (user != null) {
 			Set<RoleMember> roleSet = user.getUserRoleMembers();
-			if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 1)))
-					||roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 2)))) {
+			if (roleSet.contains(new RoleMember(new RoleMemberId(user
+					.getUserId(), 1)))
+					|| roleSet.contains(new RoleMember(new RoleMemberId(user
+							.getUserId(), 2)))) {
 				DAOService<UserOrder, Integer> service = new DAOService<>(
 						new UserOrderDAO());
 				List<UserOrder> incomplete = new ArrayList<>();
 				for (UserOrder uo : service.listObject()) {
-					if (uo.getOrderStatus().getDescription().equals("done"))
+					if (uo.getOrderStatus().getOrderStatusId() == 2)
 						incomplete.add(uo);
 				}
 				request.setAttribute("listorder", incomplete);
+				String link = roleSet.contains(new RoleMember(new RoleMemberId(
+						user.getUserId(), 1))) ? "admin-order.jsp" : "staff-order.jsp";
+
 				getServletContext().getRequestDispatcher(
-						"/manage/staff-order.jsp").forward(request, response);
+						"/manage/"+link).forward(request, response);
 			} else {
 				response.sendRedirect(request.getContextPath()
 						+ "/manage/managelogin.jsp");

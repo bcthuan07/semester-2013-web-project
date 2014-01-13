@@ -117,9 +117,16 @@
 								%>
 								<tr>
 									<td><%=c.getFullname()%></td>
-									<td><%=c.getEmail() %></td>
-									<td><%=c.getContent() %></td>
-									<td><%=c.getDateCreated() %></td>
+									<td><%=c.getEmail()%></td>
+									<td><%=c.getContent()%></td>
+									<td><%=c.getDateCreated()%></td>
+									<td><code>
+											<a
+												href="<%=contextPath%>/Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>">Chi
+												tiết</a> <a
+												href="<%=contextPath%>Manage/DeleteFeedback?feedbackid=<%=c.getFeedbackId()%>"
+												onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a>
+										</code></td>
 								</tr>
 								<%
 									}

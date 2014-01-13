@@ -22,7 +22,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Trang Quản Lý - Hóa Đơn</title>
+<title>Trang Quản Lý - Khách Hàng</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
@@ -73,8 +73,6 @@
 							class="fa fa-edit"></i> Sản Phẩm</a></li>
 					<li><a href="<%=contextPath%>Manage/Feedback"><i
 							class="fa fa-edit"></i> Phản Hồi</a></li>
-					<li><a href="<%=contextPath%>Manage/Feedback"><i
-							class="fa fa-edit"></i> Phản Hồi</a></li>
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
@@ -90,24 +88,23 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Người Dùng</h1>
+					<h1>Khách Hàng</h1>
 					<ol class="breadcrumb">
-						<li><a href="Manage"><i class="fa fa-dashboard"></i>
+						<li><a href="<%=contextPath %>Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
-						<li class="active"><i class="fa fa-table"></i> Sản Phẩm</li>
+						<li><a href=""><i class="fa fa-table"></i> Sản Phẩm</a></li>
+						<li class="active"><i class="fa fa-table"></i> Khách Hàng</li>
 					</ol>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-7">
-					<h2>Khách Hàng</h2>
+				<div class="col-lg-12">
 					<div class="table-responsive">
 						<table
 							class="table table-bordered table-hover table-striped tablesorter">
 							<thead>
 								<tr>
 									<th><i class="fa fa-sort"></i>Tên</th>
-									<th><i class="fa fa-sort"></i>Username</th>
 									<th><i class="fa fa-sort"></i>Hình Thức Thanh Toán</th>
 									<th><i class="fa fa-sort"></i>Email</th>
 									<th><i class="fa fa-sort"></i>Ngày Tạo</th>
@@ -122,12 +119,11 @@
 								%>
 								<tr>
 									<td><%=c.getFullname()%></td>
-									<td><%=c.getUsername()%></td>
 									<td><%=payment%></td>
 									<td><%=c.getEmail()%></td>
 									<td><%=c.getDatecreated()%></td>
-									<td><a href="Manage/DeleteUser?user=<%=c.getUserId()%>"
-										class="btn btn-danger">Xóa</a></td>
+									<td><a href="<%=contextPath %>Manage/DeleteUser?type=Customer&user=<%=c.getUserId()%>"
+										class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a></td>
 								</tr>
 								<%
 									}

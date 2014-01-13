@@ -44,6 +44,7 @@ public class DeleteUserServlet extends HttpServlet {
 		response.setCharacterEncoding("utf8");
 
 		String userId = request.getParameter("user");
+		String type = request.getParameter("type");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user != null) {
@@ -57,8 +58,7 @@ public class DeleteUserServlet extends HttpServlet {
 						new UserDAO());
 				boolean isDeleted = service.removeObject(id);
 				if (isDeleted) {
-					response.sendRedirect(request.getContextPath()
-							+ "/manage/admin-user.jsp");
+					getServletContext().getRequestDispatcher("/Manage/"+type).forward(request, response);
 				} else {
 					String error = "Đã có lỗi xảy ra. Không thể xóa người dùng này!";
 					request.setAttribute("error", error);
