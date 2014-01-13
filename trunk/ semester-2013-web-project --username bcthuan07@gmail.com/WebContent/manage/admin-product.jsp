@@ -128,7 +128,9 @@
 									<td><code>
 											<a
 												href="<%=request.getContextPath()%>/Manage/DeleteProduct?product=<%=p.getProductId()%>"
-												class="btn btn-danger">Xóa</a> <a
+												class="btn btn-danger"
+												onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a>
+											<a
 												href="<%=request.getContextPath()%>/Manage/ProductDetail?p=<%=p.getProductId()%>"
 												class="btn btn-primary">Sửa</a>
 										</code></td>

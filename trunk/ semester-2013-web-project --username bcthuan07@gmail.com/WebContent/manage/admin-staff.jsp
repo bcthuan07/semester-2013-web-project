@@ -89,18 +89,18 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Người Dùng</h1>
+					<h1>Nhân Viên</h1>
 					<ol class="breadcrumb">
-						<li><a href="Manage"><i class="fa fa-dashboard"></i>
+						<li><a href="<%=contextPath %>Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
-						<li class="active"><i class="fa fa-table"></i> Sản Phẩm</li>
+						<li><a href=""><i class="fa fa-table"></i>Người dùng</a></li>
+						<li class="active"><i class="fa fa-table"></i>Nhân viên</li>
 					</ol>
 				</div>
 			</div>
 			<div class="row">
 				<div class="row">
 					<div class="col-lg-12">
-						<h2>Nhân Viên</h2>
 						<div class="table-responsive">
 							<table
 								class="table table-bordered table-hover table-striped tablesorter">
@@ -122,8 +122,8 @@
 										<td><%=c.getUsername()%></td>
 										<td><%=c.getEmail()%></td>
 										<td><%=c.getDatecreated()%></td>
-										<td><a href="Manage/DeleteUser?user=<%=c.getUserId()%>"
-											class="btn btn-danger">Xóa</a></td>
+										<td><a href="<%=contextPath %>Manage/DeleteUser?type=Staff&user=<%=c.getUserId()%>"
+											class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a></td>
 									</tr>
 									<%
 										}

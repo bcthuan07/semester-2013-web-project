@@ -122,7 +122,8 @@
 									<td><%=userOrder.getOrderDate()%></td>
 									<td><a class="btn btn-danger"
 										href="<%=contextPath%>Manage/DeleteUserOrder?userorder=
-										<%=userOrder.getUserOrderId()%>">Xóa</a></td>
+										<%=userOrder.getUserOrderId()%>"
+										onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a></td>
 								</tr>
 								<%
 									}

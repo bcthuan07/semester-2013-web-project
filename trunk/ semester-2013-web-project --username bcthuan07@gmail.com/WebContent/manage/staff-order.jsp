@@ -2,16 +2,14 @@
 <%@page import="model.UserOrder"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-    <%
-    
-    String contextPath = request.getContextPath()+"/";
-    String path = contextPath+"manage/";
-    List<UserOrder> listUserOrders = request
-			.getAttribute("listorder") == null ? new ArrayList<UserOrder>()
+	pageEncoding="UTF-8"%>
+
+<%
+	String contextPath = request.getContextPath() + "/";
+	String path = contextPath + "manage/";
+	List<UserOrder> listUserOrders = request.getAttribute("listorder") == null ? new ArrayList<UserOrder>()
 			: (List<UserOrder>) request.getAttribute("listorder");
-    %>
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,9 +67,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>
-						Sản Phẩm
-					</h1>
+					<h1>Sản Phẩm</h1>
 					<ol class="breadcrumb">
 						<li><a href="Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
@@ -102,6 +98,8 @@
 									<td><%=userOrder.getUser().getFullname()%></td>
 									<td><%=userOrder.getOrderStatus().getDescription()%></td>
 									<td><%=userOrder.getOrderDate()%></td>
+									<td><a
+										href="<%=contextPath%>Manage/DeleteUserOrder?userorder=<%=userOrder.getUserOrderId()%>">Xóa</a></td>
 								</tr>
 								<%
 									}

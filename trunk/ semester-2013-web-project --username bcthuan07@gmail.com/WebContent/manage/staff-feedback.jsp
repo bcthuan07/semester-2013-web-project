@@ -99,11 +99,18 @@
 									for (Feedback c : listFeedback) {
 								%>
 								<tr>
-									<td><a href="<%=contextPath%>Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId() %>"><%=c.getFullname()%></a></td>
+									<td><a
+										href="<%=contextPath%>Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>"><%=c.getFullname()%></a></td>
 									<td><%=c.getEmail()%></td>
 									<td><%=c.getContent()%></td>
 									<td><%=c.getDateCreated()%></td>
-									<td><code><a href="<%=contextPath %>/Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>">Chi tiết</a> <a href="<%=contextPath%>Manage/DeleteFeedbackServlet?feedbackid=<%=c.getFeedbackId()%>">Xóa</a></code></td>
+									<td><code>
+											<a
+												href="<%=contextPath%>/Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>">Chi
+												tiết</a> <a
+												href="<%=contextPath%>Manage/DeleteFeedback?feedbackid=<%=c.getFeedbackId()%>"
+												onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a>
+										</code></td>
 								</tr>
 								<%
 									}
