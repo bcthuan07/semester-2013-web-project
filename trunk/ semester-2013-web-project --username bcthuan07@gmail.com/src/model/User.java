@@ -46,6 +46,7 @@ public class User implements java.io.Serializable {
 			0);
 	private Set<RoleMember> userRoleMembers = new HashSet<RoleMember>(0);
 	private String phoneNumber;
+	private Integer score;
 	public User() {
 	}
 
@@ -256,4 +257,14 @@ public class User implements java.io.Serializable {
 		return true;
 	}
 
+	@Column(name="score")
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	
 }

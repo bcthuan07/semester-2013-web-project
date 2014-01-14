@@ -39,8 +39,6 @@
 
 <title>Thực Đơn</title>
 
-<script src="js/pace.min.js"></script>
-<link href="css/loading.css" rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/3-col-portfolio.css" rel="stylesheet">
@@ -66,6 +64,8 @@
 					<li><a href="home.jsp">Home</a></li>
 					<li class="active"><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
+
 					<jsp:include page="header.jsp"></jsp:include>
 
 				</ul>
@@ -139,7 +139,7 @@
 					%>
 					<div class="col-sm-4 col-lg-4 col-md-4">
 						<div class="thumbnail">
-							<img src="http://placehold.it/320x150" alt="">
+							<img src="<%=product.getImagePath()%>" alt="">
 							<div class="caption">
 								<h4 class="pull-right">Gias</h4>
 								<h4>
@@ -159,7 +159,7 @@
 
 						<%
 							for (int i = 0; i < count; i++) {
-								String c = ((i+1) == index) ? "active" : "";
+								String c = ((i + 1) == index) ? "active" : "";
 								String productTypeId = pt.getProductTypeId() == null ? "" : pt
 										.getProductTypeId().toString();
 						%>

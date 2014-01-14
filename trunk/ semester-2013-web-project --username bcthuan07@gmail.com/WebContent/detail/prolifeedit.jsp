@@ -22,7 +22,7 @@
 				: (String) request.getAttribute("email");
 		gioitinh = user.getGender();
 	}
-	
+
 	String email_err = "";
 	String oldpassword_err = "";
 	String password1_err = "";
@@ -44,8 +44,9 @@
 
 	String phonenumber_err = request.getAttribute("phonenumber_err") == null ? ""
 			: (String) request.getAttribute("phonenumber_err");
-	
-	String fullname_err = request.getAttribute("fullname_err")==null?"":(String)request.getAttribute("fullname_err");
+
+	String fullname_err = request.getAttribute("fullname_err") == null ? ""
+			: (String) request.getAttribute("fullname_err");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,8 +78,8 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<%=contextPath%>home.jsp">Nhà
-					Hàng Jamie's Oliver</a>
+				<a class="navbar-brand" href="<%=contextPath%>home.jsp">Nhà Hàng
+					Jamie's Oliver</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -87,6 +88,8 @@
 					<li><a href="<%=contextPath%>home.jsp">Trang Chủ</a></li>
 					<li><a href="<%=contextPath%>Menu">Thực Đơn</a></li>
 					<li><a href="<%=contextPath%>lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
+
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
@@ -107,34 +110,36 @@
 			<div class="form-group">
 				<label for="oldpass">Password cũ:</label> <input type="password"
 					name="oldpassword" class="form-control" id="oldpass">
-					<p class="help-block"><%=oldpassword_err %></p>
+				<p class="help-block"><%=oldpassword_err%></p>
 
 			</div>
 
 			<div class="form-group">
 				<label for="pass1">Password mới:</label> <input type="password"
 					name="password1" class="form-control" id="pass1">
-					<p class="help-block"><%=password1_err %></p>
+				<p class="help-block"><%=password1_err%></p>
 
 			</div>
 
 			<div class="form-group">
-				<label for="pass2">Nhập lại Password mới:</label> <input type="password"
-					name="password2" class="form-control" id="pass2">
-					<p class="help-block"><%=password2_err %></p>
+				<label for="pass2">Nhập lại Password mới:</label> <input
+					type="password" name="password2" class="form-control" id="pass2">
+				<p class="help-block"><%=password2_err%></p>
 
 			</div>
 
 			<div class="form-group">
-				<label for="fullname">Họ và tên:</label> <input type="text" name="fullname"
-					value="<%=fullname%>" class="form-control" id="fullname">
-					<p class="help-block"><%=fullname_err %></p>
+				<label for="fullname">Họ và tên:</label> <input type="text"
+					name="fullname" value="<%=fullname%>" class="form-control"
+					id="fullname">
+				<p class="help-block"><%=fullname_err%></p>
 
 			</div>
 
 			<div class="form-group">
-				<label for="phone">Số điện thoại:</label> <input type="text" name="phonenumber"
-					value="<%=phonenumber%>" class="form-control" id="phone">
+				<label for="phone">Số điện thoại:</label> <input type="text"
+					name="phonenumber" value="<%=phonenumber%>" class="form-control"
+					id="phone">
 				<p class="help-block"><%=phonenumber_err%></p>
 			</div>
 

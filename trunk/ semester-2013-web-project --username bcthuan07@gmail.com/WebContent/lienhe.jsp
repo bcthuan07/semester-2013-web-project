@@ -29,10 +29,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Trang Chủ</title>
-
-<script src="js/pace.min.js"></script>
-<link href="css/loading.css" rel="stylesheet">
+<title>Liên Hệ</title>
 
 
 <!-- Bootstrap core CSS -->
@@ -61,6 +58,8 @@
 					<li><a href="home.jsp">Home</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li class="active"><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
+						<!--<li class="dropdown-header">Nav header</li>-->
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>

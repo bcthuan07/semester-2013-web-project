@@ -38,12 +38,11 @@
 			: (String) request.getAttribute("buildingnumber");
 
 	User user = (User) session.getAttribute("user");
-	boolean hasLogin = user == null ? false:true;
-	String disabled = hasLogin? "disabled": "";
-	fullname = hasLogin? user.getFullname(): "";
-	email = hasLogin? user.getEmail(): "";
+	boolean hasLogin = user == null ? false : true;
+	String disabled = hasLogin ? "disabled" : "";
+	fullname = hasLogin ? user.getFullname() : "";
+	email = hasLogin ? user.getEmail() : "";
 
-	
 	String fullname_err = request.getAttribute("fullname_err") == null ? ""
 			: (String) request.getAttribute("fullname_err");
 	String email_err = request.getAttribute("email_err") == null ? ""
@@ -98,6 +97,8 @@
 					<li><a href="home.jsp">Trang Chủ</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
+
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>

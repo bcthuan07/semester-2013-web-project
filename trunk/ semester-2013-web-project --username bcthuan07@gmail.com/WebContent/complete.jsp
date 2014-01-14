@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	
 	String message = request.getAttribute("message") == null ? ""
 			: (String) request.getAttribute("message");
 %>
@@ -46,6 +45,7 @@
 					<li><a href="home.jsp">Home</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
 					<jsp:include page="header.jsp"></jsp:include>
 
 				</ul>
@@ -55,7 +55,9 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container">
-		<h1><%=message%></h1>
+		<div class="center-block">
+			<h1 class="label label-success"><i style="background-image: url(image/icon/success-icon.png);" ></i></h1>
+		</div>
 	</div>
 	<div class="container">
 

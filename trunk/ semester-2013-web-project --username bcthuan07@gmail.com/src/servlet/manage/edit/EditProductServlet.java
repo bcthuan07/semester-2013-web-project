@@ -55,7 +55,8 @@ public class EditProductServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String priceString = request.getParameter("price");
 		Integer idProductType = Integer.parseInt(request
-				.getParameter("product"));
+				.getParameter("producttype"));
+		Integer idProduct = Integer.parseInt(request.getParameter("product"));
 		String description = request.getParameter("description");
 		Part image = request.getPart("image");
 
@@ -73,23 +74,6 @@ public class EditProductServlet extends HttpServlet {
 
 		if (image == null) {
 			image_err += "Ảnh sản phẩm không được để trống!";
-		} else {
-			filename = UploadFileUtil.getFileName(image) == null ? "temp"
-					: UploadFileUtil.getFileName(image);
-			locationImage = request.getServletContext().getRealPath("")
-					+ File.separator + "image" + File.separator + "products"
-					+ File.separator + filename;
-			File upload = new File(request.getServletContext().getRealPath("")
-					+ File.separator + "image" + File.separator + "products");
-
-			if (!upload.exists()) {
-				upload.mkdirs();
-			}
-			if (upload.exists()) {
-				System.out.println(upload.getAbsolutePath());
-			}
-			image.write(locationImage);
-
 		}
 
 		if (priceString == null || priceString.equals("")) {
@@ -126,17 +110,34 @@ public class EditProductServlet extends HttpServlet {
 					DAOService<Product, Integer> pdao = new DAOService<>(
 							new ProductDAO());
 					ProductType pt = ptdao.getObjectById(idProductType);
-					Product p = new Product();
+					Product p = pdao.getObjectById(idProduct);
+					
+					filename = UploadFileUtil.getFileName(image) == null ? "temp"
+							: UploadFileUtil.getFileName(image);
+					locationImage = request.getServletContext().getRealPath("")
+							+ "/image/products/" + filename;
+					File upload = new File(request.getServletContext()
+							.getRealPath("")
+							+ "/image/products");
+
+					if (!upload.exists()) {
+						upload.mkdirs();
+					}
+					if (upload.exists()) {
+						System.out.println(upload.getAbsolutePath());
+					}
+					image.write(locationImage);
 					ImageUtil.resizeImage(300, 300, locationImage);
+
 					p.setDescription(description);
 					p.setPrice(price);
 					p.setProductName(name);
 					p.setProductType(pt);
-					p.setImagePath("image" + File.separator + "products"
-							+ File.separator + filename);
+					p.setImagePath("image/products/"
+							 + filename);
 					if (pdao.updateObject(p)) {
-						response.sendRedirect(request.getContextPath()
-								+ "/Manage/Product");
+						getServletContext().getRequestDispatcher(
+								"/Manage/Product").forward(request, response);
 					} else {
 						String error = "Đã có lỗi xảy ra. Không thể sửa sản phẩm này!";
 						request.setAttribute("error", error);

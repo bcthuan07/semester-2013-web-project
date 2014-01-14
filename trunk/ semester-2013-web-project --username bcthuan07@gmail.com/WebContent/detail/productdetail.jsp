@@ -33,7 +33,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title><%=product.getProductName() %></title>
+<title><%=product.getProductName()%></title>
 
 <!-- Bootstrap core CSS -->
 <link href="<%=contextPath%>css/bootstrap.css" rel="stylesheet">
@@ -53,7 +53,8 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<%=contextPath%>home.jsp">Nhà Hàng Jamie's Oliver</a>
+				<a class="navbar-brand" href="<%=contextPath%>home.jsp">Nhà Hàng
+					Jamie's Oliver</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -62,6 +63,8 @@
 					<li><a href="home.jsp">Trang Chủ</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jps">Liên Hệ</a></li>
+					<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
+
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
@@ -70,17 +73,25 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container">
-		<br><br><br>
+		<br>
+		<br>
+		<br>
 		<div class="row">
 			<div class="col-md-7">
-				<a href="ProductInfo?product=<%=product.getProductId()%>"><img class="img-responsive"
-					src="<%=contextPath %><%=product.getImagePath()%>"></a>
+				<a href="ProductInfo?product=<%=product.getProductId()%>"><img
+					class="img-responsive"
+					src="<%=contextPath%><%=product.getImagePath()%>"></a>
 			</div>
 			<div class="col-md-3">
-				<p>Tên: <%=name%></p>
-				<p>Chi tiết:<%=description%></p>
-				<p>Loại:<%=type%></p>
-				<p>Giá:<%=price%></p>
+				<p>
+					Tên:
+					<%=name%></p>
+				<p>
+					Chi tiết:<%=description%></p>
+				<p>
+					Loại:<%=type%></p>
+				<p>
+					Giá:<%=price%></p>
 				<form action="ChooseProduct" method="post">
 					<input type="hidden" name="id" value="<%=id%>"> <input
 						type="number" name="number" value="1"><span><%=number_err%></span>

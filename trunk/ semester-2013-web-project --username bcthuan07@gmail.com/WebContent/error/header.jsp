@@ -34,9 +34,6 @@
 		<%
 			}
 		%>
-		<li><a href="<%=contextPath%>order/cartview.jsp">Giỏ Hàng</a></li>
-		<li class="divider"></li>
-		<!--<li class="dropdown-header">Nav header</li>-->
 		<%
 			if (user != null) {
 		%>

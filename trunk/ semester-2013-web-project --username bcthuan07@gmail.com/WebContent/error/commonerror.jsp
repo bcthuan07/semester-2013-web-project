@@ -46,6 +46,8 @@
 					<li><a href="home.jsp">Trang Chủ</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
+
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>

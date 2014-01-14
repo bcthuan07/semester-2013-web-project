@@ -55,6 +55,8 @@
 					<li><a href="home.jsp">Home</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
+						<!--<li class="dropdown-header">Nav header</li>-->
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
