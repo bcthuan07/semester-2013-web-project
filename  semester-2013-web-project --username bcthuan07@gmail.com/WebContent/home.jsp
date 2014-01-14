@@ -51,6 +51,7 @@
 					<li class="active"><a href="home.jsp">Home</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
 					<jsp:include page="header.jsp"></jsp:include>
 
 				</ul>
@@ -120,26 +121,26 @@
 	<!-- /.carousel -->
 	<div class="container marketing">
 
-			<div class="row">
+		<div class="row">
 
-				<%
-					for (Ads a : list) {
-				%>
-				<div class="col-lg-4">
-					<img class="img-circle" src="<%=a.getImagePath() %>"
-						alt="Generic placeholder image">
-					<h2><%=a.getName()%></h2>
-					<p><%=a.getContent()%></p>
-					<p>
-						<a class="btn btn-default" href="<%=a.getLink()%>"
-							target="_blank" role="button">View details &raquo;</a>
-					</p>
-				</div>
-				<!-- /.col-lg-4 -->
+			<%
+				for (Ads a : list) {
+			%>
+			<div class="col-lg-4">
+				<img class="thumbnail" src="<%=a.getImagePath()%>"
+					alt="<%=a.getContent()%>">
+				<h2><%=a.getName()%></h2>
+				<p><%=a.getContent()%></p>
+				<p>
+					<a class="btn btn-default" href="<%=a.getLink()%>" target="_blank"
+						role="button">View details &raquo;</a>
+				</p>
+			</div>
+			<!-- /.col-lg-4 -->
 
-				<%
-					}
-				%>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<div class="container">
@@ -149,7 +150,8 @@
 		<footer>
 			<div class="row">
 				<div class="col-lg-12">
-					<p>Copyright &copy; Company 2013</p>
+					<p>Copyright &copy; Company 2014</p>
+					<p>Design by Nhóm 5 - Đại học Nông Lâm</p>
 				</div>
 			</div>
 		</footer>

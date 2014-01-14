@@ -60,7 +60,7 @@ public class FeedbackDetailServlet extends HttpServlet {
 				if (roleSet.contains(new RoleMember(new RoleMemberId(user
 						.getUserId(), 1))))
 					getServletContext().getRequestDispatcher(
-							"/manage/admin-feedback.jsp").forward(request,
+							"/manage/admin-feedback-detail.jsp").forward(request,
 							response);
 				else
 					getServletContext().getRequestDispatcher(

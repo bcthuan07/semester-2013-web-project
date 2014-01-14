@@ -50,16 +50,18 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="home.jsp">Nhà
-					Hàng Jamie's Oliver</a>
+				<a class="navbar-brand" href="home.jsp">Nhà Hàng Jamie's Oliver</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="<%=contextPath %>home.jsp">Trang Chủ</a></li>
-					<li><a href="<%=contextPath %>Menu">Thực Đơn</a></li>
-					<li><a href="<%=contextPath %>lienhe.jsp">Liên Hệ</a></li>
+					<li class="active"><a href="<%=contextPath%>home.jsp">Trang
+							Chủ</a></li>
+					<li><a href="<%=contextPath%>Menu">Thực Đơn</a></li>
+					<li><a href="<%=contextPath%>lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
+
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
@@ -68,7 +70,7 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container">
-			<%
+		<%
 			int count = 0;
 			for (Product product : listProduct) {
 				count++;
@@ -86,7 +88,9 @@
 					<a href="ProductInfo?product=<%=product.getProductId()%>"><%=product.getProductName()%></a>
 				</h3>
 				<p><%=product.getDescription()%></p>
-				<a href="<%=contextPath %>RemoveProduct?product=<%=product.getProductId() %>">Bỏ Sản Phẩm</a>
+				<a
+					href="<%=contextPath%>RemoveProduct?product=<%=product.getProductId()%>">Bỏ
+					Sản Phẩm</a>
 			</div>
 			<%
 				if (count % 3 == 0) {
@@ -97,10 +101,10 @@
 			}
 			}
 		%>
-	<%=amount.toString()%>
-	<a class="btn btn-success" href="validatecart.jsp" title="Thanh Toán">Thanh
-		Toán</a>
-		
+		<%=amount.toString()%>
+		<a class="btn btn-success" href="validatecart.jsp" title="Thanh Toán">Thanh
+			Toán</a>
+
 	</div>
 	<div class="container">
 

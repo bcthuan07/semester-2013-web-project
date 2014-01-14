@@ -36,7 +36,7 @@ public class UserOrder implements java.io.Serializable {
 	private OrderStatus orderStatus;
 	private Date orderDate;
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>(0);
-
+	private Double amount;
 	public UserOrder() {
 	}
 
@@ -106,6 +106,17 @@ public class UserOrder implements java.io.Serializable {
 	public void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
+
+	@Column(name="amount", nullable=false)
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+	
+	
 	
 }
 

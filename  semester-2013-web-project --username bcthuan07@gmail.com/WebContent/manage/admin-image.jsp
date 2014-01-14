@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath() + "/";
-	String path = request.getContextPath() + "/manage/";
+	String path = contextPath + "manage/";
 
 	String home1 = request.getAttribute("home1") == null ? ""
 			: (String) request.getAttribute("home1");
@@ -91,11 +91,10 @@
 				<div class="col-md-4">
 					<img class="img-responsive"
 						src="<%=contextPath%>image/home/img1.jpg">
-					<form action="<%=contextPath%>Manage/EditImage" method="post"
-						enctype="multipart/form-data">
+					<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
 						<div class="form-group">
-							<input type="hidden" name="index" value="1"><input
-								type="hidden" name="origin" value="image/home/img1.jpg"><label
+							<input type="hidden" name="index" value="1" /><input type="hidden"
+								name="origin" value="image/home/img1.jpg"><label
 								for="home1">Đổi</label> <input type="file" class="form-control"
 								name="image" id="home1"> <input class="form-control"
 								type="submit" value="Đổi">
@@ -105,8 +104,7 @@
 				<div class="col-md-4">
 					<img class="img-responsive"
 						src="<%=contextPath%>image/home/img2.jpg">
-					<form action="<%=contextPath%>Manage/EditImage" method="post"
-						enctype="multipart/form-data">
+					<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<input type="hidden" name="index" value="2"><input
 								type="hidden" name="origin" value="image/home/img2.jpg"><label
@@ -120,8 +118,7 @@
 				<div class="col-md-4">
 					<img class="img-responsive"
 						src="<%=contextPath%>image/home/img3.jpg">
-					<form action="<%=contextPath%>Manage/EditImage" method="post"
-						enctype="multipart/form-data">
+					<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<input type="hidden" name="index" value="3"><input
 								type="hidden" name="origin" value="image/home/img3.jpg">
@@ -136,8 +133,7 @@
 					<div class="col-md-4">
 						<img class="img-responsive"
 							src="<%=contextPath%>image/menu-slide/img1.jpg">
-						<form action="<%=contextPath%>Manage/EditImage" method="post"
-							enctype="multipart/form-data">
+						<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="hidden" name="index" value="4"><input
 									type="hidden" name="origin" value="image/menu-slide/img1.jpg"><label
@@ -150,8 +146,7 @@
 					<div class="col-md-4">
 						<img class="img-responsive"
 							src="<%=contextPath%>image/menu-slide/img2.jpg">
-						<form action="<%=contextPath%>Manage/EditImage" method="post"
-							enctype="multipart/form-data">
+						<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="hidden" name="index" value="5"><input
 									type="hidden" name="origin" value="image/menu-slide/img2.jpg"><label
@@ -164,8 +159,7 @@
 					<div class="col-md-4">
 						<img class="img-responsive"
 							src="<%=contextPath%>image/menu-slide/img3.jpg">
-						<form action="<%=contextPath%>Manage/EditImage" method="post"
-							enctype="multipart/form-data">
+						<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="hidden" name="index" value="6"><input
 									type="hidden" name="origin" value="image/menu-slide/img3.jpg"><label
