@@ -66,6 +66,10 @@ public class ValidateOrderServlet extends HttpServlet {
 		String fullname = request.getParameter("fullname");
 		String paymentmethod = request.getParameter("payment");
 
+		if (user != null) {
+			fullname = user.getUsername();
+			email = user.getEmail();
+		}
 		String email_err = "";
 		String phonenumber_err = "";
 		String street_err = "";
@@ -74,7 +78,6 @@ public class ValidateOrderServlet extends HttpServlet {
 
 		String emailManageUser = getServletContext().getInitParameter(
 				"manageuser");
-		String emailAdmin = getServletContext().getInitParameter("admin");
 
 		int bdn = 0;
 		Integer cityId = 0, paymentId = 0;
@@ -85,11 +88,11 @@ public class ValidateOrderServlet extends HttpServlet {
 		} catch (Exception e) {
 		}
 		if (fullname == null || fullname.equals("")) {
-			fullname_err += user == null ? "Tên không được để trống!" : "";
+			fullname_err += "Tên không được để trống!";
 		}
 
 		if (email == null || email.equals("")) {
-			email_err += user == null ? "Email không được để trống!" : "";
+			email_err += "Email không được để trống!";
 		} else {
 			email_err += ValidateData.isEmail(email) ? ""
 					: "Email không hợp lệ!";
@@ -143,7 +146,7 @@ public class ValidateOrderServlet extends HttpServlet {
 				user.setPaymentMethod(paymentMethod);
 				RegisterService rs = new RegisterService();
 				try {
-					rs.register(user, address, "", "", false);
+					rs.register(user, address, "", "", false, new Integer(3));
 				} catch (UsernameException e) {
 				}
 			} else {
@@ -155,7 +158,7 @@ public class ValidateOrderServlet extends HttpServlet {
 			OrderService orderService = new OrderService();
 
 			if (orderService.order(listProduct, user, new Date(),
-					emailManageUser, emailAdmin, address)) {
+					emailManageUser, email, address)) {
 				listProduct.clear();
 				session.setAttribute("listproduct", listProduct);
 

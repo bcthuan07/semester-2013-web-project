@@ -23,6 +23,7 @@
 <meta name="author" content="">
 
 <title>Trang Quản Lý - Hóa Đơn</title>
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
@@ -91,46 +92,54 @@
 				<div class="col-lg-12">
 					<h1>Nhân Viên</h1>
 					<ol class="breadcrumb">
-						<li><a href="<%=contextPath %>Manage"><i class="fa fa-dashboard"></i>
-								Thống Kê</a></li>
+						<li><a href="<%=contextPath%>Manage"><i
+								class="fa fa-dashboard"></i> Thống Kê</a></li>
 						<li><a href=""><i class="fa fa-table"></i>Người dùng</a></li>
 						<li class="active"><i class="fa fa-table"></i>Nhân viên</li>
 					</ol>
 				</div>
 			</div>
+			<hr>
 			<div class="row">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="table-responsive">
-							<table
-								class="table table-bordered table-hover table-striped tablesorter">
-								<thead>
-									<tr>
-										<th><i class="fa fa-sort"></i>Tên</th>
-										<th><i class="fa fa-sort"></i>Username</th>
-										<th><i class="fa fa-sort"></i>Email</th>
-										<th><i class="fa fa-sort"></i>Ngày Đăng Ký</th>
-										<th>Thao Tác</th>
-									</tr>
-								</thead>
-								<tbody>
-									<%
-										for (User c : listStaff) {
-									%>
-									<tr>
-										<td><%=c.getFullname()%></td>
-										<td><%=c.getUsername()%></td>
-										<td><%=c.getEmail()%></td>
-										<td><%=c.getDatecreated()%></td>
-										<td><a href="<%=contextPath %>Manage/DeleteUser?type=Staff&user=<%=c.getUserId()%>"
-											class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a></td>
-									</tr>
-									<%
-										}
-									%>
-								</tbody>
-							</table>
-						</div>
+				<div class="col-sm-4">
+					<a href="<%=contextPath %>manage/admin-addstaff.jsp" class="btn btn-primary">Thêm Nhân Viên</a>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+
+				<div class="col-sm-12">
+					<div class="table-responsive">
+						<table
+							class="table table-bordered table-hover table-striped tablesorter">
+							<thead>
+								<tr>
+									<th><i class="fa fa-sort"></i>Tên</th>
+									<th><i class="fa fa-sort"></i>Username</th>
+									<th><i class="fa fa-sort"></i>Email</th>
+									<th><i class="fa fa-sort"></i>Ngày Đăng Ký</th>
+									<th>Thao Tác</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									for (User c : listStaff) {
+								%>
+								<tr>
+									<td><%=c.getFullname()%></td>
+									<td><%=c.getUsername()%></td>
+									<td><%=c.getEmail()%></td>
+									<td><%=c.getDatecreated()%></td>
+									<td><a
+										href="<%=contextPath%>Manage/DeleteUser?type=Staff&user=<%=c.getUserId()%>"
+										class="btn btn-danger"
+										onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a></td>
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

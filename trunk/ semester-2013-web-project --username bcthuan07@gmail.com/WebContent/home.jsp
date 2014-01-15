@@ -12,6 +12,7 @@
 	DAOService<Ads, Integer> service = new DAOService<Ads, Integer>(
 			new AdDAO());
 	List<Ads> list = service.listObject();
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,11 +25,12 @@
 <title>Trang Chủ</title>
 
 <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.css" rel="stylesheet">
+<link href="<%=contextPath%>css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Custom CSS for the '3 Col Portfolio' Template -->
-<link href="css/3-col-portfolio.css" rel="stylesheet">
-<link href="css/carousel.css" rel="stylesheet">
+<link href="<%=contextPath%>css/3-col-portfolio.css" rel="stylesheet">
+<link href="<%=contextPath%>css/carousel.css" rel="stylesheet">
 
 </head>
 
@@ -43,15 +45,16 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="home.jsp">Nhà Hàng Jamie Oliver's</a>
+				<a class="navbar-brand" href="<%=contextPath%>home.jsp">Nhà
+					Hàng Jamie Oliver's</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="home.jsp">Home</a></li>
-					<li><a href="Menu">Thực Đơn</a></li>
-					<li><a href="lienhe.jsp">Liên Hệ</a></li>
-					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
+					<li class="active"><a href="<%=contextPath%>home.jsp">Home</a></li>
+					<li><a href="<%=contextPath%>Menu">Thực Đơn</a></li>
+					<li><a href="<%=contextPath%>lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="<%=contextPath%>order/cartview.jsp">Giỏ Hàng</a></li>
 					<jsp:include page="header.jsp"></jsp:include>
 
 				</ul>
@@ -69,41 +72,42 @@
 		</ol>
 		<div class="carousel-inner">
 			<div class="item active">
-				<img src="image/home/img1.jpg">
+				<img src="<%=contextPath%>image/home/img1.jpg">
 				<div class="container">
 					<div class="carousel-caption">
 						<h1>Đăng kí thành viên</h1>
 						<p>Đăng kí làm thành viên ngay, để nhận hàng loạt ưu đãi hấp
 							dẫn!</p>
 						<p>
-							<a class="btn btn-lg btn-primary" href="register.jsp"
-								role="button">Đăng kí</a>
+							<a class="btn btn-lg btn-primary"
+								href="<%=contextPath%>register.jsp" role="button">Đăng kí</a>
 						</p>
 					</div>
 				</div>
 			</div>
 			<div class="item">
-				<img src="image/home/img2.jpg">
+				<img src="<%=contextPath%>image/home/img2.jpg">
 				<div class="container">
 					<div class="carousel-caption">
 						<h1>Thực Đơn</h1>
 						<p>Thực đơn phong phú, hấp dẫn</p>
 						<p>
-							<a class="btn btn-lg btn-primary" href="Menu" role="button">Xem
-								Thực Đơn</a>
+							<a class="btn btn-lg btn-primary" href="<%=contextPath%>Menu"
+								role="button">Xem Thực Đơn</a>
 						</p>
 					</div>
 				</div>
 			</div>
 
 			<div class="item">
-				<img src="image/home/img3.jpg">
+				<img src="<%=contextPath%>image/home/img3.jpg">
 				<div class="container">
 					<div class="carousel-caption">
 						<h1>Liên Hệ</h1>
 						<p>Thực đơn phong phú, hấp dẫn</p>
 						<p>
-							<a class="btn btn-lg btn-primary" href="lienhe.jsp" role="button">Xem</a>
+							<a class="btn btn-lg btn-primary"
+								href="<%=contextPath%>lienhe.jsp" role="button">Liên Hệ</a>
 						</p>
 					</div>
 				</div>
@@ -127,7 +131,8 @@
 				for (Ads a : list) {
 			%>
 			<div class="col-lg-4">
-				<img class="thumbnail" src="<%=a.getImagePath()%>"
+				<img class="center-block thumbnail"
+					src="<%=contextPath%><%=a.getImagePath()%>"
 					alt="<%=a.getContent()%>">
 				<h2><%=a.getName()%></h2>
 				<p><%=a.getContent()%></p>

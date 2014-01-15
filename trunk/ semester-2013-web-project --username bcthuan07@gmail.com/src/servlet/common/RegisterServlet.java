@@ -163,7 +163,7 @@ public class RegisterServlet extends HttpServlet {
 				RegisterService registerService = new RegisterService();
 				String emailManageUser = getServletContext().getInitParameter("manageuser");
 				String emailAdmin = getServletContext().getInitParameter("admin");
-				registerService.register(user, address, emailManageUser, emailAdmin, true);
+				registerService.register(user, address, emailManageUser, emailAdmin, true, new Integer(3));
 
 			} catch (UsernameException e) {
 				System.out.println(e.getMessage());

@@ -3,7 +3,6 @@ package servlet.common;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,12 +15,12 @@ import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import dao.UserDAO;
 import service.DAOService;
 import util.HibernateUtil;
 import util.MailUtil;
 import util.PasswordUtil;
 import util.ValidateData;
+import dao.UserDAO;
 
 /**
  * Servlet implementation class ResetPasswordServlet
@@ -72,9 +71,9 @@ public class ResetPasswordServlet extends HttpServlet {
 						.forward(request, response);
 			} else {
 				User u = list.get(0);
-				
+
 				String rPass = u.hashCode() + "";
-				
+
 				try {
 					byte[] salt = PasswordUtil.generateSalt();
 					byte[] newPass = PasswordUtil.getEncryptedPassword(rPass,
@@ -92,7 +91,7 @@ public class ResetPasswordServlet extends HttpServlet {
 				String msgBody = "Password mới của bạn là:\n\r" + rPass;
 				boolean isSent = MailUtil.send(username, "Thay đổi mật khẩu",
 						pass, email, u.getUsername(), "Thay đổi password",
-						msgBody);
+						msgBody, "text/plain");
 				if (isSent) {
 					String message = "Password mới đã được gửi tới email của bạn!";
 					request.setAttribute("message", message);
@@ -108,7 +107,8 @@ public class ResetPasswordServlet extends HttpServlet {
 				}
 			}
 		} else {
-
+			request.setAttribute("error", email_err);
+			getServletContext().getRequestDispatcher("/resetpassword.jsp").forward(request, response);
 		}
 	}
 

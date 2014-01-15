@@ -18,6 +18,7 @@ public class ValidateData {
 
 	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
 
+	private static final String PHONE_PATTERN = "\\d";
 	private static Pattern pattern;
 	private static Matcher matcher;
 
@@ -37,6 +38,12 @@ public class ValidateData {
 		pattern = Pattern.compile(PASSWORD_PATTERN);
 		matcher = pattern.matcher(password);
 		return matcher.matches();
+	}
+
+	public static boolean isPhonenumber(String phone) {
+		pattern = Pattern.compile(PHONE_PATTERN);
+		matcher = pattern.matcher(phone);
+		return matcher.matches() && (phone.length()==10);
 	}
 
 }

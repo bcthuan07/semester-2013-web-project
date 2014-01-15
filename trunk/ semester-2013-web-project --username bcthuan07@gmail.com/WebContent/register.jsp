@@ -43,7 +43,10 @@
 	DAOService<City, Integer> service = new DAOService<City, Integer>(
 			new CityDAO());
 	List<City> list = service.listObject();
-	DAOService<PaymentMethod, Integer> paymentList = new DAOService<PaymentMethod, Integer>(new PaymentMethodDAO());
+	DAOService<PaymentMethod, Integer> paymentList = new DAOService<PaymentMethod, Integer>(
+			new PaymentMethodDAO());
+
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +60,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Custom CSS for the '3 Col Portfolio' Template -->
 <link href="css/3-col-portfolio.css" rel="stylesheet">
@@ -92,85 +96,129 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container">
-		<div style="max-width: 900px; margin-left: auto; margin-right: auto;">
-			<form method="post" action="Register">
-				<legend>Đăng Ký:</legend>
-				<div class="form-group">
-					<label for="username">Username:</label> <input type="text"
-						class="form-control" id="username" placeholder="Username"
-						name="username" value="<%=username%>">
-					<p class="help-block"><%=username_err%></p>
-				</div>
-				<div class="form-group">
-					<label for="password">Password:</label> <input type="password"
-						class="form-control" id="password" placeholder="Password"
-						name="password">
-					<p class="help-block"><%=password_err%></p>
-				</div>
-				<div class="form-group">
-					<label for="fullname">Tên Đầy Đủ:</label> <input type="text"
-						class="form-control" id="fullname" placeholder="Tên Đầy Đủ"
-						name="fullname" value="<%=fullname%>">
-					<p class="help-block"><%=fullname_err%></p>
-				</div>
-				<div class="form-group">
-					<label for="email">Email:</label> <input type="email"
-						class="form-control" id="email" placeholder="Email" name="email"
-						value="<%=email%>">
-					<p class="help-block"><%=email_err%></p>
-				</div>
-				<div class="form-group">
-					<label for="phone">Số Điện Thoại:</label> <input type="text"
-						class="form-control" id="phone" placeholder="Số Điện Thoại"
-						name="phonenumber" value="<%=phonenumber%>">
-					<p class="help-block"><%=phonenumber_err%></p>
-				</div>
-				<div class="form-group">
-					<label for="gend">Giới Tính</label>
-				</div>
-				<div class="radio" id="gend">
-					<label> <input type="radio" value="Nam" name="gender"
-						checked="checked"> Nam
-					</label>
-				</div>
-				<div class="radio">
-					<label> <input type="radio" value="Nu" name="gender">
-						Nữ
-					</label>
-				</div>
-				<div class="form-group">
-					<label for="buildingnumber">Số Nhà:</label> <input type="text"
-						class="form-control" id="buildingnumber" placeholder="Số Nhà"
-						name="buildingnumber" value="<%=buildingnumber%>">
-					<p class="help-block"><%=buildingnumber_err%></p>
-				</div>
-				<div class="form-group">
-					<label for="street">Đường:</label> <input type="text"
-						class="form-control" id="street" placeholder="Đường" name="street"
-						value="<%=street%>">
-					<p class="help-block"><%=street_err%></p>
-				</div>
-				<div class="form-group">
-					<label for="city">Thành Phố:</label>
-					<select id="city" name="city">
-						<%for(City c: list){%>
-						<option value="<%=c.getId()%>"><%=c.getName() %></option>
-						<% }%>
-					</select>
-				</div>
-				
-				<div class="form-group">
-					<label for="payment">Hình thức thanh toán:</label>
-					<select id="payment" name="payment" class="form-control">
-						<%for(PaymentMethod p: paymentList.listObject()){ %>
-							<option value="<%=p.getPaymentMethodId() %>"><%=p.getDescription() %></option>
-						<%} %>
-					</select>
-				</div>
-				<div class="form-group">
-					<input type="submit" class="form-control" value="Đăng Ký">
-				</div>
-			</form>
+		<div class="row">
+			<div class="col-lg-7">
+				<form method="post" action="Register" class="form-horizontal">
+					<legend>
+						<h2>Đăng Ký:</h2>
+					</legend>
+					<h4>Thông tin tài khoản:</h4>
+					<div class="well">
+						<div class="form-group">
+							<label for="username" class="col-sm-2 control-label">Username:</label>
+							<div class="col-sm-5">
+								<input type="text" class=" form-control" id="username"
+									placeholder="Username" name="username" value="<%=username%>">
+								<p class="help-block"><%=username_err%></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password" class="col-sm-2 control-label">Password:</label>
+							<div class="col-sm-5">
+								<input type="password" class="form-control" id="password"
+									placeholder="Password" name="password">
+								<p class="help-block"><%=password_err%></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fullname" class="col-sm-2 control-label">Họ
+								và tên:</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control" id="fullname"
+									placeholder="Họ và tên" name="fullname" value="<%=fullname%>">
+								<p class="help-block"><%=fullname_err%></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="email" class="col-sm-2 control-label">Email:</label>
+							<div class="col-sm-5">
+								<input type="email" class="form-control" id="email"
+									placeholder="Email" name="email" value="<%=email%>">
+								<p class="help-block"><%=email_err%></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="phone" class="col-sm-2 control-label">Số Điện
+								Thoại:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="phone"
+									placeholder="Số Điện Thoại" name="phonenumber"
+									value="<%=phonenumber%>">
+								<p class="help-block"><%=phonenumber_err%></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="gend" class="col-sm-2 control-label">Giới
+								Tính:</label>
+							<div class="col-sm-6" id="gend">
+								<label class="radio-inline"> <input type="radio"
+									value="Nam" name="gender" checked="checked"> Nam
+								</label> <label class="radio-inline"> <input type="radio"
+									value="Nu" name="gender" checked="checked"> Nữ
+								</label>
+							</div>
+						</div>
+					</div>
+					<h4>Thông tin liên hệ</h4>
+					<div class="well">
+						<div class="form-group">
+							<label for="buildingnumber" class="col-sm-2 control-label">Số
+								Nhà:</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="buildingnumber"
+									placeholder="Số Nhà" name="buildingnumber"
+									value="<%=buildingnumber%>">
+								<p class="help-block"><%=buildingnumber_err%></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="street" class="col-sm-2 control-label">Đường:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="street"
+									placeholder="Tên đường" name="street" value="<%=street%>">
+								<p class="help-block"><%=street_err%></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="city" class="col-sm-2 control-label">Thành
+								Phố:</label>
+							<div class="col-sm-3">
+								<select id="city" class="form-control" name="city">
+									<%
+										for (City c : list) {
+									%>
+									<option value="<%=c.getId()%>"><%=c.getName()%></option>
+									<%
+										}
+									%>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="payment" class="col-sm-2 control-label">Hình
+								thức thanh toán:</label>
+							<div class="col-sm-3">
+								<select id="payment" name="payment" class="form-control">
+									<%
+										for (PaymentMethod p : paymentList.listObject()) {
+									%>
+									<option value="<%=p.getPaymentMethodId()%>"><%=p.getDescription()%></option>
+									<%
+										}
+									%>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 col-sm-offset-2">
+								<input type="submit" class="form-control" value="Đăng Ký">
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
 		</div>
 	</div>
 	<div class="container">

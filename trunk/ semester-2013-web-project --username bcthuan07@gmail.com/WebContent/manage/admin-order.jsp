@@ -1,3 +1,5 @@
+<%@page import="dao.OrderStatusDAO"%>
+<%@page import="model.OrderStatus"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="model.UserOrder"%>
@@ -15,6 +17,8 @@
 	//response.setHeader("Refresh", "10;url="+location);
 	String path = request.getContextPath() + "/manage/";
 	String contextPath = request.getContextPath() + "/";
+	List<OrderStatus> orderStatus = new DAOService<OrderStatus, Integer>(
+			new OrderStatusDAO()).listObject();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +29,7 @@
 <meta name="author" content="">
 
 <title>Trang Quản Lý - Hóa Đơn</title>
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
@@ -89,18 +94,17 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Sản Phẩm</h1>
+					<h2>Hóa Đơn</h2>
 					<ol class="breadcrumb">
 						<li><a href="Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
-						<li class="active"><i class="fa fa-table"></i> Sản Phẩm</li>
+						<li class="active"><i class="fa fa-table"></i> Hóa Đơn</li>
 					</ol>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-lg-8">
-					<h2>Sản Phẩm</h2>
+				<div class="col-lg-12">
 					<div class="table-responsive">
 						<table
 							class="table table-bordered table-hover table-striped tablesorter">
@@ -109,6 +113,7 @@
 									<th><i class="fa fa-sort"></i>Tên khách hàng</th>
 									<th><i class="fa fa-sort"></i>Tình trạng thanh toán</th>
 									<th><i class="fa fa-sort"></i>Ngày Lập</th>
+									<th><i class="fa fa-sort"></i>Tổng tiền</th>
 									<th>Thao Tác</th>
 								</tr>
 							</thead>
@@ -117,13 +122,19 @@
 									for (UserOrder userOrder : listUserOrders) {
 								%>
 								<tr>
+
 									<td><%=userOrder.getUser().getFullname()%></td>
 									<td><%=userOrder.getOrderStatus().getDescription()%></td>
 									<td><%=userOrder.getOrderDate()%></td>
-									<td><a class="btn btn-danger"
+									<td><%=userOrder.getAmount().toString()%></td>
+									<td><a class="btn btn-primary"
+										href="<%=contextPath%>Manage/OrderDetail?idOrder=<%=userOrder.getUserOrderId()%>">Chi
+											tiết</a><a class="btn btn-danger"
+										style="width: 100px; margin-left: 10px;"
 										href="<%=contextPath%>Manage/DeleteUserOrder?userorder=
 										<%=userOrder.getUserOrderId()%>"
 										onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a></td>
+
 								</tr>
 								<%
 									}

@@ -24,6 +24,7 @@
 <meta name="author" content="">
 
 <title>Trang Quản Lý - Phản Hồi</title>
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
@@ -80,9 +81,9 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-7">
-					<h2>Khách Hàng</h2>
+				<div class="col-lg-12">
 					<div class="table-responsive">
+					<hr>
 						<table
 							class="table table-bordered table-hover table-striped tablesorter">
 							<thead>
@@ -102,15 +103,18 @@
 									<td><a
 										href="<%=contextPath%>Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>"><%=c.getFullname()%></a></td>
 									<td><%=c.getEmail()%></td>
-									<td><%=c.getContent()%></td>
+									<%
+										String content = c.getContent();
+											if (content.length() > 40)
+												content = content.subSequence(0, 40) + "....";
+									%>
+									<td><%=content%></td>
 									<td><%=c.getDateCreated()%></td>
-									<td><code>
-											<a
-												href="<%=contextPath%>/Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>">Chi
-												tiết</a> <a
-												href="<%=contextPath%>Manage/DeleteFeedback?feedbackid=<%=c.getFeedbackId()%>"
+									<td>
+											<a href="<%=contextPath%>/Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>" class=" btn btn-success">Chi tiết</a>
+											<a class="btn btn-danger" href="<%=contextPath%>Manage/DeleteFeedback?feedbackid=<%=c.getFeedbackId()%>"
 												onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a>
-										</code></td>
+									</td>
 								</tr>
 								<%
 									}

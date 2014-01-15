@@ -44,7 +44,7 @@
 		<%
 			}
 		%>
-		<li><a href="<%=contextPath%>feedback.jsp">Gửi phản hồi</a></li>
+		<li><a href="<%=contextPath%>lienhe.jsp">Gửi phản hồi</a></li>
 		<li><a href="<%=contextPath%>Logout">Thoát</a></li>
 		<%
 			}

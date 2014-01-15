@@ -21,18 +21,8 @@ import javax.mail.internet.MimeMessage;
  */
 public class MailUtil {
 
-	/**
-	 * 
-	 * @param username: dia chi email nguoi gui
-	 * @param userInfo: ten nguoi gui
-	 * @param pass
-	 * @param dest dia chi email nguoi nhan
-	 * @param destInfo: ten nguoi nhan
-	 * @param subject: tieu de
-	 * @param msgBody: noi dung
-	 */
 	public static boolean send(final String username, String userInfo, final String pass,
-			String dest, String destInfo, String subject, String msgBody) {
+			String dest, String destInfo, String subject, String msgBody, String type) {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -52,9 +42,11 @@ public class MailUtil {
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					dest, destInfo, "utf8"));
 
-			msg.setHeader("Content-Type", "text/plain; charset=UTF-8;");
+//			msg.setHeader("Content-Type", type+"; charset=UTF-8;");
+			msg.setContent(msgBody, type+"; charset=UTF-8;");
 			msg.setSubject(subject, "UTF-8");
-			msg.setText(msgBody, "utf8");
+			
+//			msg.setText(msgBody, "utf8");
 
 			// msg.writeTo(new FileOutputStream("d:\\msg.txt"));
 			Transport.send(msg);

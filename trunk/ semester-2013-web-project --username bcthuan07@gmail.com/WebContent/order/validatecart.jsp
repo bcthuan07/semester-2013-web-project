@@ -38,10 +38,10 @@
 			: (String) request.getAttribute("buildingnumber");
 
 	User user = (User) session.getAttribute("user");
-	boolean hasLogin = user == null ? false : true;
-	String disabled = hasLogin ? "disabled" : "";
-	fullname = hasLogin ? user.getFullname() : "";
-	email = hasLogin ? user.getEmail() : "";
+	String disabled = user != null ? "disabled" : "";
+
+	fullname = user != null ? user.getFullname() : fullname;
+	email = user != null ? user.getEmail() : email;
 
 	String fullname_err = request.getAttribute("fullname_err") == null ? ""
 			: (String) request.getAttribute("fullname_err");
@@ -66,6 +66,7 @@
 <meta name="author" content="">
 
 <title>Trang Chủ</title>
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=contextPath%>css/bootstrap.css" rel="stylesheet">
@@ -87,17 +88,17 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://startbootstrap.com">Nhà
-					Hàng Jamie's Oliver</a>
+				<a class="navbar-brand" href="<%=contextPath%>home.jsp">Nhà Hàng
+					Jamie's Oliver</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="home.jsp">Trang Chủ</a></li>
-					<li><a href="Menu">Thực Đơn</a></li>
-					<li><a href="lienhe.jsp">Liên Hệ</a></li>
-					<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
+					<li><a href="<%=contextPath%>home.jsp">Trang Chủ</a></li>
+					<li><a href="<%=contextPath%>Menu">Thực Đơn</a></li>
+					<li><a href="<%=contextPath%>lienhe.jsp">Liên Hệ</a></li>
+					<li><a href="<%=contextPath%>order/cartview.jsp">Giỏ Hàng</a></li>
 
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
@@ -107,75 +108,109 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container">
-		<form action="<%=request.getContextPath()%>/ValidateOrder"
-			method="post">
-			<legend>Thanh Toán</legend>
-			<div class="form-group">
-				<label for="fullname">Tên đầy đủ</label> <input class="form-control"
-					id="fullname" type="text" name="fullname" value="<%=fullname%>"
-					<%=disabled%>>
-				<p class="help-block"><%=fullname_err%>
-			</div>
+		<div class="col-sm-10">
+			<h2>Thanh toán</h2>
+			<hr>
 
-			<div class="form-group">
-				<label for="email">Email</label> <input class="form-control"
-					id="email" type="text" name="email" value="<%=email%>"
-					<%=disabled%>>
-				<p class="help-block"><%=email_err%></p>
-			</div>
+			<h5>Thông tin khách hàng:</h5>
+			<form action="<%=request.getContextPath()%>/ValidateOrder"
+				method="post" class="form-horizontal">
+				<div class="well">
+					<div class="form-group">
+						<label for="fullname" class="col-sm-2 control-label">Họ và
+							tên:</label>
 
-			<div class="form-group">
-				<label for="phone">Số điện thoại</label> <input class="form-control"
-					id="phone" type="text" name="phonenumber" value="<%=phonenumber%>">
-				<p><%=phonenumber_err%></p>
-			</div>
+						<div class="col-sm-5">
+							<input class="form-control" id="fullname" type="text"
+								name="fullname" value="<%=fullname%>" <%=disabled%>
+								placeholder="Họ và tên">
+							<p class="help-block"><%=fullname_err%></p>
+						</div>
+					</div>
+					<div class="form-group">
 
-			<div class="form-group">
-				<label for="street">Đường</label> <input class="form-control"
-					id="street" type="text" name="street" value="<%=street%>">
-				<p><%=street_err%></p>
-			</div>
+						<label for="email" class="col-sm-2 control-label">Email:</label>
+						<div class="col-sm-5">
+							<input class="form-control" id="email" type="text" name="email"
+								value="<%=email%>" <%=disabled%>>
+							<p class="help-block"><%=email_err%></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="phone" class="col-sm-2 control-label">Số điện
+							thoại:</label>
+						<div class="col-sm-3">
+							<input class="form-control" id="phone" type="text"
+								name="phonenumber" value="<%=phonenumber%>">
+							<p><%=phonenumber_err%></p>
+						</div>
+					</div>
+					<div class="form-group">
 
-			<div class="form-group">
-				<label for="city">Thành Phố</label> <select name="city"
-					class="form-control" id="city">
-					<%
-						for (City c : service.listObject()) {
-					%>
-					<option value=<%=c.getId()%>><%=c.getName()%></option>
-					<%
-						}
-					%>
-				</select>
-			</div>
+						<label for="payment" class="col-sm-2 control-label">Hình
+							thức thanh toán</label>
+						<div class="col-sm-4">
+							<select class="form-control" id="payment" name="payment">
+								<%
+									for (PaymentMethod p : paymentList.listObject()) {
+								%>
+								<option value="<%=p.getPaymentMethodId()%>"><%=p.getDescription()%></option>
+								<%
+									}
+								%>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="well">
+					<div class="form-group">
+						<label for="street" class="col-sm-2 control-label">Đường</label>
+						<div class="col-sm-4">
+							<input class="form-control" id="street" type="text" name="street"
+								value="<%=street%>">
+							<p><%=street_err%></p>
+						</div>
+					</div>
 
-			<div class="form-group">
-				<label for="number">Số nhà</label> <input class="form-control"
-					id="number" type="text" name="buildingnumber"
-					value="<%=buildingnumber%>">
-				<p><%=buildingnumber_err%></p>
-			</div>
+					<div class="form-group">
+						<label for="city" class="col-sm-2 control-label">Thành Phố</label>
+						<div class="col-sm-4">
+							<select name="city" class="form-control" id="city">
+								<%
+									for (City c : service.listObject()) {
+								%>
+								<option value=<%=c.getId()%>><%=c.getName()%></option>
+								<%
+									}
+								%>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="number" class="col-sm-2 control-label">Số nhà</label>
+						<div class="col-sm-3">
+							<input class="form-control" id="number" type="text"
+								name="buildingnumber" value="<%=buildingnumber%>">
+							<p><%=buildingnumber_err%></p>
+						</div>
+					</div>
 
-			<div class="form-group">
-				<label for="payment">Hình thức thanh toán</label> <select
-					class="form-control" id="payment" name="payment">
-					<%
-						for (PaymentMethod p : paymentList.listObject()) {
-					%>
-					<option value="<%=p.getPaymentMethodId()%>"><%=p.getDescription()%></option>
-					<%
-						}
-					%>
-				</select>
-
-			</div>
-			<div class="form-group">
-				<label for="amount">Tổng Thành Tiền:</label>
-				<p><%=amount%></p>
-			</div>
-			<input class="form-control" type="submit" value="Mua">
-
-		</form>
+				</div>
+				<div class="well">
+					<div class="form-group">
+						<label class="col-sm-2">Tổng thành tiền:</label>
+						<div class=" col-sm-3">
+							<input type="text" disabled="disabled" value="<%=amount%>"
+								class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-md-2 col-md-offset-2 ">
+					<input class="form-control btn btn-success" type="submit"
+						value="Mua">
+				</div>
+			</form>
+		</div>
 	</div>
 	<div class="container">
 

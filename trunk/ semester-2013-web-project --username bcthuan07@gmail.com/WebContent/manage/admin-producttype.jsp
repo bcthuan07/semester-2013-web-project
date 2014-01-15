@@ -28,6 +28,7 @@
 <meta name="author" content="">
 
 <title>Trang Quản Lý - Hóa Đơn</title>
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
@@ -93,19 +94,20 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>
-						Sản Phẩm <small>Sort Your Data</small>
-					</h1>
+					<h2>
+						Loại Sản Phẩm
+					</h2>
 					<ol class="breadcrumb">
 						<li><a href="Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
-						<li class="active"><i class="fa fa-table"></i> Sản Phẩm</li>
+						<li><i class="fa fa-table"></i> Sản Phẩm</li>
+						<li class="active"><i class="fa fa-table"></i> Loại Sản Phẩm</li>
 					</ol>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-8">
-					<h2>Sản Phẩm</h2>
+				<div class="col-lg-12">
+				<hr>
 					<form action="<%=request.getContextPath()%>/Manage/AddProductType"
 						method="post">
 
@@ -130,7 +132,7 @@
 										<td><%=pt.toString()%></td>
 										<td><a
 											href="<%=request.getContextPath()%>/Manage/DeleteProductType?pt=<%=pt.getProductTypeId()%>"
-											class="btn btn-danger"
+											class="btn btn-danger" style="width: 100px"
 											onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nCác sản phẩm có trong loại sản phẩm cũng sẽ bị xóa đi!')">Xóa</a></td>
 									</tr>
 
@@ -138,16 +140,16 @@
 										}
 									%>
 									<tr>
+										<td><label for="des">Thêm loại sản phẩm:</label></td>
 										<td>
 											<div class="form-group">
-												<label for="des">Thêm loại sản phẩm:</label> <input
-													type="text" name="description" class="form-control"
+												<input type="text" name="description" class="form-control"
 													id="des">
 												<p class="help-block"><%=error%></p>
 											</div>
 										</td>
-										<td><input class="form-control" type="submit"
-											value="Thêm"></td>
+										<td><input class="form-control btn btn-success" style="width: 100px;"
+											type="submit" value="Thêm"></td>
 								</tbody>
 							</table>
 						</div>

@@ -122,6 +122,7 @@ public class EditProlifeServlet extends HttpServlet {
 		} else {
 			request.setAttribute("email", email);
 			request.setAttribute("fullname", fullname);
+			request.setAttribute("phonenumber", phonenumber);
 			
 			request.setAttribute("fullname_err", fullname_err);
 			request.setAttribute("oldpassword_err", oldpassword_err);

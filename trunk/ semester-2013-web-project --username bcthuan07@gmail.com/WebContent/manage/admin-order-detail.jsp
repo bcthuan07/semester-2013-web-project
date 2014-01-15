@@ -1,18 +1,24 @@
+<%@page import="dao.OrderStatusDAO"%>
+<%@page import="model.OrderStatus"%>
+<%@page import="model.UserOrder"%>
+<%@page import="model.Feedback"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.User"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.ProductDAO"%>
-<%@page import="model.Product"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="model.User"%>
 <%@page import="service.DAOService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
-	List<Product> listproduct = request.getAttribute("listproduct") == null ? new ArrayList<Product>()
-			: (List<Product>) request.getAttribute("listproduct");
 	String path = request.getContextPath() + "/manage/";
 	String contextPath = request.getContextPath() + "/";
+	List<OrderStatus> orderStatus = new DAOService<OrderStatus, Integer>(
+			new OrderStatusDAO()).listObject();
+	UserOrder order = (UserOrder) request.getAttribute("order");
+	if (order == null)
+		response.sendRedirect(path + "admin-order.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +58,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<%=path%>manage.jsp">Thống Kê</a>
+				<a class="navbar-brand" href="<%=contextPath%>Manage">Thống Kê</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,13 +66,13 @@
 				<ul class="nav navbar-nav side-nav">
 					<li class="active"><a href="<%=contextPath%>Manage"><i
 							class="fa fa-dashboard"></i> Thống Kê</a></li>
-
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
-							Người Dùng <b class="caret"></b></a>
+							Người Dùng<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="<%=contextPath%>Manage/Staff">Nhân Viên</a></li>
-							<li><a href="<%=contextPath%>Manage/Customer">Khách Hàng</a></li>
+							<li><a href="<%=contextPath%>Manage/Staff"> Nhân Viên</a></li>
+							<li><a href="<%=contextPath%>Manage/Customer"> Khách
+									Hàng</a></li>
 						</ul></li>
 					<li><a href="<%=contextPath%>Manage/Order"><i
 							class="fa fa-table"></i> Hóa Đơn</a></li>
@@ -74,7 +80,6 @@
 							class="fa fa-edit"></i> Sản Phẩm</a></li>
 					<li><a href="<%=contextPath%>Manage/Feedback"><i
 							class="fa fa-edit"></i> Phản Hồi</a></li>
-
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
 							Cài đặt <b class="caret"></b></a>
@@ -89,75 +94,69 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Sản Phẩm</h1>
+					<h2>Chi tiết hóa đơn</h2>
 					<ol class="breadcrumb">
-						<li><a href="Manage"><i class="fa fa-dashboard"></i>
+						<li><a href="<%=contextPath %>Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
-						<li class="active"><i class="fa fa-table"></i> Sản Phẩm</li>
+						<li><i class="fa fa-table"></i> Hóa Đơn</li>
 					</ol>
-					<hr>
 				</div>
 			</div>
-
 			<div class="row">
-				<div class="col-lg-10">
-					<div class="row">
-						<div class="col-sm-2">
-							<a href="<%=contextPath%>manage/admin-addproduct.jsp"
-								class="btn btn-primary">Thêm sản phẩm</a>
-						</div>
-						<div class="col-sm-2">
-							<a href="<%=contextPath%>Manage/ProductType"
-								class="btn btn-primary">Danh sách loại sản phẩm</a>
-						</div>
-					</div>
-					<hr>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="table-responsive">
-								<table
-									class="table table-bordered table-hover table-striped tablesorter">
-									<thead>
-										<tr>
-											<th>Tên<i class="fa fa-sort"></i></th>
-											<th>Mô tả<i class="fa fa-sort"></i></th>
-											<th>Giá<i class="fa fa-sort"></i></th>
-											<th>Loại<i class="fa fa-sort"></i></th>
-											<th>Hình Ảnh<i class="fa fa-sort"></i></th>
-											<th>Thao Tác</th>
-										</tr>
-									</thead>
-									<tbody>
-										<%
-											for (Product p : listproduct) {
-										%>
-										<tr>
-											<td><%=p.getProductName()%></td>
-											<td><%=p.getDescription()%></td>
-											<td><%=p.getPrice()%></td>
-											<td><%=p.getProductType().getDescription()%></td>
-											<td><%=p.getImagePath()%></td>
-											<td><code>
-													<a
-														href="<%=request.getContextPath()%>/Manage/DeleteProduct?product=<%=p.getProductId()%>"
-														class="btn btn-danger"
-														onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a>
-													<a
-														href="<%=request.getContextPath()%>/Manage/ProductDetail?p=<%=p.getProductId()%>"
-														class="btn btn-primary">Sửa</a>
-												</code></td>
-										<tr>
-											<%
-												}
-											%>
-										
-									</tbody>
-								</table>
+				<hr>
+				<div class="col-lg-9">
+					<div class="well">
+						<form action="<%=contextPath%>Manage/UpdateOrder" method="post">
+							<div class="row" style="margin-bottom: 10px;">
+								<label class="col-sm-3">Tên Khách Hàng</label>
+								<div class="col-sm-6">
+									<a href="" class="form-control"><%=order.getUser().getFullname()%></a>
+								</div>
+
+
 							</div>
-						</div>
+
+							<div class="row">
+								<label class="col-sm-3">Ngày Lập Hóa Đơn</label>
+								<div class="col-sm-6">
+									<p class="form-control"><%=order.getOrderDate().toString()%></p>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-sm-3">Tổng Tiền</label>
+								<div class="col-sm-6">
+									<p class="form-control"><%=order.getAmount().toString()%></p>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-sm-3">Tình trạng:</label>
+								<div class="col-sm-7">
+									<input type="hidden" name="idOrder"
+										value="<%=order.getUserOrderId()%>"> <select
+										name="idStatus" class="form-control">
+										<%
+											Integer id = order.getOrderStatus().getOrderStatusId();
+										%>
+
+										<%
+											for (OrderStatus os : orderStatus) {
+												String s = os.getOrderStatusId().equals(id) ? "selected" : "";
+										%>
+										<option value="<%=os.getOrderStatusId()%>" <%=s%>><%=os.getDescription()%></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3 col-sm-offset-3" style="margin-top: 20px;">
+									<input type="submit" value="Cập Nhật" class="btn btn-success">
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

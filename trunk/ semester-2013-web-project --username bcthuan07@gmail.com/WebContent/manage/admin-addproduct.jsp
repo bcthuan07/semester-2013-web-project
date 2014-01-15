@@ -21,10 +21,10 @@
 			: (String) request.getAttribute("description_err");
 	String price_err = request.getAttribute("price_err") == null ? ""
 			: (String) request.getAttribute("price_err");
-	String quantity_err = request.getAttribute("quantity_err") == null ? ""
-			: (String) request.getAttribute("quantity_err");
 	String image_err = request.getAttribute("image_err") == null ? ""
 			: (String) request.getAttribute("image_err");
+	String description = request.getAttribute("description") == null ? ""
+			: (String) request.getAttribute("description");
 
 	String contextPath = request.getContextPath() + "/";
 %>
@@ -40,6 +40,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -102,53 +103,65 @@
 		<div id="page-wrapper">
 			<h1>Thêm Sản Phẩm</h1>
 			<form action="<%=request.getContextPath()%>/Manage/AddProduct"
-				method="post" enctype="multipart/form-data">
+				method="post" enctype="multipart/form-data" class="form-horizontal">
 				<div class="form-group">
-					<label for="pro">Tên: </label> <input name="productname"
-						type="text" class="form-control" id="pro">
-					<p class="help-block"><%=name_err%></p>
+					<label for="pro" class="col-sm-2 control-label">Tên: </label>
+					<div class="col-sm-5">
+						<input name="productname" type="text" class="form-control"
+							id="pro">
+						<p class="help-block"><%=name_err%></p>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label for="fn" class="col-sm-2 control-label">Ảnh trưng
+						bày </label>
+					<div class="col-sm-2">
+						<input name="image" class="form-control" id="fn" type="file">
+						<p class="help-block"><%=image_err%></p>
+					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="description">Mô tả sản phẩm:</label> <input
-						class="form-control" type="text" name="description"
-						id="description">
-				</div>
-				<div class="devider"></div>
-
-				<div class="form-group">
-					<label for="fn">Ảnh trưng bày </label> <input name="image"
-						class="form-control" id="fn" type="file">
-
-					<p class="help-block"><%=image_err%></p>
-				</div>
-
-				<div class="form-group">
-					<label for="pt">Loại Sản Phẩm:</label> <select id="pt"
-						class="form-control" name="producttype">
-						<%
-							for (ProductType pt : list) {
-						%>
-						<option value="<%=pt.getProductTypeId()%>"><%=pt.getDescription()%></option>
-						<%
-							}
-						%>
-					</select>
+					<label for="pt" class="col-sm-2 control-label">Loại Sản
+						Phẩm:</label>
+					<div class="col-sm-4">
+						<select id="pt" class="form-control" name="producttype">
+							<%
+								for (ProductType pt : list) {
+							%>
+							<option value="<%=pt.getProductTypeId()%>"><%=pt.getDescription()%></option>
+							<%
+								}
+							%>
+						</select>
+					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="price">Giá: </label> <input name="price"
-						class="form-control" id="price" type="text">
-					<p class="help-block"><%=price_err%></p>
+					<label for="price" class="col-sm-2 control-label">Giá: </label>
+					<div class="col-sm-4">
+						<input name="price" class="form-control" id="price" type="text">
+						<p class="help-block"><%=price_err%></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="description" class="col-sm-2 control-label">Mô
+						tả sản phẩm:</label>
+					<div class="col-sm-7">
+						<textarea rows="6" class="form-control" name="description"
+							id="description"><%=description%></textarea>
+						<p class="help-block"><%=description_err%></p>
+					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="quantity">Số Lượng Sản Phẩm:</label> <input
-						class="form-control" id="quantity" name="quantity" type="number">
-					<p class="help-block"><%=quantity_err%></p>
+					<div class="col-sm-2 col-sm-offset-2">
+						<input class="form-control btn btn-success" type="submit"
+							value="Thêm">
+					</div>
 				</div>
-
-				<input class="form-control" type="submit" value="Thêm">
 			</form>
 		</div>
 	</div>

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	String path = request.getContextPath() + "/";
-	String pathToMarkUp = path + "manage/";
+	String contextPath = request.getContextPath() + "/";
+	String pathToMarkUp = contextPath + "manage/";
 
 	String username = request.getAttribute("username") == null ? ""
 			: (String) request.getAttribute("username");
@@ -20,6 +20,7 @@
 <meta name="author" content="">
 
 <title>Đăng nhập - Admin</title>
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=pathToMarkUp%>css/bootstrap.css" rel="stylesheet">
@@ -36,7 +37,7 @@
 
 <body>
 	<div class="container">
-		<form action="<%=path%>Manage/LoginManage" method="post"
+		<form action="<%=contextPath%>Manage/LoginManage" method="post"
 			class="form-signin" role="form">
 			<div class="form-group">
 				<label for="username">Username:</label><input class="form-control"

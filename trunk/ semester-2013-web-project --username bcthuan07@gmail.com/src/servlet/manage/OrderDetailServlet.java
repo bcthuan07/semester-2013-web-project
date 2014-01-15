@@ -1,7 +1,6 @@
 package servlet.manage;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -11,21 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.ProductType;
 import model.RoleMember;
 import model.RoleMemberId;
 import model.User;
+import model.UserOrder;
 import service.DAOService;
-import dao.ProductTypeDAO;
+import dao.UserOrderDAO;
 
 /**
- * Servlet implementation class ManageProductTypeServlet
+ * Servlet implementation class OrderDetailServlet
  */
-@WebServlet("/Manage/ProductType")
-public class ManageProductTypeServlet extends HttpServlet {
+@WebServlet("/Manage/OrderDetail")
+public class OrderDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ManageProductTypeServlet() {
+	public OrderDetailServlet() {
 		super();
 	}
 
@@ -44,29 +43,31 @@ public class ManageProductTypeServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		String error = (String)request.getAttribute("error");
 		if (user != null) {
-			
+
 			Set<RoleMember> roleSet = user.getUserRoleMembers();
 
-			if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 1)))) {
-				DAOService<ProductType, Integer> service = new DAOService<ProductType, Integer>(
-						new ProductTypeDAO());
-				List<ProductType> listproduct = service.listObject();
-				request.setAttribute("listproducttype", listproduct);
-				request.setAttribute("error", error);
+			Integer id = Integer.parseInt(request.getParameter("idOrder"));
+			UserOrder order = new DAOService<>(new UserOrderDAO())
+					.getObjectById(id);
+			request.setAttribute("order", order);
+
+			if (roleSet.contains(new RoleMember(new RoleMemberId(user
+					.getUserId(), 1)))) {
+
 				getServletContext().getRequestDispatcher(
-						"/manage/admin-producttype.jsp").forward(request,
+						"/manage/admin-order-detail.jsp").forward(request,
 						response);
 			} else {
-				response.sendRedirect(request.getContextPath()
-						+ "/manage/managelogin.jsp");
-
+				getServletContext().getRequestDispatcher(
+						"/manage/staff-order-detail.jsp").forward(request,
+						response);
 			}
 		} else {
 			response.sendRedirect(request.getContextPath()
 					+ "/manage/managelogin.jsp");
-		}
 
+		}
 	}
+
 }

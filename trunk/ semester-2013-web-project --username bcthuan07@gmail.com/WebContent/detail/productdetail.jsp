@@ -34,6 +34,7 @@
 <meta name="author" content="">
 
 <title><%=product.getProductName()%></title>
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=contextPath%>css/bootstrap.css" rel="stylesheet">
@@ -63,7 +64,7 @@
 					<li><a href="home.jsp">Trang Chủ</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jps">Liên Hệ</a></li>
-					<li><a href="<%=contextPath %>order/cartview.jsp">Giỏ Hàng</a></li>
+					<li><a href="<%=contextPath%>order/cartview.jsp">Giỏ Hàng</a></li>
 
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
@@ -73,40 +74,55 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container">
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-md-4">
 				<a href="ProductInfo?product=<%=product.getProductId()%>"><img
 					class="img-responsive"
 					src="<%=contextPath%><%=product.getImagePath()%>"></a>
 			</div>
-			<div class="col-md-3">
-				<p>
-					Tên:
-					<%=name%></p>
-				<p>
-					Chi tiết:<%=description%></p>
-				<p>
-					Loại:<%=type%></p>
-				<p>
-					Giá:<%=price%></p>
-				<form action="ChooseProduct" method="post">
-					<input type="hidden" name="id" value="<%=id%>"> <input
-						type="number" name="number" value="1"><span><%=number_err%></span>
-					<input class="btn btn-primary" type="submit"
-						value="Thêm vào giỏ hàng">
-				</form>
+			<div class="col-md-7">
+				<div class="well">
+					<div class="row">
+						<label class="col-sm-3">Tên Sản Phẩm:</label>
+						<div class="col-sm-3">
+							<span class="form-control"><%=name%></span>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-sm-3">Loại</label>
+						<div class="col-sm-4">
+							<span class="form-control"><%=type%></span>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-sm-3">Giá Tiền:</label>
+						<div class="col-sm-4">
+							<span class="form-control"><%=price%></span>
+						</div>
+					</div><br>
+					<form action="ChooseProduct" method="post">
+						<div class="row">
+							<label class="col-sm-3">Số Lượng Muốn Mua:</label> <input
+								type="hidden" name="id" value="<%=id%>">
+							<div class="col-sm-4">
+								<input class="form-control" type="number" name="number"
+									value="1">
+								<p class="help-block"><%=number_err%></p>
+							</div>
+						</div><br>
+						<div class="row">
+							<div class="col-sm-2 col-sm-offset-3">
+								<input class="btn btn-primary" type="submit"
+									value="Thêm vào giỏ hàng">
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-	<footer>
-		<div class="info">
-			<p>COPYRIGHT © 2013</p>
-			<a href="lienhe.jsp"> <b>Liên Hệ </b>
-			</a>
-		</div>
-	</footer>
 </body>
 </html>

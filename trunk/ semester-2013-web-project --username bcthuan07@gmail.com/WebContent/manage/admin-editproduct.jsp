@@ -45,6 +45,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -103,7 +104,7 @@
 			</div>
 		</nav>
 		<div id="page-wrapper">
-			<h1>Thêm Sản Phẩm</h1>
+			<h1>Chỉnh Sửa Sản Phẩm</h1>
 
 
 			<form method="post" action="<%=contextPath%>Manage/EditProduct"

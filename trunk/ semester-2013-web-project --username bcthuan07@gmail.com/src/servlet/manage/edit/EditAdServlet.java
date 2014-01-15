@@ -3,6 +3,7 @@ package servlet.manage.edit;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import model.Ads;
  * Servlet implementation class EditAdServlet
  */
 @WebServlet("/Manage/EditAd")
+@MultipartConfig
 public class EditAdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -82,8 +84,9 @@ public class EditAdServlet extends HttpServlet {
 			a.setName(name);
 			String aImg = a.getImagePath();
 			if (filename != null && filename.endsWith(".jpg")) {
-				String location = request.getServletContext().getRealPath("")
+				String location = request.getServletContext().getRealPath("")+"/"
 						+ aImg;
+				System.out.println(location);
 				part.write(location);
 				ImageUtil.resizeImage(140, 140, location);
 			}
