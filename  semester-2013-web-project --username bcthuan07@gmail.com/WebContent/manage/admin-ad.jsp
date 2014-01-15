@@ -23,6 +23,8 @@
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -87,11 +89,11 @@
 
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>
-						Dashboard <small>Statistics Overview</small>
-					</h1>
+					<h1>Thống kê</h1>
 					<ol class="breadcrumb">
-						<li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+						<li><i class="fa fa-dashboard"></i> Thống kê</li>
+						<li><i class="fa fa-dashboard"></i> Cài đặt</li>
+						<li class="active"><i class="fa fa-dashboard"></i> Quảng cáo</li>
 					</ol>
 				</div>
 			</div>
@@ -100,13 +102,25 @@
 				<%
 					for (Ads a : list) {
 				%>
-				<p><%=a.getName()%></p>
-				<p><%=a.getLink()%></p>
-				<p><%=a.getContent()%></p>
-				<img alt="Ảnh" src="<%=contextPath%><%=a.getImagePath()%>"> <a
-					href="<%=contextPath%>Manage/AdDetail?ad=<%=a.getId()%>">Chỉnh
-					Sửa</a> <br> <br>
-
+				<div class="well">
+					<div class="row">
+						<div class="col-sm-2">
+							<img alt="Ảnh" src="<%=contextPath%><%=a.getImagePath()%>">
+						</div>
+						<div class="col-sm-2">
+							<p>Tên:</p>
+							<p>Đường dẫn:</p>
+							<p>Nội dung:</p>
+							<a href="<%=contextPath%>Manage/AdDetail?ad=<%=a.getId()%>" class="btn btn-primary">Chỉnh
+								Sửa</a>
+						</div>
+						<div class="col-sm-5">
+							<p><%=a.getName()%></p>
+							<p><%=a.getLink()%></p>
+							<p><%=a.getContent()%></p>
+						</div>
+					</div>
+				</div>
 				<%
 					}
 				%>

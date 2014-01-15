@@ -3,6 +3,7 @@
 <%
 	String message = request.getAttribute("message") == null ? ""
 			: (String) request.getAttribute("message");
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +14,7 @@
 <meta name="author" content="">
 
 <title>Thành Công</title>
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -35,8 +37,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://startbootstrap.com">Start
-					Bootstrap</a>
+				<a class="navbar-brand" href="home.jsp">Nhà Hàng Jamie Oliver's</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,9 +55,13 @@
 		</div>
 		<!-- /.container -->
 	</nav>
-	<div class="container">
-		<div class="center-block">
-			<h1 class="label label-success"><i style="background-image: url(image/icon/success-icon.png);" ></i></h1>
+	<div class="container marketing">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-3">
+				<h1>
+					<span class="label label-success"><%=message%></span>
+				</h1>
+			</div>
 		</div>
 	</div>
 	<div class="container">

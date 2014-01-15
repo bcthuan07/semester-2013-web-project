@@ -1,6 +1,7 @@
 package servlet.manage.add;
 
 import java.io.IOException;
+import java.text.Collator;
 import java.util.List;
 import java.util.Set;
 
@@ -62,38 +63,38 @@ public class AddProductTypeServlet extends HttpServlet {
 							new ProductTypeDAO());
 					List<ProductType> list = daoService.listObject();
 					boolean exists = false;
+					System.out.println(description);
+					Collator collator = Collator.getInstance();
 					for (ProductType pt : list) {
-						if (pt.getDescription().equals(description))
+						boolean equal = collator.compare(pt.getDescription(), description)==0? true: false;
+						if (equal)
 							exists = true;
 					}
+					
 					if (exists) {
 						description_err += "Loại sản phẩm này đã có.";
 						request.setAttribute("error", description_err);
 						getServletContext().getRequestDispatcher(
-								"/manage/admin-producttype.jsp").forward(
-								request, response);
+								"/Manage/ProductType").forward(request,
+								response);
 					} else {
-						ProductType pt = new ProductType();
-						pt.setDescription(description);
-						daoService.addObject(pt);
+						ProductType productType = new ProductType(description);
+						daoService.addObject(productType);
 						response.sendRedirect(request.getContextPath()
-								+ "/manage/admin-producttype.jsp");
+								+ "/Manage/ProductType");
 					}
 				} else {
 					request.setAttribute("error", description_err);
 					getServletContext().getRequestDispatcher(
-							"/manage/admin-producttype.jsp").forward(request,
-							response);
+							"/Manage/ProductType").forward(request, response);
 				}
 			} else {
-				response.sendRedirect(request.getContextPath()
-						+ "/manage/managelogin.jsp");
+				getServletContext().getRequestDispatcher(
+						"/manage/managelogin.jsp").forward(request, response);
 			}
 		} else {
-			response.sendRedirect(request.getContextPath()
-					+ "/manage/managelogin.jsp");
-
+			getServletContext().getRequestDispatcher("/manage/managelogin.jsp")
+					.forward(request, response);
 		}
 	}
-
 }

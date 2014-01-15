@@ -20,6 +20,7 @@
 			: (String) request.getAttribute("content_err");
 	String email_err = request.getAttribute("email_err") == null ? ""
 			: (String) request.getAttribute("email_err");
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +32,7 @@
 
 <title>Liên Hệ</title>
 
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -55,11 +57,11 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="home.jsp">Home</a></li>
+					<li><a href="home.jsp">Trang Chủ</a></li>
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li class="active"><a href="lienhe.jsp">Liên Hệ</a></li>
 					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
-						<!--<li class="dropdown-header">Nav header</li>-->
+					<!--<li class="dropdown-header">Nav header</li>-->
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
@@ -71,41 +73,58 @@
 		<br> <br> <br>
 		<div class="row">
 			<div class="col-md-7">
-				<h2>Phản hồi:</h2>
-				<form action="Feedback" method="post">
-					<div class="row">
-						<div class="col-md-5 form-group">
-							<label for="fullname">Họ và Tên:</label> <input type="text"
-								name="fullname" id="fullname" class="form-control"
-								value="<%=fullname%>">
+				<div class="row">
+					<h2>Địa chỉ:</h2>
+				</div>
+				<hr>
+				<div class="row">
+					<iframe width="650" height="350" frameborder="0" scrolling="no"
+						marginheight="0" marginwidth="0"
+						src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=vi&amp;geocode=&amp;q=&amp;aq=&amp;sll=10.872103,106.792817&amp;sspn=0.104351,0.169086&amp;ie=UTF8&amp;t=m&amp;ll=10.541821,106.464386&amp;spn=0.472538,0.686646&amp;z=10&amp;output=embed"></iframe>
+					<br />
+					<small><a
+						href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=vi&amp;geocode=&amp;q=&amp;aq=&amp;sll=10.872103,106.792817&amp;sspn=0.104351,0.169086&amp;ie=UTF8&amp;t=m&amp;ll=10.541821,106.464386&amp;spn=0.472538,0.686646&amp;z=10"
+						style="color: #0000FF; text-align: left">Xem Bản đồ cỡ lớn hơn</a></small>
+				</div>
+			</div>
+
+			<div class="col-md-5">
+
+				<h2>Liên Hệ</h2>
+				<form action="Feedback" method="post" class="form-horizontal">
+				<br><br><br>
+					<div class=" form-group">
+						<label for="fullname" class="col-sm-3 control-label">Họ và
+							Tên:</label>
+						<div class="col-sm-7">
+							<input type="text" name="fullname" id="fullname"
+								class="form-control" value="<%=fullname%>">
 							<p class="help-block"><%=fullname_err%></p>
 						</div>
 					</div>
-					<div class="row">
-						<div class=" col-md-5 form-group">
-							<label for="email">Email:</label> <input type="email"
-								name="email" id="email" value="<%=email%>" class="form-control">
+					<div class=" form-group">
+						<label for="email" class="col-sm-3 control-label">Email:</label>
+						<div class="col-sm-7">
+							<input type="email" name="email" id="email" value="<%=email%>"
+								class="form-control">
 							<p class="help-block"><%=email_err%></p>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-6 form-group">
-							<label for="content">Nội dung:</label>
+					<div class=" form-group">
+						<label for="content" class="col-sm-3 control-label">Nội
+							dung:</label>
+						<div class="col-sm-7">
 							<textarea rows="6" class="form-control" name="content"></textarea>
 							<p class="help-block"><%=content_err%></p>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-3 form-group">
-							<input type="submit" value="Gửi" class="form-control">
+						<div class="col-md-5 col-md-offset-5">
+							<input type="submit" value="Gửi"
+								class="form-control btn btn-success">
 						</div>
 					</div>
 				</form>
-			</div>
-			<div class="col-md-3">
-				<h1>Địa chỉ:</h1>
-				<p>Số 327 Biên Hòa</p>
-				<p>Số ĐT: 1234567</p>
 			</div>
 		</div>
 	</div>

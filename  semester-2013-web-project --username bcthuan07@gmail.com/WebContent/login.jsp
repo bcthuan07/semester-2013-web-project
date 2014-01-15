@@ -14,6 +14,7 @@
 
 	String username = request.getAttribute("username") == null ? ""
 			: (String) request.getAttribute("username");
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +25,7 @@
 <meta name="author" content="">
 
 <title>Trang Chủ</title>
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -56,7 +58,7 @@
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
 					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
-						<!--<li class="dropdown-header">Nav header</li>-->
+					<!--<li class="dropdown-header">Nav header</li>-->
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>
@@ -67,24 +69,32 @@
 	<div class="container">
 		<form action="Login" method="post" class="form-signin" role="form">
 			<div class="form-group">
-				<label for="username">Username:</label><input class="form-control"
-					type="text" id="username" name="username" placeholder="Username" value="<%=username%>">
+				<label style="font-size: 20px;" for="username">Username:</label><input
+					class="form-control" type="text" id="username" name="username"
+					placeholder="Username" value="<%=username%>">
 				<p class="help-block"><%=username_err%></p>
 			</div>
 			<div class="form-group">
-				<label for="password">Password:</label><input class="form-control"
-					placeholder="Password" id="password" type="password"
-					name="password">
+				<label style="font-size: 20px;" for="password">Password:</label> <input
+					class="form-control" placeholder="Password" id="password"
+					type="password" name="password"></input>
 				<p class="help-block">
 					<%=password_err%>
 				</p>
 			</div>
 			<div class="form-group">
-				<code>
-					<input class="btn btn-success" type="submit" value="Đăng Nhập">Hoặc
-					<a href="register.jsp" class="btn btn-primary">Đăng Ký</a>
-				</code>
+				<input class="form-control btn btn-success " type="submit"
+					value="Đăng Nhập">
 			</div>
+			<div class="form-group" style="margin-top: -10px;">
+				<a href="register.jsp" class="form-control btn btn-primary">Đăng
+					Ký</a>
+			</div>
+			<div class="form-group">
+				<a style="font-size: 18px;" href="resetpassword.jsp">Quên mật
+					khẩu?</a>
+			</div>
+
 		</form>
 		<hr>
 

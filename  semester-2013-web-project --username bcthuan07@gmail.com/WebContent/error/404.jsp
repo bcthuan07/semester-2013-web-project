@@ -12,6 +12,7 @@
 <meta name="author" content="">
 
 <title>Trang Chủ</title>
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=contextPath%>css/bootstrap.css" rel="stylesheet">

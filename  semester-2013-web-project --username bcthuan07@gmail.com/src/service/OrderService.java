@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import util.MailUtil;
 import model.Address;
 import model.OrderItem;
 import model.OrderStatus;
@@ -34,9 +35,9 @@ public class OrderService {
 	}
 
 	public boolean order(List<Product> listProduct, User user, Date date,
-			String emailManageUser, String emailAdmin, Address address) {
+			String emailManageUser, String email, Address address) {
 		try {
-			 DAOService<User, Integer> userdao = new DAOService<>(new UserDAO());
+			DAOService<User, Integer> userdao = new DAOService<>(new UserDAO());
 			DAOService<UserOrder, Integer> userorderdao = new DAOService<>(
 					new UserOrderDAO());
 			DAOService<OrderItem, Integer> orderitemdao = new DAOService<>(
@@ -69,31 +70,30 @@ public class OrderService {
 
 			//
 			Double amount = new Double(0);
-			for(Product p: listProduct){
-				amount+=p.getPrice();
+			for (Product p : listProduct) {
+				amount += p.getPrice();
 			}
-			if(user.getScore()!=null){
+			if (user.getScore() != null) {
 				Integer score = user.getScore();
-				//cong diem
-				if(amount>20){
-					score+=10;
-				}else if(amount>40){
-					score+=20;
+				// cong diem
+				if (amount > 20) {
+					score += 10;
+				} else if (amount > 40) {
+					score += 20;
 				}
-				
-				
+
 				user.setScore(score);
 				userdao.updateObject(user);
 				//
-				if(user.getScore() > 30)
-					amount-=amount*.05;
-				else if(user.getScore() > 400)
-					amount-=amount*.1;
-				
+				if (user.getScore() > 50)
+					amount -= amount * .05;
+				else if (user.getScore() > 100)
+					amount -= amount * .2;
+				else if(user.getScore() > 150)
+					amount -= amount * .5;
+
 			}
-			
-			
-			
+
 			Set<Product> set = new HashSet<>(listProduct);
 			UserOrder userOrder = new UserOrder();
 			userOrder.setOrderDate(date);
@@ -101,7 +101,7 @@ public class OrderService {
 			userOrder.setOrderStatus(orderStatus);
 			userOrder.setAmount(amount);
 			userorderdao.addObject(userOrder);
-			
+			String list = "";
 			System.out.println(set);
 			for (Product p : set) {
 				int count = 0;
@@ -110,13 +110,21 @@ public class OrderService {
 						count++;
 					}
 				}
+				list += "<tr>" + "<td>" + p.getProductName() + "</td>"
+						+ "<td>"+count+"</td>"
+						+"<td>"+p.getPrice().toString()+"</td></tr>";
 				OrderItem item = new OrderItem(userOrder, p, count);
 				orderitemdao.addObject(item);
 			}
 			// gui mail
-			// String pass = "dfghjhFGHJKL";
-			// String msgBody = "";
+			String pass = "dfghjhFGHJKL";
+			String msgBody = "<h1>Thông tin đặt hàng</h1><p>Các sản phẩm đã đặt</p><table><tr>"
+					+ "<th>Tên sản phẩm</th>"
+					+ "<th>Số lượng</th>"
+					+ "<th>Đơn giá</th></tr>" + list+"</table>";
 
+			MailUtil.send(emailManageUser, "Nhà hàng", pass, email,
+					user.getFullname(), "Thông Tin Đặt Hàng", msgBody,"text/html");
 			// userOrder.setOrderItems(setProducts);
 			// userorderdao.updateObject(userOrder);
 			// userdao.updateObject(user);

@@ -12,9 +12,9 @@
 	String path = request.getContextPath() + "/manage/";
 	String contextPath = request.getContextPath() + "/";
 
-
 	Feedback feedback = (Feedback) request.getAttribute("feedback");
-	if(feedback==null) response.sendRedirect(path+"staff-feedback.jsp");
+	if (feedback == null)
+		response.sendRedirect(path + "staff-feedback.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,10 +24,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Trang Quản Lý - Hóa Đơn</title>
+<title>Trang Quản Lý - Phản Hồi</title>
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -59,11 +60,11 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav side-nav">
-					<li class="active"><a href="<%=contextPath%>Manage"><i
+					<li><a href="<%=contextPath%>Manage"><i
 							class="fa fa-dashboard"></i> Thống Kê</a></li>
 					<li><a href="<%=contextPath%>Manage/Order"><i
 							class="fa fa-table"></i> Hóa Đơn</a></li>
-					<li><a href="<%=contextPath%>Manage/Product"><i
+					<li class="active"><a href="<%=contextPath%>Manage/Product"><i
 							class="fa fa-edit"></i> Phản Hồi</a></li>
 				</ul>
 				<jsp:include page="staff-header.jsp"></jsp:include>
@@ -72,21 +73,49 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Người Dùng</h1>
+					<h1>Thông tin phản hồi</h1>
 					<ol class="breadcrumb">
 						<li><a href="Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
-						<li class="active"><i class="fa fa-table"></i> Sản Phẩm</li>
+						<li><i class="fa fa-table"></i> Phản Hồi</li>
+						<li class="active"><i class="fa fa-table"></i> Thông tin phản
+							hồi</li>
 					</ol>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-7">
-					<h2>Khách Hàng</h2>
-					<p><%=feedback.getFullname() %></p>
-					<p><%=feedback.getDateCreated() %></p>
-					<textarea rows="" cols=""><%=feedback.getContent() %></textarea>
-					<a href=""><%=feedback.getEmail() %></a>				
+				<hr>
+				<div class="col-lg-9">
+					<div class="well">
+						<div class="row" style="margin-bottom: 10px;">
+							<label class="col-sm-3">Email:</label>
+							<div class="col-sm-6">
+								<a href="" class="form-control"><%=feedback.getEmail()%></a>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+							<label class="col-sm-3">Tên người gửi:</label>
+							<div class="col-sm-6">
+								<p class="form-control"><%=feedback.getFullname()%></p>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">Thời gian gửi:</label>
+							<div class="col-sm-6">
+								<p class="form-control"><%=feedback.getDateCreated()%></p>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">Nội dung:</label>
+							<div class="col-sm-7">
+								<textarea class="form-control" rows="4"><%=feedback.getContent()%></textarea>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>

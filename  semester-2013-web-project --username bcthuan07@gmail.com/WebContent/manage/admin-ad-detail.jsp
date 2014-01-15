@@ -33,6 +33,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -92,45 +93,68 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1>
-						Thống Kê <small>Statistics Overview</small>
+						Thống Kê <small>Quảng cáo</small>
 					</h1>
 					<ol class="breadcrumb">
-						<li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+						<li><i class="fa fa-dashboard"></i> Thống kê</li>
+						<li><i class="fa fa-dashboard"></i> Cài đặt</li>
+						<li class="active"><i class="fa fa-dashboard"></i> Quảng cáo</li>
 					</ol>
 				</div>
 			</div>
 			<!-- /.row -->
+			<h2>Thông tin chi tiết quảng cáo</h2>
+			<hr>
+			<div class="col-sm-9 well">
+				<form action="<%=contextPath%>Manage/EditAd" method="post"
+					class="form-horizontal" enctype="multipart/form-data">
+					<input type="hidden" name="id" value="<%=ads.getId()%>">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Tên</label>
+						<div class="col-sm-4">
+							<input class="form-control" type="text" name="name" id="name"
+								value="<%=name%>">
+							<p class="help-block"><%=name_err%></p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="img" class="col-sm-2 control-label">Hình Ảnh</label>
+						<div class="col-sm-3">
+							<input class="form-control" type="file" name="image" id="img">
 
-			<form action="<%=contextPath%>Manage/EditAd" method="post">
-				<input type="hidden" name="id" value="<%=ads.getId()%>">
-				<div class="form-group">
-					<label for="name">Tên</label> <input class="form-control"
-						type="text" name="name" id="name" value="<%=name%>">
-					<p class="help-block"><%=name_err%></p>
-				</div>
+						</div>
+						<div class="col-sm-6">
+							<p class="help-block">Kích thước hình ảnh phải có kích cỡ là
+								140x140px</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="link" class="col-sm-2 control-label">Đường dẫn</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="link" id="link"
+								value="<%=link%>">
+							<p class="help-block"><%=link_err%></p>
+						</div>
+					</div>
 
-				<div class="form-group">
-					<label for="link">Đường dẫn</label> <input class="form-control"
-						type="text" name="link" id="link" value="<%=link%>">
-					<p class="help-block"><%=link_err%></p>
-				</div>
+					<div class="form-group">
+						<label for="content" class="col-sm-2 control-label">Nội
+							dung</label>
+						<div class="col-sm-6">
+							<textarea class="form-control" name="content" id="content"
+								rows="4"><%=content%></textarea>
+							<p class="help-block"><%=content_err%></p>
+						</div>
+					</div>
 
-				<div class="form-group">
-					<label for="content">Nội dung</label>
-					<textarea class="form-control" name="content" id="content" rows="4"><%=content%></textarea>
-					<p class="help-block"><%=content_err%></p>
-				</div>
 
-				<div class="form-group">
-					<label for="img">Hình Ảnh</label> <input class="form-control"
-						type="file" name="image" id="img">
-					<p class="help-block">Kích thước hình ảnh phải có kích cỡ là
-						140x140px</p>
-				</div>
-
-				<input class="form-control" type="submit" value="Lưu">
-			</form>
-
+					<div class="form-group">
+						<div class=" col-sm-2 col-sm-offset-2">
+							<input class="form-control" type="submit" value="Lưu">
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 		<!-- /#page-wrapper -->
 

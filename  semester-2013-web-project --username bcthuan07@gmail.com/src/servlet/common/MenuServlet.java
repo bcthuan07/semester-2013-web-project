@@ -46,8 +46,8 @@ public class MenuServlet extends HttpServlet {
 		String idproducttype = request.getParameter("producttype");
 		String indexString = request.getParameter("index") == null ? "1"
 				: request.getParameter("index");
-		System.out.println("index = "+indexString);
-		System.out.println("producttype = "+idproducttype);
+		System.out.println("index = " + indexString);
+		System.out.println("producttype = " + idproducttype);
 		int total = 0;
 		int index = Integer.parseInt(indexString);
 
@@ -62,9 +62,9 @@ public class MenuServlet extends HttpServlet {
 			System.out.println(pt);
 			List<Product> products = new ArrayList<Product>(pt.getProducts());
 			total = products.size();
-			int count = total % 3 > 0 ? (total / 3) + 1 : total / 3;
-			int start = (index-1)*3;
-			int end = (total - start) < 3 ? total : start+3;
+			int count = total % 6 > 0 ? (total / 6) + 1 : total / 6;
+			int start = (index - 1) * 6;
+			int end = (total - start) < 6 ? total : start + 3;
 			for (int i = start; i < end; i++) {
 				listProduct.add(products.get(i));
 
@@ -79,9 +79,9 @@ public class MenuServlet extends HttpServlet {
 			List<Product> products = new DAOService<>(new ProductDAO())
 					.listObject();
 			total = products.size();
-			int count = total % 3 > 0 ? (total / 3) + 1 : total / 3;
-			int start = (index-1)*3;
-			int end = (total - start) < 3 ? total : start+3;
+			int count = total % 6 > 0 ? (total / 6) + 1 : total / 6;
+			int start = (index - 1) * 6;
+			int end = (total - start) < 6 ? total : start + 3;
 			for (int i = start; i < end; i++) {
 				listProduct.add(products.get(i));
 			}

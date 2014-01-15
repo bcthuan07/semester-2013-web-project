@@ -15,8 +15,8 @@
 		Set<RoleMember> roleSet = user.getUserRoleMembers();
 		if (roleSet.contains(new RoleMember(new RoleMemberId(user
 				.getUserId(), 1)))
-				||roleSet.contains(new RoleMember(new RoleMemberId(user
-						.getUserId(),2))))
+				|| roleSet.contains(new RoleMember(new RoleMemberId(
+						user.getUserId(), 2))))
 			permission = true;
 	}
 	String contextPath = request.getContextPath() + "/";
@@ -36,6 +36,8 @@
 		<%
 			if (user != null) {
 		%>
+		<li><a href="<%=contextPath %>ProlifeInfo">Thông tin tài khoản</a></li>
+
 		<%
 			if (permission) {
 		%>
@@ -43,7 +45,7 @@
 		<%
 			}
 		%>
-		<li><a href="<%=contextPath%>feedback.jsp">Gửi phản hồi</a></li>
+		<li><a href="<%=contextPath%>lienhe.jsp">Gửi phản hồi</a></li>
 
 		<li><a href="<%=contextPath%>Logout">Thoát</a></li>
 		<%

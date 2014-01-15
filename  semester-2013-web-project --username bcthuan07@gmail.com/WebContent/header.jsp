@@ -36,6 +36,7 @@
 						<%
 							if (user != null) {
 						%>
+						<li><a href="ProlifeInfo">Thông tin tài khoản</a></li>						
 						<%
 							if (permission) {
 						%>
@@ -43,7 +44,7 @@
 						<%
 							}
 						%>
-						<li><a href="feedback.jsp">Gửi phản hồi</a></li>
+						<li><a href="lienhe.jsp">Gửi phản hồi</a></li>
 						<li><a href="Logout">Thoát</a></li>
 						<%
 							}

@@ -28,6 +28,7 @@
 			: (Integer) request.getAttribute("count");
 	int index = request.getAttribute("index") == null ? 1
 			: (Integer) request.getAttribute("index");
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +39,7 @@
 <meta name="author" content="">
 
 <title>Thực Đơn</title>
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -113,13 +115,16 @@
 							</ol>
 							<div class="carousel-inner">
 								<div class="item active">
-									<img class="slide-image" src="http://placehold.it/800x300">
+									<img class="slide-image"
+										src="<%=contextPath%>image/menu-slide/img1.jpg">
 								</div>
 								<div class="item">
-									<img class="slide-image" src="http://placehold.it/800x300">
+									<img class="slide-image"
+										src="<%=contextPath%>image/menu-slide/img2.jpg">
 								</div>
 								<div class="item">
-									<img class="slide-image" src="http://placehold.it/800x300">
+									<img class="slide-image"
+										src="<%=contextPath%>image/menu-slide/img3.jpg">
 								</div>
 							</div>
 							<a class="left carousel-control" href="#carousel-example-generic"
@@ -139,9 +144,12 @@
 					%>
 					<div class="col-sm-4 col-lg-4 col-md-4">
 						<div class="thumbnail">
-							<img src="<%=product.getImagePath()%>" alt="">
+							<a href="ProductInfo?product=<%=product.getProductId()%>"><img
+								src="<%=product.getImagePath()%>" alt=""></a>
 							<div class="caption">
-								<h4 class="pull-right">Gias</h4>
+								<h4 class="pull-right">
+									Giá:
+									<%=product.getPrice()%></h4>
 								<h4>
 									<a href="ProductInfo?product=<%=product.getProductId()%>"><%=product.getProductName()%></a>
 								</h4>
@@ -155,20 +163,26 @@
 				</div>
 				<div class="center-block">
 					<ul class="pagination">
-						<li><a href="#">&laquo;</a></li>
+						<%
+							int next = index == count ? count : (index + 1);
+							int prev = index == 1 ? 1 : index - 1;
+							String productTypeId = pt.getProductTypeId() == null ? "" : pt
+									.getProductTypeId().toString();
+						%>
+						<li><a
+							href="Menu?index=<%=prev%>&producttype=<%=productTypeId%>">&laquo;</a></li>
 
 						<%
 							for (int i = 0; i < count; i++) {
 								String c = ((i + 1) == index) ? "active" : "";
-								String productTypeId = pt.getProductTypeId() == null ? "" : pt
-										.getProductTypeId().toString();
 						%>
 						<li class="<%=c%>"><a
 							href="Menu?index=<%=(i + 1)%>&producttype=<%=productTypeId%>"><%=(i + 1)%></a></li>
 						<%
 							}
 						%>
-						<li><a href="#">&raquo;</a></li>
+						<li><a
+							href="Menu?index=<%=next%>&producttype=<%=productTypeId%>">&raquo;</a></li>
 
 					</ul>
 				</div>

@@ -1,3 +1,6 @@
+<%@page import="dao.OrderStatusDAO"%>
+<%@page import="model.OrderStatus"%>
+<%@page import="model.UserOrder"%>
 <%@page import="model.Feedback"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -9,11 +12,15 @@
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
-
-	List<Feedback> listFeedback = request.getAttribute("listfeedback") == null ? new ArrayList<Feedback>()
-			: (List<Feedback>) request.getAttribute("listfeedback");
 	String path = request.getContextPath() + "/manage/";
 	String contextPath = request.getContextPath() + "/";
+
+	UserOrder order = (UserOrder) request.getAttribute("order");
+	if (order == null) {
+		response.sendRedirect(path + "staff-order.jsp");
+	}
+	List<OrderStatus> orderStatus = new DAOService<OrderStatus, Integer>(
+			new OrderStatusDAO()).listObject();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +34,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
-<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -59,87 +66,79 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav side-nav">
-					<li><a href="<%=contextPath%>Manage"><i
+					<li class="active"><a href="<%=contextPath%>Manage"><i
 							class="fa fa-dashboard"></i> Thống Kê</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
-							Người Dùng<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="<%=contextPath%>Manage/Staff"> Nhân Viên</a></li>
-							<li><a href="<%=contextPath%>Manage/Customer"> Khách
-									Hàng</a></li>
-						</ul></li>
 					<li><a href="<%=contextPath%>Manage/Order"><i
 							class="fa fa-table"></i> Hóa Đơn</a></li>
 					<li><a href="<%=contextPath%>Manage/Product"><i
-							class="fa fa-edit"></i> Sản Phẩm</a></li>
-					<li class="active"><a href="<%=contextPath%>Manage/Feedback"><i
 							class="fa fa-edit"></i> Phản Hồi</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>
-							Cài đặt <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="<%=contextPath%>Manage/Image">Hình ảnh</a></li>
-							<li><a href="<%=contextPath%>Manage/Ad">Quảng cáo</a></li>
-						</ul></li>
 				</ul>
-				<jsp:include page="admin-header.jsp"></jsp:include>
+				<jsp:include page="staff-header.jsp"></jsp:include>
 			</div>
 		</nav>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Phản Hồi</h1>
+					<h2>Hóa Đơn</h2>
 					<ol class="breadcrumb">
 						<li><a href="Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
-						<li class="active"><i class="fa fa-table"></i> Phản Hồi</li>
+						<li class="active"><i class="fa fa-table"></i> Hóa Đơn</li>
 					</ol>
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-lg-7">
+					<div class="well">
+						<form action="<%=contextPath%>Manage/UpdateOrder" method="post">
+							<div class="row" style="margin-bottom: 10px;">
+								<label class="col-sm-3">Tên Khách Hàng</label>
+								<div class="col-sm-6">
+									<a href="" class="form-control"><%=order.getUser().getFullname()%></a>
+								</div>
 
-				<div class="col-lg-12">
-					<hr>
-					<div class="table-responsive">
-						<table
-							class="table table-bordered table-hover table-striped tablesorter">
-							<thead>
-								<tr>
-									<th><i class="fa fa-sort"></i>Họ và tên</th>
-									<th><i class="fa fa-sort"></i>Email</th>
-									<th><i class="fa fa-sort"></i>Nội dung phản hồi</th>
-									<th><i class="fa fa-sort"></i>Ngày Tạo</th>
-									<th>Thao Tác</th>
-								</tr>
-							</thead>
-							<tbody>
-								<%
-									for (Feedback c : listFeedback) {
-								%>
-								<tr>
-									<td><%=c.getFullname()%></td>
-									<td><%=c.getEmail()%></td>
-									<%
-										String content = c.getContent();
-											if (content.length() > 40)
-												content = content.subSequence(0, 40) + "....";
-									%>
-									<td><%=content%></td>
-									<td><%=c.getDateCreated()%></td>
-									<td><code>
-											<a class="btn btn-primary"
-												href="<%=contextPath%>Manage/FeedbackDetail?feedbackid=<%=c.getFeedbackId()%>">Chi
-												tiết</a> <a class="btn btn-danger"
-												href="<%=contextPath%>Manage/DeleteFeedback?feedbackid=<%=c.getFeedbackId()%>"
-												onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a>
-										</code></td>
-								</tr>
-								<%
-									}
-								%>
-							</tbody>
-						</table>
+
+							</div>
+
+							<div class="row">
+								<label class="col-sm-3">Ngày Lập Hóa Đơn</label>
+								<div class="col-sm-6">
+									<p class="form-control"><%=order.getOrderDate().toString()%></p>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-sm-3">Tổng Tiền</label>
+								<div class="col-sm-6">
+									<p class="form-control"><%=order.getAmount().toString()%></p>
+								</div>
+							</div>
+							<div class="row">
+								<label class="col-sm-3">Tình trạng:</label>
+								<div class="col-sm-7">
+									<input type="hidden" name="idOrder"
+										value="<%=order.getUserOrderId()%>"> <select
+										name="idStatus" class="form-control">
+										<%
+											Integer id = order.getOrderStatus().getOrderStatusId();
+										%>
+
+										<%
+											for (OrderStatus os : orderStatus) {
+												String s = os.getOrderStatusId().equals(id) ? "selected" : "";
+										%>
+										<option value="<%=os.getOrderStatusId()%>" <%=s%>><%=os.getDescription()%></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3 col-sm-offset-3" style="margin-top: 20px;">
+									<input type="submit" value="Cập Nhật" class="btn btn-success">
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

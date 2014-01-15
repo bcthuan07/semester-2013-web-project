@@ -13,6 +13,7 @@ import model.RoleMemberId;
 import model.User;
 import model.UserAddressHistory;
 import model.UserAddressHistoryId;
+import util.MailUtil;
 import dao.AddressDAO;
 import dao.RoleMemberDAO;
 import dao.UserAddressHistoryDAO;
@@ -26,7 +27,7 @@ import exception.UsernameException;
 public class RegisterService {
 
 	public boolean register(User user, Address address, String emailManageUser,
-			String emailAdmin, boolean sendEmail) throws UsernameException {
+			String emailAdmin, boolean sendEmail, Integer roleId) throws UsernameException {
 		try {
 			DAOService<User, Integer> userService = new DAOService<>(
 					new UserDAO());
@@ -58,7 +59,7 @@ public class RegisterService {
 			}
 			Date date = new Date();
 			Role role = new Role();
-			role.setRoleId(new Integer(3));
+			role.setRoleId(roleId);
 			userService.addObject(user);
 			RoleMemberId roleMemberId = new RoleMemberId(user.getUserId(),
 					role.getRoleId());
@@ -73,18 +74,22 @@ public class RegisterService {
 			userAddressService.addObject(addressHistory);
 
 			// gui mail thong bao cho khach hang
-//			if(sendEmail){
-//			String pass = "dfghjhFGHJKL";
-//			String msgBody = "Username: " + user.getUsername()
-//					+ "\n\rHọ và tên: " + user.getFullname() + "\n\rĐịa chỉ: "
-//					+ address.getBuildingNumber() + ", " + address.getCity()
-//					+ ", \n\r" + "Số ĐT: " + address.getPhonenumber();
-//			MailUtil.send(emailManageUser, "Quản lý tài khoản", pass,
-//					user.getEmail(), user.getFullname(),
-//					"Thông tin đăng ký tài khoản", msgBody);
-//
-//			MailUtil.send(emailManageUser, "Quản lý tài khoản", pass,
-//					emailAdmin, "Admin", "Đăng ký tài khoản", msgBody);
+			if (sendEmail) {
+				String pass = "dfghjhFGHJKL";
+				String msgBody = "Username: " + user.getUsername()
+						+ "\n\rMật khẩu:" + pass
+						+ "\n\rHọ và tên: " + user.getFullname()
+						+ "\n\rĐịa chỉ: " + address.getBuildingNumber() + ", "
+						+ address.getCity().getName() + ", \n\r" + "Số ĐT: "
+						+ user.getPhoneNumber();
+				MailUtil.send(emailManageUser, "Quản lý tài khoản", pass,
+						user.getEmail(), user.getFullname(),
+						"Thông tin đăng ký tài khoản", msgBody, "text/plain");
+
+				MailUtil.send(emailManageUser, "Quản lý tài khoản", pass,
+						emailAdmin, "Admin", "Đăng ký tài khoản", msgBody,
+						"text/plain");
+			}
 			return true;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

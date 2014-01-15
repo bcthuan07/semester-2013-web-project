@@ -1,3 +1,6 @@
+<%@page import="dao.OrderStatusDAO"%>
+<%@page import="service.DAOService"%>
+<%@page import="model.OrderStatus"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.UserOrder"%>
 <%@page import="java.util.List"%>
@@ -9,6 +12,8 @@
 	String path = contextPath + "manage/";
 	List<UserOrder> listUserOrders = request.getAttribute("listorder") == null ? new ArrayList<UserOrder>()
 			: (List<UserOrder>) request.getAttribute("listorder");
+	List<OrderStatus> orderStatus = new DAOService<OrderStatus, Integer>(
+			new OrderStatusDAO()).listObject();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +24,7 @@
 <meta name="author" content="">
 
 <title>Trang Quản Lý - Hóa Đơn</title>
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
@@ -67,7 +73,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Sản Phẩm</h1>
+					<h2>Hóa Đơn</h2>
 					<ol class="breadcrumb">
 						<li><a href="Manage"><i class="fa fa-dashboard"></i>
 								Thống Kê</a></li>
@@ -77,35 +83,44 @@
 			</div>
 
 			<div class="row">
-				<div class="col-lg-8">
-					<h2>Sản Phẩm</h2>
+				<div class="col-lg-12">
+					<hr>
 					<div class="table-responsive">
-						<table
-							class="table table-bordered table-hover table-striped tablesorter">
-							<thead>
-								<tr>
-									<th><i class="fa fa-sort"></i>Tên khách hàng</th>
-									<th><i class="fa fa-sort"></i>Tình trạng thanh toán</th>
-									<th><i class="fa fa-sort"></i>Ngày Lập</th>
-									<th>Thao Tác</th>
-								</tr>
-							</thead>
-							<tbody>
-								<%
-									for (UserOrder userOrder : listUserOrders) {
-								%>
-								<tr>
-									<td><%=userOrder.getUser().getFullname()%></td>
-									<td><%=userOrder.getOrderStatus().getDescription()%></td>
-									<td><%=userOrder.getOrderDate()%></td>
-									<td><a
-										href="<%=contextPath%>Manage/DeleteUserOrder?userorder=<%=userOrder.getUserOrderId()%>">Xóa</a></td>
-								</tr>
-								<%
-									}
-								%>
-							</tbody>
-						</table>
+						<form method="post" action="<%=contextPath%>Manage/UpdateOrder">
+
+							<table
+								class="table table-bordered table-hover table-striped tablesorter">
+								<thead>
+									<tr>
+										<th><i class="fa fa-sort"></i>Tên khách hàng</th>
+										<th><i class="fa fa-sort"></i>Tình trạng thanh toán</th>
+										<th><i class="fa fa-sort"></i>Ngày Lập</th>
+										<th>Thao Tác</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (UserOrder userOrder : listUserOrders) {
+									%>
+									<tr>
+										<td><%=userOrder.getUser().getFullname()%></td>
+										<td><%=userOrder.getOrderStatus().getDescription()%></td>
+										<td><%=userOrder.getOrderDate()%></td>
+										<td><a class="btn btn-primary"
+											href="<%=contextPath%>Manage/OrderDetail?idOrder=<%=userOrder.getUserOrderId()%>">Chi
+												tiết</a><a class="btn btn-danger"
+											style="width: 100px; margin-left: 10px;"
+											href="<%=contextPath%>Manage/DeleteUserOrder?userorder=
+										<%=userOrder.getUserOrderId()%>"
+											onclick="return confirm('Bạn chắc chắn muốn xóa trường này chứ? \nThao tác này không thể undo')">Xóa</a></td>
+
+									</tr>
+									<%
+										}
+									%>
+								</tbody>
+							</table>
+						</form>
 					</div>
 				</div>
 			</div>

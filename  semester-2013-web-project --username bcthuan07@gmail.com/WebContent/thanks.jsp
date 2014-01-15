@@ -4,6 +4,7 @@
 <%
 	request.setCharacterEncoding("utf8");
 	response.setCharacterEncoding("utf8");
+	String contextPath = request.getContextPath() + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,7 @@
 <meta name="author" content="">
 
 <title>Cảm ơn</title>
+<link rel="shortcut icon" href="<%=contextPath%>image/icon/icon.png" />
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -45,7 +47,7 @@
 					<li><a href="Menu">Thực Đơn</a></li>
 					<li><a href="lienhe.jsp">Liên Hệ</a></li>
 					<li><a href="order/cartview.jsp">Giỏ Hàng</a></li>
-						<!--<li class="dropdown-header">Nav header</li>-->
+					<!--<li class="dropdown-header">Nav header</li>-->
 					<jsp:include page="header.jsp"></jsp:include>
 				</ul>
 			</div>

@@ -30,6 +30,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="<%=path%>css/bootstrap.css" rel="stylesheet">
+<link rel="shortcut icon" href="<%=contextPath %>image/icon/icon.png" />
 
 <!-- Add custom CSS here -->
 <link href="<%=path%>css/sb-admin.css" rel="stylesheet">
@@ -86,54 +87,70 @@
 			</div>
 		</nav>
 		<div id="page-wrapper">
-			<h1>Trang Chủ</h1>
+			<h1>Hình ảnh trang chủ</h1>
+			<hr>
 			<div class="row">
 				<div class="col-md-4">
-					<img class="img-responsive"
-						src="<%=contextPath%>image/home/img1.jpg">
-					<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
-						<div class="form-group">
-							<input type="hidden" name="index" value="1" /><input type="hidden"
-								name="origin" value="image/home/img1.jpg"><label
-								for="home1">Đổi</label> <input type="file" class="form-control"
-								name="image" id="home1"> <input class="form-control"
-								type="submit" value="Đổi">
-						</div>
-					</form>
+					<div class="well">
+						<img class="img-responsive"
+							src="<%=contextPath%>image/home/img1.jpg">
+						<form action="<%=contextPath%>Manage/EditImage" method="post"
+							enctype="multipart/form-data">
+							<div class="form-group">
+								<input type="hidden" name="index" value="1" /><input
+									type="hidden" name="origin" value="image/home/img1.jpg"><label
+									for="home1">Đổi</label> <input type="file" class="form-control"
+									name="image" id="home1"> <input class="form-control"
+									type="submit" value="Đổi">
+							</div>
+						</form>
+					</div>
 				</div>
 				<div class="col-md-4">
-					<img class="img-responsive"
-						src="<%=contextPath%>image/home/img2.jpg">
-					<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
-						<div class="form-group">
-							<input type="hidden" name="index" value="2"><input
-								type="hidden" name="origin" value="image/home/img2.jpg"><label
-								for="home2">Đổi</label> <input type="file" id="home2"
-								class="form-control" name="image"> <input type="submit"
-								value="Đổi" class="form-control">
+					<div class="well">
 
-						</div>
-					</form>
+						<img class="img-responsive"
+							src="<%=contextPath%>image/home/img2.jpg">
+						<form action="<%=contextPath%>Manage/EditImage" method="post"
+							enctype="multipart/form-data">
+							<div class="form-group">
+								<input type="hidden" name="index" value="2"><input
+									type="hidden" name="origin" value="image/home/img2.jpg"><label
+									for="home2">Đổi</label> <input type="file" id="home2"
+									class="form-control" name="image"> <input type="submit"
+									value="Đổi" class="form-control">
+
+							</div>
+						</form>
+					</div>
 				</div>
 				<div class="col-md-4">
-					<img class="img-responsive"
-						src="<%=contextPath%>image/home/img3.jpg">
-					<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
-						<div class="form-group">
-							<input type="hidden" name="index" value="3"><input
-								type="hidden" name="origin" value="image/home/img3.jpg">
-							<label for="home3">Đổi</label> <input id="home3" type="file"
-								class="form-control" name="image"> <input type="submit"
-								class="form-control" value="Đổi">
-						</div>
-					</form>
+					<div class="well">
+
+						<img class="img-responsive"
+							src="<%=contextPath%>image/home/img3.jpg">
+						<form action="<%=contextPath%>Manage/EditImage" method="post"
+							enctype="multipart/form-data">
+							<div class="form-group">
+								<input type="hidden" name="index" value="3"><input
+									type="hidden" name="origin" value="image/home/img3.jpg">
+								<label for="home3">Đổi</label> <input id="home3" type="file"
+									class="form-control" name="image"> <input type="submit"
+									class="form-control" value="Đổi">
+							</div>
+						</form>
+					</div>
 				</div>
-				<h1>Menu</h1>
-				<div class="row">
-					<div class="col-md-4">
+			</div>
+			<h1>Hình ảnh trang Menu</h1>
+			<hr>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="well">
 						<img class="img-responsive"
 							src="<%=contextPath%>image/menu-slide/img1.jpg">
-						<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
+						<form action="<%=contextPath%>Manage/EditImage" method="post"
+							enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="hidden" name="index" value="4"><input
 									type="hidden" name="origin" value="image/menu-slide/img1.jpg"><label
@@ -143,10 +160,13 @@
 							</div>
 						</form>
 					</div>
-					<div class="col-md-4">
+				</div>
+				<div class="col-md-4">
+					<div class="well">
 						<img class="img-responsive"
 							src="<%=contextPath%>image/menu-slide/img2.jpg">
-						<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
+						<form action="<%=contextPath%>Manage/EditImage" method="post"
+							enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="hidden" name="index" value="5"><input
 									type="hidden" name="origin" value="image/menu-slide/img2.jpg"><label
@@ -156,16 +176,19 @@
 							</div>
 						</form>
 					</div>
-					<div class="col-md-4">
+				</div>
+				<div class="col-md-4">
+					<div class="well">
 						<img class="img-responsive"
 							src="<%=contextPath%>image/menu-slide/img3.jpg">
-						<form action="<%=contextPath%>Manage/EditImage" method="post" enctype="multipart/form-data">
+						<form action="<%=contextPath%>Manage/EditImage" method="post"
+							enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="hidden" name="index" value="6"><input
 									type="hidden" name="origin" value="image/menu-slide/img3.jpg"><label
 									for="menu3">Đổi</label> <input class="form-control" id="menu3"
-									type="file" name="image"> <input type="submit"
-									class="form-control" value="Đổi">
+									type="file" name="image"> <br> <input
+									type="submit" class="form-control" value="Đổi">
 							</div>
 						</form>
 					</div>

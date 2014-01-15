@@ -48,7 +48,7 @@ public class ManageServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		if (user != null) {
 			Set<RoleMember> roleSet = user.getUserRoleMembers();
-			
+
 			String totalUser = "", totalProduct = "", totalOrder = "", totalOrderIncomplete = "";
 
 			DAOService<User, Integer> userService = new DAOService<>(
@@ -56,7 +56,8 @@ public class ManageServlet extends HttpServlet {
 			int customer = 0;
 			for (User u : userService.listObject()) {
 				Set<RoleMember> set = u.getUserRoleMembers();
-				if (set.contains(new RoleMember(new RoleMemberId(user.getUserId(), 3))))
+				if (set.contains(new RoleMember(new RoleMemberId(user
+						.getUserId(), 3))))
 					customer++;
 			}
 			totalUser = customer + "";
@@ -69,15 +70,16 @@ public class ManageServlet extends HttpServlet {
 			int orderIncomp = 0;
 			int orderComp = 0;
 			for (UserOrder order : listOrders) {
-				if (!order.getOrderStatus().getDescription().equals("done"))
+				if (order.getOrderStatus().getOrderStatusId().equals(1))
 					orderIncomp++;
-				else
+				else if (order.getOrderStatus().getOrderStatusId().equals(2))
 					orderComp++;
 			}
 			totalOrderIncomplete = orderIncomp + "";
 			totalOrder = orderComp + "";
 
-			if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 1)))) {
+			if (roleSet.contains(new RoleMember(new RoleMemberId(user
+					.getUserId(), 1)))) {
 				request.setAttribute("totaluser", totalUser);
 				request.setAttribute("totalproduct", totalProduct);
 				request.setAttribute("totalorder", totalOrder);
@@ -85,7 +87,8 @@ public class ManageServlet extends HttpServlet {
 						totalOrderIncomplete);
 				getServletContext().getRequestDispatcher(
 						"/manage/admin-manage.jsp").forward(request, response);
-			} else if (roleSet.contains(new RoleMember(new RoleMemberId(user.getUserId(), 2)))) {
+			} else if (roleSet.contains(new RoleMember(new RoleMemberId(user
+					.getUserId(), 2)))) {
 				request.setAttribute("totalorder", totalOrder);
 				request.setAttribute("totalorderincomplete",
 						totalOrderIncomplete);
